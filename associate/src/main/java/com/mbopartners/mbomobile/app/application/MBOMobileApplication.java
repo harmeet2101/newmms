@@ -58,7 +58,6 @@ public class MBOMobileApplication extends Application
 
         super.onCreate();
 
-
         preferences = getSharedPreferences("environment_pref", Context.MODE_PRIVATE);
         String env = preferences.getString("env", "prod");
         if (env.equalsIgnoreCase("prod")) {
