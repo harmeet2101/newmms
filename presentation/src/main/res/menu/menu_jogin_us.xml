@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mbopartners.mbomobile.ui.activity.joinus.JoinUsActivity">
+    <item android:id="@+id/menu_Join_Us_action_CallByPhone"
+        android:title="Call us by phone"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/menu_Join_Us_action_AskQuestion"
+        android:title="Ask question by Email"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/menu_Join_Us_action_InviteFriend"
+        android:title="Invite friend"
+        android:orderInCategory="102" app:showAsAction="never" />
+</menu>

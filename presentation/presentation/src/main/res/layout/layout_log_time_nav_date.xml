@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:background="@color/mbo_color_white"
+        android:id="@+id/left"
+        android:src="@drawable/worktracking_ic_lesft"
+        android:layout_below="@+id/label_date_textView"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:text="Monday,6"
+        android:gravity="center_horizontal|center"
+        android:background="@color/mbo_color_white"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:id="@+id/right"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:layout_alignEnd="@+id/label_date_textView"
+        android:background="@color/mbo_color_white"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+        android:src="@drawable/worktracking_ic_right"
+        android:layout_below="@+id/label_date_textView"/>
+</LinearLayout>

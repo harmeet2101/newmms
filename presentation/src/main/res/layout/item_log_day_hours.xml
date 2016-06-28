@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/mbo_color_white"
+    android:paddingEnd="@dimen/log_time_border_padding"
+    android:paddingStart="@dimen/log_time_border_padding">
+
+    <TextView
+        android:id="@+id/time_task_name_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="18sp"
+        android:layout_marginLeft="30dp"
+        tools:text="Regular"/>
+
+    <EditText
+        android:id="@+id/hours_EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mbo_color_white"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/time_task_name_TextView"
+        android:paddingBottom="6dp"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="30dp"
+        android:hint="0.00 hrs"
+        android:textColorHint="@android:color/secondary_text_light_nodisable"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:id="@+id/view"
+        android:layout_below="@+id/hours_EditText"
+        android:layout_marginLeft="30dp"
+        android:background="@color/mbo_color_grey_delimiter_30"/>
+
+</RelativeLayout>

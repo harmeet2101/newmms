@@ -1,0 +1,9 @@
+include ':associate'                // Main module
+include ':presentation'             // Presentation (UI) module
+include ':domain'                   // Business logic module
+include ':data'                     // Work with DataBase module
+include ':rest'                     // Project REST pattern implementations module
+include ':MDRest'                   // MD REST Library
+include ':MDFramework'              // MD Android Framework Library
+include ':AssociateDaoGenerator'    // DataBase entities generator from GreenDao library
+include ':artisan'                  // http://docs.useartisan.com/

@@ -1,0 +1,252 @@
+<resources>
+    <string name="app_name">MBO Mobile</string>
+
+    <string name="passcode_manage">Manage passcode</string>
+    <string name="passcode_enter_passcode_unlock_prompt">Enter PIN</string>
+    <string name="passcode_enter_passcode">Enter your PIN</string>
+    <string name="passcode_enter_old_passcode">Enter your old PIN</string>
+    <string name="passcode_re_enter_passcode">Re-enter your PIN</string>
+    <string name="passcode_re_entered_wrong">PINs did not match, please try again</string>
+    <string name="passcode_change_passcode">Change PIN</string>
+    <string name="passcode_set">PIN set</string>
+    <string name="passcode_turn_on">Easy login with PIN</string>
+
+    <!-- Delete next lines -->
+    <string name="title_activity_main">Main Activity</string>
+    <string name="title_activity_simple">SimpleActivity</string>
+
+    <!-- General Values -->
+    <string name="hours_signature">hr</string>
+    <string name="currency_signature">$</string>
+
+    <!-- Activities titles -->
+    <string name="title_activity_login">Sign Up</string>
+    <string name="title_activity_forgot_password">Forgot password</string>
+    <string name="title_activity_join_us">Join Us</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_weekly_time_sheet">Project</string>
+    <string name="title_activity_weekly_time_sheet02">Time</string>
+    <string name="title_activity_log_time">Add Time</string>
+    <string name="title_activity_choose_time_period">Choose Project</string>
+    <string name="title_activity_choose_expense_type">Expense</string>
+    <string name="title_activity_log_expense">Expense Type</string>
+
+
+    <!-- Menu -->
+    <string name="menu_dashboard_action_settings">Settings</string>
+    <string name="menu_dashboard_action_businessManager">Business Manager</string>
+    <string name="menu_dashboard_action_about">About</string>
+    <string name="menu_dashboard_action_logout">Logout</string>
+    <string name="menu_title_submit">SUBMIT</string>
+    <string name="menu_title_save">SAVE</string>
+
+    <!-- Messages -->
+    <string name="mbo_login_ErrorMessage">Invalid username or password, please try again.</string>
+    <string name="mbo_login_NoConnection_ErrorMessage">Unable to contact MBO. Please check your network connection and try again.</string>
+    <string name="mbo_login_ServerError_ErrorMessage">An error occurred, please wait a minute and try again.</string>
+
+    <!-- TextView labels -->
+    <string name="mbo_LabelPre_ForgotPassword">Please enter Your email and we will send you directions to reset your password</string>
+    <string name="mbo_LabelSuccess_ForgotPassword">An email has been sent with instructions on how to reset your password</string>
+    <string name="mbo_Settings_Unlock_with_PIN">Easy login with PIN</string>
+    <string name="mbo_Settings_Change_password">Change PIN</string>
+    <string name="mbo_Settings_application_support">App Support</string>
+    <string name="mbo_dashboard_revenue_text">Revenue Dashboard</string>
+    <string name="mbo_dashboard_revenue_rolling_period">Rolling 4-week Revenue Totals</string>
+    <string name="mbo_dashboard_timesheets_text">Work Tracking</string>
+    <string name="mbo_dashboard_expenses_text">Recent Expenses</string>
+    <string name="mbo_PIN_screen_action_logout">LOGOUT</string>
+
+    <!-- EditText hints -->
+    <string name="mbo_Login_hint_Login">Username</string>
+    <string name="mbo_Login_hint_Password">Password</string>
+    <string name="mbo_ForgotPassword_hint_email">Email</string>
+
+    <!-- Buttons -->
+    <string name="mbo_ForgotPassword_SubmitEmail">Submit Email</string>
+    <string name="mbo_Login_ForgotPassword">Forgot password</string>
+    <string name="mbo_Login_SignIn">Sign In</string>
+    <string name="mbo_Login_JoinUs">Join Us</string>
+    <string name="mbo_add_time">ADD TIME</string>
+    <string name="mbo_save_time">SAVE</string>
+    <!-- Dialogs -->
+    <string name="mbo_Login_ProgressDialog_title">Sign in</string>
+    <string name="mbo_Login_ProgressDialog_message">Please wait …</string>
+
+    <string name="mbo_PIN_Settings_dialog_message">Would You like to set a PIN for quick access to your app?</string>
+    <string name="mbo_PIN_Settings_dialog_title">Set PIN</string>
+    <string name="mbo_PIN_Settings_dialog_Button_OK">Yes</string>
+    <string name="mbo_PIN_Settings_dialog_Button_NO">Not now</string>
+
+    <string name="mbo_Submit_TimeSheet_dialog_title">Time sheet submission</string>
+    <string name="mbo_Submit_TimeSheet_dialog_message">Submit time sheet? This will send a notification to your Business Manager to approve your hours.</string>
+    <string name="mbo_Submit_TimeSheet_dialog_Button_OK">Submit</string>
+    <string name="mbo_Submit_TimeSheet_dialog_Button_NO">Cancel</string>
+
+    <string name="mbo_Discard_changes_dialog_title">Discard changes</string>
+    <string name="mbo_Discard_changes_dialog_message">Do you want to discard your unsaved changes?</string>
+    <string name="mbo_Discard_changes_dialog_Button_OK">Yes</string>
+    <string name="mbo_Discard_changes_dialog_Button_NO">No</string>
+
+    <string name="mbo_LogTime_Save_Error_dialog_title">Saving error</string>
+    <string name="mbo_LogTime_Save_Error_dialog_message">Failed to save time, please check your internet connection and try again</string>
+    <string name="mbo_LogTime_Save_Error_dialog_Button_OK">Ok</string>
+
+    <string name="mbo_LogExpense_Save_Error_dialog_title">Saving error</string>
+    <string name="mbo_LogExpense_Save_Error_dialog_message">Failed to save expense, please check your internet connection and try again</string>
+    <string name="mbo_LogExpense_Save_Error_dialog_Button_OK">Ok</string>
+
+    <string name="mbo_LogExpense_mandatory_fields_dialog_message">Please complete all required fields before adding a photo or saving the entry</string>
+    <string name="mbo_LogExpense_mandatory_fields_dialog_Button_OK">Ok</string>
+
+    <string name="mbo_LogExpense_delete_receipt_dialog_title">Delete receipt photo</string>
+    <string name="mbo_LogExpense_delete_receipt_dialog_message">Do you want to delete %s ?</string>
+    <string name="mbo_LogExpense_delete_receipt_dialog_Button_OK">Delete</string>
+    <string name="mbo_LogExpense_delete_receipt_dialog_Button_NO">Cancel</string>
+
+    <string name="mbo_LogExpense_delete_receipt_success_message">%s removed</string>
+    <string name="mbo_LogExpense_delete_receipt_fail_message">%s wasn\'t removed</string>
+
+    <string name="mbo_LogExpense_post_receipt_success_message">Receipt added</string>
+    <string name="mbo_LogExpense_post_receipt_fail_message">Receipt not sent</string>
+
+    <string name="mbo_LogExpense_ProgressDialog_title">Please wait …</string>
+    <string name="mbo_LogExpense_ProgressDialog_expense_message">Saving expense …</string>
+    <string name="mbo_LogExpense_ProgressDialog_remove_receipt_message">Removing photo …</string>
+    <string name="mbo_LogExpense_ProgressDialog_post_receipt_message">Adding photo …</string>
+
+    <!-- New Error messages -->
+    <!-- New Error messages -->
+    <!-- New Error messages -->
+    <string name="mbo_Error_dialog__General__Button_OK">Ok</string>
+    <string name="mbo_Error_dialog__General__title">Error</string>
+    <string name="mbo_Error_dialog__No_Internet_connection__title"></string>
+
+    <string name="mbo_Error_dialog__No_Internet_connection__message">Unable to contact MBO. Please check your network connection and try again</string>
+    <string name="mbo_Error_dialog__Failed_ToCreate_Expense__message">Connection to uploading service failed, please try again</string>
+    <string name="mbo_Error_dialog__Failed_To_Update__message">Failed to save, please try again</string>
+    <string name="mbo_Error_dialog__Failed_To_Submit_Time__message">Time sheet submission failed, please try again</string>
+    <string name="mbo_Error_dialog__General_Server_Error__message">An error occurred, please wait a minute and try again</string>
+    <string name="mbo_Error_dialog__Data_Validation_Not_Passed_Error__message">The Data received from server is invalid. Check LOG messages for details</string>
+    <string name="mbo_Error_dialog__Failed_To_Login__message">X</string>
+    <string name="mbo_Error_dialog__Invalid_Username_Or_Password__message">Relogin required. Please logout and login again.</string>
+
+
+
+    <!--<string name="mbo_Settings_choose_environment_dialog_message">Choose environment</string>-->
+    <string name="mbo_Settings_choose_environment_dialog_title">Choose environment</string>
+    <string name="mbo_Settings_choose_environment_dialog_Button_OK">pre-prod</string>
+    <string name="mbo_Settings_choose_environment_dialog_Button_NO">production</string>
+
+    <!-- TABs Titles -->
+    <string name="tab_dashboard_title_dashboard">Dashboard</string>
+    <string name="tab_dashboard_title_time">Time</string>
+    <string name="tab_dashboard_title_expense">Expenses</string>
+
+    <string name="title_activity_simple_activity_with_fragment">SimpleActivityWithFragment</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_simple_activity__with_fragment">SimpleActivity_WithFragment</string>
+
+    <!-- Empty Lists -->
+    <string name="mbo_dashboard_revenue_empty_list">No Data</string>
+    <string name="mbo_dashboard_expense_empty_list">No Expenses</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="loading_data_for_list_message">Loading…</string>
+    <string name="list_item_no_timesheets_avialable">No Time sheets</string>
+    <string name="list_item_no_workorders_avialable">No active work orders</string>
+
+    <!-- Toasts -->
+    <string name="mbo_passcode_wrong_passcode">Incorrect PIN. Please try again.</string>
+    <string name="mbo_Settings_environment_changed">Configuration changed</string>
+    <string name="mbo_Login_Successfully_Logged_Out_message">You successfully logged out</string>
+    <string name="mbo_Login_Spent_all_Unlock_attempts_message">Too many incorrect PIN attempts. Please login again and set a new PIN.</string>
+
+
+    <!-- SnackBar messages -->
+    <string name="mbo_snackbar_success_submit_message">Your timesheet has been submitted</string>
+    <string name="mbo_snackbar_success_time_save_message">Time saved</string>
+    <string name="mbo_snackbar_success_expense_save_message">Expense saved</string>
+
+
+    <!-- UNSORTED STRINGS. PLEASE KEEP STRINGS IN ORDER -->
+
+    <string name="mbo_settings_Support_Email_Subject">MBO App Feedback</string>
+    <string name="mbo_settings_Support_Email_EnterYourFeedbackHere_Phrase">Enter Your feedback here</string>
+    <string name="mbo_settings_Support_Email_Email_Chooser_title">"Choose email application"</string>
+    <string name="title_activity_test_activity_with_fragment">TestActivityWithFragment</string>
+
+    <string name="mbo_image_pick_error_no_source">No image sources available</string>
+    <string name="mbo_take_picture">Take picture</string>
+    <string name="mbo_choose_from_gallery">Choose from gallery</string>
+    <string name="mbo_receipts_added_photos">Added photos</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_ffffffffffffff">FFFFFFFFFFFFFFActivity</string>
+    <string name="mbo_time_sign_letter">h</string>
+    <string name="test_message">It is Empty Activity!</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="mbo_Mobile_Version_text">MBO Partners Mobile</string>
+    <string name="mbo_Copyright">2015 MBO Partners</string>
+    <string name="mbo_Privacy_Policy">Privacy Policy</string>
+    <string name="mbo_Terms_and_Conditions">Terms and Conditions</string>
+    <string name="Item_Nonbillable_Expense_label">Nonbillable Expense</string>
+
+    <string name="mbo_submit_dialog_text">You will not be able to edit this timesheet once it has been invoiced.</string>
+    <string name="mbo_weekly_timesheet_summary">Total hours this week:</string>
+    <string name="mbo_saving_time_dialogbox_msg">Saving Time...</string>
+    <string-array name="states_list">
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Arizona</item>
+        <item>Arkansas</item>
+        <item>Arkansas</item>
+        <item>California</item>
+        <item>Colorado</item>
+        <item>Connecticut</item>
+        <item>Delaware</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Hawaii</item>
+        <item>Idaho</item>
+        <item>Illinois Indiana</item>
+        <item>Iowa</item>
+        <item>Kansas</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Maine</item>
+        <item>Maryland</item>
+        <item>Massachusetts</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Mississippi</item>
+        <item>Missouri</item>
+        <item>Montana</item>
+        <item>Nebraska</item>
+        <item>Nevada</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Mexico</item>
+        <item>New York</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Utah</item>
+        <item>Vermont</item>
+        <item>Virginia</item>
+        <item>Washington</item>
+        <item>West Virginia</item>
+        <item>Wisconsin</item>
+        <item>Wyoming</item>
+    </string-array>
+
+
+</resources>

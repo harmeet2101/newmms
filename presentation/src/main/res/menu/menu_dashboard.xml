@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity">
+    <item
+        android:id="@+id/menu_dashboard_action_settings"
+        android:title="@string/menu_dashboard_action_settings"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_dashboard_action_businessManager"
+        android:title="@string/menu_dashboard_action_businessManager"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_dashboard_action_logout"
+        android:title="@string/menu_dashboard_action_logout"
+        android:orderInCategory="103"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/expenseFieldTitle_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        android:paddingEnd="3dp"
+        android:paddingTop="23dp"
+        android:text="@string/mbo_receipts_added_photos"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14dp"/>
+
+    <LinearLayout
+        android:id="@+id/receipt_items_LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/expenseFieldTitle_TextView"
+        android:orientation="vertical"/>
+
+</RelativeLayout>

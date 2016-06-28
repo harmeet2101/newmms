@@ -1,0 +1,36 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:theme="@style/mbo_AppBar_grey"
+        app:popupTheme="@style/mbo_AppBar_PopupMenu_green"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+
+
+    <fragment
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/fragment"
+        android:name="com.mbopartners.mbomobile.ui.activity.choose_workorder.ChoseWorkOrderActivityFragment"
+        tools:layout="@layout/fragment_choose_work_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/bar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mbo_shadow_height"/>
+
+</RelativeLayout>
+

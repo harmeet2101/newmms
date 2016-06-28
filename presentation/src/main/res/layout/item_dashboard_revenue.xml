@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/money_img"
+        tools:background="@drawable/ic_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <TextView
+        android:id="@+id/money_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="Invoiced"
+        android:textColor="@color/mbo_actionbar_textColor_black"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/money_img" />
+
+    <TextView
+        android:id="@+id/money_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="$23658"
+        android:textColor="@color/mbo_actionbar_textColor_black"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Date From - Date To"
+        android:textSize="12dp"
+        android:id="@+id/mbo_dashboard_revenue_period_textView"
+        android:layout_below="@+id/money_amount"
+        android:layout_alignEnd="@+id/money_amount" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/mbo_color_grey_delimiter_30"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/money_img"
+        android:id="@+id/dividerLine"
+        android:layout_alignStart="@+id/money_type" />
+
+</RelativeLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mbo_style_layout_shape">
+
+    <!--<TextView
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/mbo_actionbar_textColor_black"
+        android:text="@string/mbo_dashboard_expenses_text"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mbo_color_secondary_text"
+        android:textSize="14dp"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Date From - Date To"
+        android:id="@+id/mbo_dashboard_time_period_textView" />-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>.
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottombar"
+        android:background="@color/mbo_fab_color_green">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/mbo_fab_color_white"
+            android:layout_centerHorizontal="true"
+            android:paddingRight="20dp"
+            android:id="@+id/newExpenseTextview"
+            android:text="NEW EXPENSE"/>
+    </RelativeLayout>
+
+</FrameLayout>

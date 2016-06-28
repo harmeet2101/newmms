@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:background="@color/mbo_theme_blue_primary" >
+
+    <TextView
+        android:id="@+id/company_name_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Company Name"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/work_order_name_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        tools:text="WorkOrder Name"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/period_dates_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Date FROM - Date TO"
+        android:textSize="12dp" />
+
+</LinearLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="support_fab_extra_padding_top_workaround">0dp</dimen>
+    <dimen name="support_fab_extra_padding_end_workaround">0dp</dimen>
+</resources>

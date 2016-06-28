@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bottom_total_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/mbo_weekly_timesheet_summary_label_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mbo_weekly_timesheet_summary"
+            android:textSize="20dp"
+            android:paddingStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/mbo_simple_text__color"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/mbo_weekly_timesheet_summary_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="33.57"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:textColor="@color/mbo_simple_text__color"
+             />
+
+        <TextView
+            android:id="@+id/mbo_timesheet_totalhours_sign_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours_signature"
+            android:textColor="@color/mbo_simple_text__color"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"/>
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/mbo_color_grey_delimiter_30"
+        />
+    <include layout="@layout/layout_bottom_bar_submit"
+        android:layout_width="match_parent"
+        android:id="@+id/bottonbar01"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

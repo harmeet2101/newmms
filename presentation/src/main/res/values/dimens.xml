@@ -1,0 +1,11 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="support_fab_extra_padding_top_workaround">32dp</dimen>
+    <dimen name="support_fab_extra_padding_end_workaround">16dp</dimen>
+    <dimen name="log_expense_border_padding">40dp</dimen>
+    <dimen name="log_time_border_padding">20dp</dimen>
+    <dimen name="mbo_shadow_height">10dp</dimen>
+</resources>

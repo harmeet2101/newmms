@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ua.com.mobidev.android.mdrest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+
+        <service
+            android:name=".web.rest.WebRestService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
+    </application>
+
+</manifest>

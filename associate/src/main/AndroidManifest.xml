@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mbopartners.mbomobile.app">
+
+    <application
+        android:name=".application.MBOMobileApplication"
+
+        android:allowBackup="false">
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0f2ac42104ab6ad6a42f3df9b0588083f7c27a5f" />
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

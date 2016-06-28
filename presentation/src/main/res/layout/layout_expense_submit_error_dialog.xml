@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Transmission Failed"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/heading"
+        android:textColor="@color/mbo_actionbar_textColor_black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Lodging - Hotel Dinosaur project\n$147.53 transmission failed."
+        android:layout_marginTop="14dp"
+        android:id="@+id/msg"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/heading"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:layout_below="@+id/msg"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="14dp"
+        android:paddingTop="20dp"
+        android:textSize="16sp"
+        android:textColor="@color/mbo_theme_blue_primary"
+        android:id="@+id/canceltext"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RETRY"
+        android:textSize="16sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="14dp"
+        android:textColor="@color/mbo_theme_blue_primary"
+        android:id="@+id/submittext"
+        android:layout_alignTop="@+id/canceltext"
+        android:layout_alignEnd="@+id/msg" />
+</RelativeLayout>

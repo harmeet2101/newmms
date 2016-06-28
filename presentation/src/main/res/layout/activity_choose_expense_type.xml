@@ -1,0 +1,35 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/mbo_AppBar_grey"
+        app:popupTheme="@style/mbo_AppBar_PopupMenu_green"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment"
+        android:name="com.mbopartners.mbomobile.ui.activity.choose_expense_type.ChooseExpenseTypeActivityFragment"
+        tools:layout="@layout/fragment_weekly_time_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/bar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mbo_shadow_height"/>
+
+</RelativeLayout>

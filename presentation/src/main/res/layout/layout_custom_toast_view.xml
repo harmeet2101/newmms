@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mbo_theme_black_primary_dark">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16sp"
+        android:text="Expense Saved! jcjd jbcdjbcd b cdc bdbc dhdb bcd dbvchbchd"
+        android:id="@+id/textview"
+        android:textColor="@color/mbo_simple_white_color"
+        />
+</LinearLayout>

@@ -1,0 +1,111 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/mbo_style_layout_shape"
+    tools:context="com.mbopartners.mbomobile.ui.activity.weekly_timesheet.WeeklyTimeSheetActivityFragment">
+
+    <TextView
+        android:id="@+id/mbo_weekly_timesheet_WorkOrderName_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Company Name"
+        android:textColor="@color/mbo_actionbar_textColor_black"
+        android:textSize="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/mbo_weekly_timesheet_CompanyName_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Work Order Name"
+        android:textSize="14dp"
+        android:textColor="@color/mbo_actionbar_textColor_black"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/mbo_weekly_timesheet_WorkOrderName_TextView"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/mbo_weekly_timesheet_TimePeriodName_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Time Period Name"
+        android:textSize="14dp"
+        android:textColor="@color/mbo_theme_grey_TextView_text_color"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/mbo_weekly_timesheet_CompanyName_TextView"
+        android:layout_alignParentStart="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/mbo_weekly_timesheet_TimePeriodName_TextView"
+        android:layout_above="@+id/bottom_total_layout" />
+
+
+    <include layout="@layout/layout_weekly_summary_include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_total_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"></include>
+    <!--<RelativeLayout
+        android:id="@+id/bottom_total_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/mbo_weekly_timesheet_summary_label_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mbo_weekly_timesheet_summary"
+            android:textSize="18dp"
+            android:paddingStart="16dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="26dp"
+            android:textColor="@color/mbo_simple_text__color"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            />
+
+
+        <TextView
+            android:id="@+id/mbo_weekly_timesheet_summary_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="33.57"
+            android:textSize="18dp"
+            android:textColor="@color/mbo_simple_text__color"
+            android:layout_marginStart="54dp"
+            android:layout_alignBaseline="@+id/mbo_weekly_timesheet_summary_label_TextView"
+            android:layout_alignBottom="@+id/mbo_weekly_timesheet_summary_label_TextView"
+            android:layout_toEndOf="@+id/mbo_weekly_timesheet_summary_label_TextView" />
+
+        <TextView
+            android:id="@+id/mbo_timesheet_totalhours_sign_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours_signature"
+            android:textColor="@color/mbo_simple_text__color"
+            android:textSize="18dp"
+            android:layout_marginStart="2dp"
+            android:layout_alignBaseline="@+id/mbo_weekly_timesheet_summary_TextView"
+            android:layout_toEndOf="@+id/mbo_weekly_timesheet_summary_TextView"
+            android:layout_marginTop="4dp" />
+
+    </RelativeLayout>-->
+
+
+
+</RelativeLayout>

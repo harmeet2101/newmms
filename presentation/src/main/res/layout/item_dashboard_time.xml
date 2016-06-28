@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    card_view:cardCornerRadius="2.5dp"
+    card_view:cardBackgroundColor="@color/mbo_color_white"
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp">
+
+
+        <TextView
+            android:id="@+id/company_name_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="80dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingEnd="8dp"
+            android:paddingTop="9dp"
+            android:singleLine="true"
+            android:textColor="@color/company_name"
+            android:textSize="18dp"
+            tools:text="Company Name with very-very long name"/>
+
+        <TextView
+            android:id="@+id/work_order_name_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/company_name_TextView"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingEnd="8dp"
+            android:singleLine="true"
+            android:textColor="@color/company_name"
+            android:textSize="12dp"
+            tools:text="Work Order Name with very-very long name"/>
+
+        <TextView
+            android:id="@+id/mbo_timesheet_time_period_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/work_order_name_TextView"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="-2dp"
+            android:paddingEnd="8dp"
+            android:textColor="@color/workorder_name"
+            android:textSize="12dp"
+            tools:text="Date FROM - Date TO"/>
+
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:id="@+id/relativeLayout2">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+                    <TextView
+                        android:id="@+id/mbo_timesheet_totalhours_period_TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/mbo_theme_blue_primary"
+                        android:textSize="24dp"
+                        tools:text="88"
+                        />
+                    <TextView
+                        android:id="@+id/mbo_timesheet_totalhours_sign_TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/mbo_timesheet_totalhours_period_TextView"
+                        android:layout_marginStart="1dp"
+                        android:layout_toEndOf="@+id/mbo_timesheet_totalhours_period_TextView"
+                        android:text="@string/hours_signature"
+                        android:textColor="@color/mbo_theme_blue_primary"
+                        android:textSize="16dp"/>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

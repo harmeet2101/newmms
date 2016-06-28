@@ -1,0 +1,107 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/coordinator02"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/mbo_AppBar_grey"
+            app:popupTheme="@style/mbo_AppBar_PopupMenu_grey"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            />
+        <View
+            android:layout_below="@+id/toolbar"
+            android:background="@drawable/bar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mbo_shadow_height"/>
+
+        <fragment
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/fragment"
+            android:name="com.mbopartners.mbomobile.ui.activity.weekly_timesheet.WeeklyTimeSheetActivityFragment"
+            tools:layout="@layout/fragment_weekly_time_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentStart="true" />
+
+
+        <!--<android.support.design.widget.FloatingActionButton
+            android:id="@+id/mboFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_add"
+            android:clickable="true"
+            app:backgroundTint="@color/mbo_fab_color_red"
+            app:fabSize="normal"
+            app:elevation="4dp"
+            app:borderWidth="0dp"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
+
+        <RelativeLayout
+            android:id="@+id/FAB_holder_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:id="@+id/multiple_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+
+                fab:fab_addButtonColorNormal="@color/mbo_fab_color_red"
+                fab:fab_addButtonColorPressed="@color/mbo_fab_color_red_pressed"
+                fab:fab_addButtonPlusIconColor="@color/mbo_fab_color_white"
+                fab:fab_labelStyle="@style/menu_labels_style"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true">
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_log_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_icon="@drawable/btn_ic_time"
+                    fab:fab_colorNormal="@color/mbo_fab_color_blue"
+                    fab:fab_colorPressed="@color/mbo_fab_color_blue_pressed"
+                    fab:fab_size="mini"
+                    fab:fab_title="Log Time"/>
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_log_expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_icon="@drawable/btn_ic_expense"
+                    fab:fab_colorNormal="@color/mbo_fab_color_green"
+                    fab:fab_colorPressed="@color/mbo_fab_color_green_pressed"
+                    fab:fab_size="mini"
+                    fab:fab_title="Log Expense" />
+
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+        </RelativeLayout>-->
+    </RelativeLayout>
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

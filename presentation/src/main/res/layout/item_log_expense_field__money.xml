@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/expenseFieldTitle_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/mbo_color_secondary_text"
+        android:textSize="14dp"
+        tools:text="Date *"
+        />
+
+
+    <EditText
+        android:id="@+id/expenseFieldValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/expenseFieldTitle_TextView"
+        android:background="@null"
+        android:gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:textColor="@color/mbo_color_secondary_text"
+        android:hint="@string/currency_signature"
+        android:paddingBottom="6dp"
+        android:textSize="18dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/expenseFieldValue"
+        android:id="@+id/border"/>
+</RelativeLayout>

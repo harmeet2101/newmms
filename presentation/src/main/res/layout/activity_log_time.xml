@@ -1,0 +1,174 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/log_time_rootview"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mbopartners.mbomobile.ui.activity.logtime.LogTimeActivityFragment" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mbo_theme_blue_primary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_close_white_48dp"
+            android:id="@+id/crossImageview"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Time"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/mbo_simple_white_color"
+            android:textSize="22sp"/>
+    </LinearLayout>
+    <!--<android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/mbo_AppBar_blue"
+        app:popupTheme="@style/mbo_AppBar_PopupMenu_blue"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        />-->
+
+    <!--<TextView
+        android:id="@+id/company_name_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="Company Name"
+        android:visibility="gone"
+        android:textColor="@color/mbo_color_white"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/work_order_name_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/mbo_color_white_70"
+        tools:text="WorkOrder Name"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/period_dates_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:textColor="@color/mbo_color_white_70"
+        tools:text="Date FROM - Date TO"
+        android:textSize="14dp" />-->
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/mbo_color_white">
+        <TextView
+            android:id="@+id/company_name_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:text="Company Name"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:lines="1"
+            android:visibility="visible"
+            android:layout_marginTop="20dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:id="@+id/view"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/company_name_TextView"
+            android:background="@color/mbo_color_grey_delimiter_30"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date"
+            android:textSize="14dp"
+            android:layout_below="@+id/view"
+            android:id="@+id/label_date_textView"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/date_viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_date_textView"
+            android:background="@color/mbo_color_white"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true">
+            <android.support.v4.view.PagerTabStrip
+                style="@style/ViewPagerTitleStrip"
+                android:id="@+id/pager_title_strip"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/mbo_color_white"
+                android:textColor="@android:color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                >
+            </android.support.v4.view.PagerTabStrip>
+        </android.support.v4.view.ViewPager>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:background="@color/mbo_transparent__color"
+            android:id="@+id/left"
+            android:src="@drawable/worktracking_ic_lesft"
+            android:layout_below="@+id/label_date_textView"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/right"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:layout_alignEnd="@+id/label_date_textView"
+            android:background="@color/mbo_transparent__color"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/worktracking_ic_right"
+            android:layout_below="@+id/label_date_textView"/>
+        <View
+            android:background="@drawable/bar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mbo_shadow_height"/>
+    </RelativeLayout>
+</LinearLayout>

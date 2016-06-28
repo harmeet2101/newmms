@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/company_name_TextView"
+    android:background="?android:selectableItemBackground"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:padding="16dp"
+    android:textSize="18dp"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:singleLine="true"
+    android:lines="1"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:text="@string/Item_Nonbillable_Expense_label" />

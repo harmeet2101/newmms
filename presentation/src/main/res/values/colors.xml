@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_gray">#E5E5E5</color>
+    <color name="gray">#CCC</color>
+    <color name="list_row_selected">#78c8e6</color>
+
+
+
+
+    <color name="mbo_actionbar_textColor_black">#FF000000</color>
+
+    <color name="mbo_transparent__color">#00000000</color>
+
+    <color name="mbo_simple_button_font__color">#FEFFFF</color>
+    <color name="mbo_simple_white_color">#FFFFFF</color>
+    <color name="mbo_login_button_bg__color">#4D607D8B</color>
+    <color name="mbo_simple_button_bg__color">#E8F1FA</color>
+    <color name="mbo_simple_button_bg__color_normal">#409DFB</color>
+    <color name="mbo_grey_layout_bg__color">#ECECEC</color>
+
+    <color name="mbo_simple_text__color">#FF273941</color>
+    <color name="mbo_error_message_text__color">#FFAC343C</color>
+    <color name="mbo_error_message_hint__color">#80AC343C</color>
+
+    <color name="mbo_simple_edittext_font_color">#FF273941</color>
+    <color name="mbo_simple_edittext_hint_color">#80273941</color>
+    <!--<color name="mbo_simple_edittext_bg_color"></color>-->
+
+    <!-- Floating Action Button (FAB) colors -->
+    <color name="mbo_fab_color_red">#50D2C2</color>
+    <color name="mbo_fab_color_red_pressed">#9F9F9F</color>
+
+    <color name="mbo_fab_color_green">#50D2C2</color>
+    <color name="mbo_fab_color_green_pressed">#9F9F9F</color>
+
+    <color name="mbo_fab_color_blue">#50D2C2</color>
+    <color name="mbo_fab_color_blue_pressed">#9F9F9F</color>
+
+    <color name="mbo_fab_color_white">#FFFFFF</color>
+
+
+    <!-- Themes colors -->
+    <!-- Green theme colors -->
+    <color name="mbo_theme_green_android_windowBackground">#40004000</color>
+    <color name="mbo_theme_green_colorAccent">#FF00FF00</color>
+
+    <!-- MBO Blue theme colors -->
+    <color name="mbo_theme_blue_primary">#409DFB</color>
+    <color name="mbo_blue_disable">#56409dfb</color>
+    <color name="mbo_lght_blue_disable">#E8F1FA</color>
+
+    <color name="mbo_theme_black_primary_dark">#000000</color>
+    <color name="mbo_theme_grey_accent">#FFFFFF</color>
+    <color name="mbo_theme_grey_android_colorBackground">#E8F1FA</color>
+    <color name="mbo_theme_blue_AppBar_ToolBar">#409DFB</color>
+    <color name="mbo_theme_grey_TextView_text_color">#B3273941</color>
+    <color name="mbo_theme_grey_PopupMenu_text_color">#FF000000</color>
+
+    <!-- White theme colors -->
+    <color name="mbo_theme_white_primary">#FFFFFF</color>
+    <color name="mbo_theme_white_primary_dark">#FFFFFF</color>
+    <color name="mbo_theme_white_accent">#FF000000</color>
+    <color name="mbo_theme_white_android_colorBackground">#FFFFFFFF</color>
+    <color name="mbo_theme_white_android_windowBackground">#FFFFFF</color>
+    <color name="mbo_theme_white_TextView_text_color">#FF000000</color>
+    <color name="mbo_theme_white_PopupMenu_text_color">#FF000000</color>
+
+
+
+    <!-- NEW COLORS -->
+    <color name="mbo_color_blue">#03A9F4</color>
+    <color name="mbo_color_green">#4CAF50</color>
+    <color name="mbo_color_white">#FFFFFFFF</color>
+    <color name="mbo_color_white_70">#B3FFFFFF</color>
+    <color name="mbo_color_black_70">#B3000000</color>
+    <color name="mbo_color_grey_delimiter_30">#b1b6b8</color>
+
+    <color name="mbo_color_secondary_text">#777F82</color>
+    <color name="mbo_light_grey_weekly">#9F9F9F</color>
+
+    <color name="mbo_color_edittext_error">#F8533C</color>
+
+</resources>

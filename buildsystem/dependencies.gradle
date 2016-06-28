@@ -1,0 +1,138 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "23.0.1"
+    androidMinSdkVersion = 19
+    androidTargetSdkVersion = 22
+    androidCompileSdkVersion = 23
+
+    //Libraries
+    appcompatVersion = '22.2.0' // PagerTabStrip BUG up to 23.0.1
+    materialDesignLibraryVersion = '22.2.0'
+    recyclerviewVersion = '22.2.0'
+    cardviewVersion = '22.2.0'
+
+    fabLibraryVersion = '1.10.0'
+
+    gsonVersion = '2.3.1'
+    volleyVersion = '1.0.+'
+    greendaoVersion = '2.0.0'
+    apacheHttpComponentsVersion = '4.3.3'
+
+    daggerVersion = '2.0'
+    butterKnifeVersion = '6.0.0'
+    recyclerViewVersion = '21.0.3'
+
+    rxJavaVersion = '1.0.9'
+    rxAndroidVersion = '0.24.0'
+    javaxAnnotationVersion = '10.0-b28'
+    okHttpVersion = '2.3.0'
+    androidAnnotationsVersion = '20.0.0'
+
+    //Testing
+    espressoVersion = '2.0'
+    testingSupportLibVersion = '0.1'
+
+    robolectricVersion = '2.4'
+    jUnitVersion = '4.11'
+    mockitoVersion = '1.9.5'
+    dexmakerVersion = '1.0'
+
+
+    associateDependencies = [
+
+    ]
+
+    associateTestDependencies = [
+
+    ]
+
+    dataDependencies = [
+            // NOT OFFICIAL VOLLEY REPOSITORY!
+            volley:             "com.mcxiaoke.volley:library:${volleyVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            greendao:           "de.greenrobot:greendao:${greendaoVersion}",
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+    ]
+
+    dataTestDependencies = [
+    ]
+
+    domainDependencies = [
+//            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+//            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+//            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+//            rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
+    ]
+
+    domainTestDependencies = [
+//            junit:              "junit:junit:${jUnitVersion}",
+//            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+    ]
+
+    presentationDependencies = [
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            design:             "com.android.support:design:${materialDesignLibraryVersion}",
+            recyclerview:       "com.android.support:recyclerview-v7:${recyclerviewVersion}",
+            cardview:           "com.android.support:cardview-v7:${cardviewVersion}",
+            fabLibrary:         "com.getbase:floatingactionbutton:${fabLibraryVersion}",
+
+//            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+//            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+//            butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",
+//            recyclerView:       "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+//            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+    ]
+
+    presentationTestDependencies = [
+//            espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+//            testingSupportLib:  "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+//
+//            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+//            dexmaker:           "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+//            dexmakerMockito:    "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+    ]
+
+    restDependencies = [
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            httpmime:           "org.apache.httpcomponents:httpmime:${apacheHttpComponentsVersion}",
+            httpcore:           "org.apache.httpcomponents:httpcore:${apacheHttpComponentsVersion}",
+    ]
+
+    restTestDependencies = [
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+    ]
+
+    // --------------------------------------------------------------------------------
+
+    MdFrameworkDependencies = [
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            recyclerview:       "com.android.support:recyclerview-v7:${recyclerviewVersion}",
+    ]
+
+    MdFrameworkTestDependencies = [
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            recyclerview:       "com.android.support:recyclerview-v7:${recyclerviewVersion}",
+    ]
+
+    MdRestDependencies = [
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            volley:             "com.mcxiaoke.volley:library:${volleyVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            greendao:           "de.greenrobot:greendao:${greendaoVersion}",
+    ]
+
+    MdRestTestDependencies = [
+            appcompat:          "com.android.support:appcompat-v7:${appcompatVersion}",
+            volley:             "com.mcxiaoke.volley:library:${volleyVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            greendao:           "de.greenrobot:greendao:${greendaoVersion}",
+    ]
+}

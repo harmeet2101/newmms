@@ -1,0 +1,171 @@
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mbo_log_expense_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="false"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/mbo_AppBar_blue"
+                app:popupTheme="@style/mbo_AppBar_PopupMenu_green"
+                app:titleTextAppearance="@style/Toolbar.TitleText"/>
+
+            <!-- static height used for camera button alignment-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/mbo_style_layout_shape_green"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/expense_ImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:visibility="gone"
+                    tools:src="@drawable/log_expense_fuel"/>
+
+                <TextView
+                    android:id="@+id/expense_name_TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/mbo_color_white"
+                    tools:text="Fuel"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appbar"
+            android:id="@+id/relative01"
+            android:background="@color/mbo_color_white">
+
+            <View
+                android:background="@drawable/bar_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mbo_shadow_height"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/spinner01"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="10dp"
+                >
+
+            </Spinner>
+            <View
+                android:layout_below="@+id/spinner01"
+                android:background="@color/mbo_color_grey_delimiter_30"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.mbopartners.mbomobile.ui.activity.logexpense.LogExpenseActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/spinner01"
+                tools:layout="@layout/fragment_log_expense"/>
+
+
+
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/fab_fade_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="@color/mbo_color_black_70"
+            android:fitsSystemWindows="true"/>
+
+        <RelativeLayout
+            android:id="@+id/multiple_actions_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:id="@+id/multiple_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="@dimen/support_fab_extra_padding_end_workaround"
+                android:layout_marginTop="@dimen/support_fab_extra_padding_top_workaround"
+                android:visibility="visible"
+                app:fab_addButtonColorNormal="@android:color/transparent"
+                app:fab_addButtonSize="mini"
+                app:fab_expandDirection="down"
+                app:fab_labelStyle="@style/menu_labels_style">
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    app:fab_colorNormal="@color/mbo_fab_color_green"
+                    app:fab_colorPressed="@color/mbo_fab_color_green_pressed"
+                    app:fab_icon="@drawable/mbo_btn_camera"
+                    app:fab_size="mini"
+                    app:fab_title="Camera"/>
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fab_colorNormal="@color/mbo_fab_color_blue"
+                    app:fab_colorPressed="@color/mbo_fab_color_blue_pressed"
+                    app:fab_icon="@drawable/mbo_btn_gallery"
+                    app:fab_size="mini"
+                    app:fab_title="Gallery"/>
+
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+            <!-- this button overlaps actions menu and controls it-->
+            <android.support.design.widget.FloatingActionButton
+                android:layout_marginEnd="6dp"
+                android:id="@+id/mboFAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:src="@drawable/mbo_btn_camera_add"
+                app:backgroundTint="@color/mbo_fab_selector"
+                app:borderWidth="0dp"
+                app:elevation="8dp"
+                app:fabSize="normal"
+                app:fab_colorNormal="@color/mbo_fab_color_red"
+                app:fab_colorPressed="@color/mbo_color_white"/>
+
+        </RelativeLayout>
+    <include layout="@layout/layout_cancel_submit_bottombar"
+        android:layout_width="match_parent"
+        android:id="@+id/includeview"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
+
+
+
+</RelativeLayout>
