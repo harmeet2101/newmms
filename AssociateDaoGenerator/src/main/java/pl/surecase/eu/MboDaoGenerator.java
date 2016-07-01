@@ -37,6 +37,8 @@ public class MboDaoGenerator {
         Entity expenseType = create_ExpenseType_Table();
         Entity expenseField = create_ExpenseField_Table();
         Entity expenseFieldValue = create_ExpenseFieldValue_Table();
+        Entity business_center_table =create_business_center_table();
+        Entity business_address_table =create_business_address_table();
 
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
 
@@ -248,6 +250,25 @@ public class MboDaoGenerator {
         Entity table = schema.addEntity("ExpenseType_2_ExpenseField");
         table.addIdProperty().autoincrement();
 
+        return table;
+    }
+
+    public static Entity create_business_center_table(){
+        Entity table = schema.addEntity("BusinessCenter");
+        table.addIdProperty().autoincrement();
+        table.addStringProperty("Name");
+        table.addStringProperty("MboId");
+        table.addStringProperty("Balance");
+        return table;
+    }
+    public static Entity create_business_address_table(){
+        Entity table = schema.addEntity("BusinessAddress");
+        table.addIdProperty().autoincrement();
+        table.addStringProperty("line1");
+        table.addStringProperty("line2");
+        table.addStringProperty("city");
+        table.addStringProperty("state");
+        table.addStringProperty("postalCode");
         return table;
     }
 
