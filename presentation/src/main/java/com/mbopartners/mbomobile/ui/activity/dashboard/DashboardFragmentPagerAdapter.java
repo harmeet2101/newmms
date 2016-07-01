@@ -6,13 +6,14 @@ import android.support.v4.app.FragmentManager;
 
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.dashboard.expense.ExpensePageFragment;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.revenue.RevenuePageFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.timesheet.TimePageFragment;
 
 import ua.com.mobidev.android.framework.ui.fragment.SmartFragmentStatePagerAdapter;
 
 public class DashboardFragmentPagerAdapter extends SmartFragmentStatePagerAdapter {
-    final int PAGE_COUNT = 3;
+    final int PAGE_COUNT = 4;
     private String tabTitles[] = new String[PAGE_COUNT];
     private Context context;
 
@@ -23,6 +24,7 @@ public class DashboardFragmentPagerAdapter extends SmartFragmentStatePagerAdapte
         tabTitles[0] = this.context.getString(R.string.tab_dashboard_title_dashboard);
         tabTitles[1] = this.context.getString(R.string.tab_dashboard_title_time);
         tabTitles[2] = this.context.getString(R.string.tab_dashboard_title_expense);
+        tabTitles[3]=this.context.getString(R.string.tab_dashboard_title_payroll);
     }
 
     @Override
@@ -46,6 +48,10 @@ public class DashboardFragmentPagerAdapter extends SmartFragmentStatePagerAdapte
 
             case 2 : {
                 fragment =  ExpensePageFragment.newInstance();
+                break;
+            }
+            case 3 : {
+                fragment =  PayrollFragment.newInstance();
                 break;
             }
 

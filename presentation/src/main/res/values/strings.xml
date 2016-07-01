@@ -57,6 +57,7 @@
     <string name="mbo_dashboard_timesheets_text">Work Tracking</string>
     <string name="mbo_dashboard_expenses_text">Recent Expenses</string>
     <string name="mbo_PIN_screen_action_logout">LOGOUT</string>
+    <string name="mbo_dashboard_payroll_text">Payroll</string>
 
     <!-- EditText hints -->
     <string name="mbo_Login_hint_Login">Username</string>
@@ -70,6 +71,7 @@
     <string name="mbo_Login_JoinUs">Join Us</string>
     <string name="mbo_add_time">ADD TIME</string>
     <string name="mbo_save_time">SAVE</string>
+    <string name="mbo_schedule_payroll">Schedule</string>
     <!-- Dialogs -->
     <string name="mbo_Login_ProgressDialog_title">Sign in</string>
     <string name="mbo_Login_ProgressDialog_message">Please wait …</string>
@@ -143,6 +145,7 @@
     <string name="tab_dashboard_title_dashboard">Dashboard</string>
     <string name="tab_dashboard_title_time">Time</string>
     <string name="tab_dashboard_title_expense">Expenses</string>
+    <string name="tab_dashboard_title_payroll">Payroll</string>
 
     <string name="title_activity_simple_activity_with_fragment">SimpleActivityWithFragment</string>
     <string name="action_settings">Settings</string>
