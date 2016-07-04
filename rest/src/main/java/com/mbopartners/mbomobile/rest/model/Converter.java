@@ -15,6 +15,7 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableTimePeriod;
 import com.mbopartners.mbomobile.data.db.generated.model.TableTimeTask;
 import com.mbopartners.mbomobile.data.db.generated.model.TableUserProfile;
 import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.Company;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
@@ -30,9 +31,9 @@ import com.mbopartners.mbomobile.rest.model.response.TimePeriod;
 import com.mbopartners.mbomobile.rest.model.response.TimeTask;
 import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,11 +71,20 @@ public class Converter {
         return tableBusinessManager;
     }
 
+    public static TableBusinessCenter toTable_businessCenter(BusinessCenter businessCenter) {
+        TableBusinessCenter tableBusinessCenter = new TableBusinessCenter(
+                businessCenter.getId(),
+                businessCenter.getBusinessId(),
+                businessCenter.getName(),
+                businessCenter.getMboId(),
+                businessCenter.getBalance());
+        return tableBusinessCenter;
+    }
+
     public static TableDashboard toTable(Dashboard dashboard) {
         TableDashboard  tableDashboard = new TableDashboard(null, dashboard.getPurpose());
         return tableDashboard;
     }
-
     public static TableDashboardField toTable(long dashboardID, DashboardField dashboardField) {
         TableDashboardField tableDashboardField = new TableDashboardField(
                 null,
@@ -232,6 +242,11 @@ public class Converter {
         return dashboardField;
     }
 
+    public static BusinessCenter toWeb_businessCenter(TableBusinessCenter table) {
+        BusinessCenter businessCenter = new BusinessCenter(table.getId(),table.getBusinessId(),table.getName(),table.getMboId(),table.getBalance());
+        return businessCenter;
+    }
+
     public static WorkOrder toWeb(TableWorkOrder table) {
         WorkOrder workOrder = new WorkOrder(
                 table.getMboId(),
@@ -355,6 +370,14 @@ public class Converter {
             dashboardFields.add(toWeb(tableField));
         }
         return dashboardFields;
+    }
+
+    public static List<BusinessCenter> toWeb_BusinessCenterField(List<TableBusinessCenter> table) {
+        List<BusinessCenter> businessCenter = new ArrayList<>(table.size());
+        for (TableBusinessCenter tableField : table) {
+            businessCenter.add(toWeb_businessCenter(tableField));
+        }
+        return businessCenter;
     }
 
     public static List<TimeEntry> toWeb_TimeEntry(List<TableTimeEntry> table) {

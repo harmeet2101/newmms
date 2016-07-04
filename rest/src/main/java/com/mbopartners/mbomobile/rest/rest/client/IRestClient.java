@@ -56,5 +56,6 @@ public interface IRestClient {
 
     RequestDescriptor postExpenseReceipt(Context context, String mboExpenseId, File receiptImageFile);
     RequestDescriptor deleteExpenseReceipt(Context context, String mboExpenseId, String receiptFilename);
+    RequestDescriptor getBusinessCenterList(Context context);
 
 }

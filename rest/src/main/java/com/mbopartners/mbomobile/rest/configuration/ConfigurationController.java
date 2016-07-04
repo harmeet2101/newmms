@@ -23,9 +23,9 @@ public class ConfigurationController extends AbstractApplicationController {
 
     private static final String OAUTH_DEV_CLIENT_ID = "time-expenses-app";
     private static final String OAUTH_DEV_CLIENT_SECRET = "43568d19-3620-4ec4-8123-f63502ec261f";
-
     private static final String OAUTH_PROD_CLIENT_ID = "mbo-mobile";
     private static final String OAUTH_PROD_CLIENT_SECRET = "4eb69d74-b9ac-4052-acef-f5884bc8fd2e";
+
 
     private SharedPreferencesController sharedPreferencesController;
     private EnvironmentConfiguration currentConfiguration;

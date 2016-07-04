@@ -254,15 +254,16 @@ public class MboDaoGenerator {
     }
 
     public static Entity create_business_center_table(){
-        Entity table = schema.addEntity("BusinessCenter");
+        Entity table = schema.addEntity("TableBusinessCenter");
         table.addIdProperty().autoincrement();
+        table.addStringProperty("BusinessCenterId");
         table.addStringProperty("Name");
         table.addStringProperty("MboId");
-        table.addStringProperty("Balance");
+        table.addDoubleProperty("Balance");
         return table;
     }
     public static Entity create_business_address_table(){
-        Entity table = schema.addEntity("BusinessAddress");
+        Entity table = schema.addEntity("TableBusinessAddress");
         table.addIdProperty().autoincrement();
         table.addStringProperty("line1");
         table.addStringProperty("line2");

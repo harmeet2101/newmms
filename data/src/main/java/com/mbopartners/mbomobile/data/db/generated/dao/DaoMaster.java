@@ -54,7 +54,6 @@ public class DaoMaster extends AbstractDaoMaster {
         TableExpenseFieldValueDao.createTable(db, ifNotExists);
         ExpenseType_2_ExpenseFieldDao.createTable(db, ifNotExists);
         TableBusinessCenterDao.createTable(db,ifNotExists);
-        TableBusinessAddressDao.createTable(db,ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
@@ -76,7 +75,6 @@ public class DaoMaster extends AbstractDaoMaster {
         TableExpenseFieldValueDao.dropTable(db, ifExists);
         ExpenseType_2_ExpenseFieldDao.dropTable(db, ifExists);
         TableBusinessCenterDao.dropTable(db,ifExists);
-        TableBusinessAddressDao.dropTable(db,ifExists);
     }
     
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -125,7 +123,6 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(TableExpenseFieldValueDao.class);
         registerDaoClass(ExpenseType_2_ExpenseFieldDao.class);
         registerDaoClass(TableBusinessCenterDao.class);
-        registerDaoClass(TableBusinessAddressDao.class);
     }
     
     public DaoSession newSession() {

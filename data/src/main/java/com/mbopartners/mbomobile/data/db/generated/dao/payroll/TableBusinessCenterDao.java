@@ -27,9 +27,10 @@ public class TableBusinessCenterDao extends AbstractDao<TableBusinessCenter, Lon
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Name = new Property(1, String.class, "Name", false, "NAME");
-        public final static Property MboId = new Property(2, String.class, "MboId", false, "MBO_ID");
-        public final static Property Balance = new Property(3, String.class, "Balance", false, "BALANCE");
+        public final static Property BusinessCenterId = new Property(1, String.class, "businessId", false, "businessid");
+        public final static Property Name = new Property(2, String.class, "Name", false, "NAME");
+        public final static Property MboId = new Property(3, String.class, "MboId", false, "MBO_ID");
+        public final static Property Balance = new Property(4, Double.class, "Balance", false, "BALANCE");
     };
 
     public TableBusinessCenterDao(DaoConfig config) {
@@ -45,9 +46,10 @@ public class TableBusinessCenterDao extends AbstractDao<TableBusinessCenter, Lon
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TABLE_BUSINESS_CENTER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NAME\" TEXT NOT NULL ," + // 1: Name
-                "\"MBO_ID\" TEXT NOT NULL ," + // 2: MBO_ID
-                "\"BALANCE\" TEXT NOT NULL );" ); // 3: Balance
+                "\"businessid\" TEXT NOT NULL,"+// 1: businessid
+                "\"NAME\" TEXT NOT NULL ," + // 2: Name
+                "\"MBO_ID\" TEXT NOT NULL ," + // 3: MBO_ID
+                "\"BALANCE\" REAL NOT NULL );" ); // 4: Balance
     }
 
     /** Drops the underlying database table. */
@@ -64,9 +66,10 @@ public class TableBusinessCenterDao extends AbstractDao<TableBusinessCenter, Lon
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindString(2, entity.getName());
-        stmt.bindString(3, entity.getMboId());
-        stmt.bindString(4, entity.getBalance());
+        stmt.bindString(2, entity.getBusinessId());
+        stmt.bindString(3, entity.getName());
+        stmt.bindString(4, entity.getMboId());
+        stmt.bindDouble(5, entity.getBalance());
     }
 
     /** @inheritdoc */
@@ -80,9 +83,10 @@ public class TableBusinessCenterDao extends AbstractDao<TableBusinessCenter, Lon
     public TableBusinessCenter readEntity(Cursor cursor, int offset) {
         TableBusinessCenter entity = new TableBusinessCenter( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-                cursor.getString(offset + 1), // Namne
-                cursor.getString(offset + 2), // MboID
-                cursor.getString(offset + 3) // Balance
+                cursor.getString(offset + 1), // businessId
+                cursor.getString(offset + 2), // Name
+                cursor.getString(offset + 3), // mboId
+                cursor.getDouble(offset + 4)// Balance
         );
         return entity;
     }
@@ -91,9 +95,10 @@ public class TableBusinessCenterDao extends AbstractDao<TableBusinessCenter, Lon
     @Override
     public void readEntity(Cursor cursor, TableBusinessCenter entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setName(cursor.getString(offset + 1));
-        entity.setMboId(cursor.getString(offset + 2));
-        entity.setBalance(cursor.getString(offset + 3));
+        entity.setBusinessId(cursor.getString(offset + 1));
+        entity.setName(cursor.getString(offset + 2));
+        entity.setMboId(cursor.getString(offset + 3));
+        entity.setBalance(cursor.getDouble(offset + 4));
 
     }
 

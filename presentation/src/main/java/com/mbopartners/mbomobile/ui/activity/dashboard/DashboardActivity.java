@@ -35,6 +35,7 @@ import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.TimePeriod;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 import com.mbopartners.mbomobile.rest.rest.client.IRestClient;
 import com.mbopartners.mbomobile.rest.rest.client.request.RestApiContract;
@@ -88,6 +89,8 @@ public class DashboardActivity extends AutoLockActivity
     public static final int TIMES_FRAGMENT_DATA_LOADER = 1;
     public static final int EXPENSE_FRAGMENT_DATA_LOADER = 2;
 
+    public static final int PAYROLL_FRAGMENT_DATA_LOADER = 3;
+
     public static final int FAB_BACKGROUND_COLOR__NORMAL = Color.TRANSPARENT;
 
     private DashboardActivityDataModel dataModel = new DashboardActivityDataModel();
@@ -108,6 +111,7 @@ public class DashboardActivity extends AutoLockActivity
     private DashboardFieldsLoadCallbackDriver dashboardFieldsLoadCallbackDriver = new DashboardFieldsLoadCallbackDriver();
     private WorkOrdersLoadCallbackDriver workOrdersLoadCallbackDriver = new WorkOrdersLoadCallbackDriver();
     private ExpensesLoadCallbackDriver expensesLoadCallbackDriver = new ExpensesLoadCallbackDriver();
+    private BusinessCenterLoadCallbackDriver businessCenterLoadCallbackDriver = new BusinessCenterLoadCallbackDriver();
     private static boolean notNowFlag = false;
     public static String SYSTEM_LOCALE;
     public ActionBar actionBar;
@@ -403,6 +407,7 @@ public class DashboardActivity extends AutoLockActivity
         forceLoadRevenueData();
         forceLoadTimesData();
         forceLoadExpenseData();
+        forceLoadPayrollData();
     }
 
     private void forceLoadRevenueData() {
@@ -420,7 +425,11 @@ public class DashboardActivity extends AutoLockActivity
         LoaderManager loaderManager = getSupportLoaderManager();
         loaderManager.restartLoader(EXPENSE_FRAGMENT_DATA_LOADER, null, expensesLoadCallbackDriver).forceLoad();
     }
-
+    private void forceLoadPayrollData() {
+        dataModel.initBusinessModel();
+        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager.restartLoader(PAYROLL_FRAGMENT_DATA_LOADER, null, businessCenterLoadCallbackDriver).forceLoad();
+    }
     private void notifyAllFragmentsDataReceived() {
         notifyRevenueDataReceived();
         notifyTimesDataReceived();
@@ -492,6 +501,7 @@ public class DashboardActivity extends AutoLockActivity
         fetchDashboardData();
         fetchExpenseTypes();
         fetchWorkOrders();
+        fetchBusinessCenterData();
 
     }
 
@@ -504,12 +514,14 @@ public class DashboardActivity extends AutoLockActivity
         final IRestClient.Callback getWorkOrdersCallback = new WorkOrdersCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpenseTypesCallback = new ExpenseTypesCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpensesCallback = new ExpensesCallback(defaultRestClientResponseHandler);
+        final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
         restServiceHelper.clearCallbacks();
         restServiceHelper.registerCallback(RestApiContract.Method.getDashboards, getDashboardsCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getWorkOrdersList, getWorkOrdersCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpenseTypesList, getExpenseTypesCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpensesList, getExpensesCallback);
+        restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
     }
 
     /**
@@ -565,6 +577,18 @@ public class DashboardActivity extends AutoLockActivity
         dataLoadingDispatcher.notifyNeedDataReload();
         dataLoadingDispatcher.notifyDadaLoadingStarted();
         restServiceHelper.getExpensesList(this);
+        mNetworkingCount++;
+    }
+
+    /**
+     * Get BusinessCenterData  from Server
+     */
+    private void fetchBusinessCenterData(){
+        dataModel.initBusinessModel();
+        notifyAllFragmentsDataReceived();
+        dataLoadingDispatcher.notifyNeedDataReload();
+        dataLoadingDispatcher.notifyDadaLoadingStarted();
+        restServiceHelper.getBusinessCenterList(this);
         mNetworkingCount++;
     }
 
@@ -811,6 +835,30 @@ public class DashboardActivity extends AutoLockActivity
         }
     }
 
+    class BusinessCenterCallback implements IRestClient.Callback {
+        private DefaultRestClientResponseHandler defaultHandler;
+
+        public BusinessCenterCallback(DefaultRestClientResponseHandler defaultHandler) {
+            this.defaultHandler = defaultHandler;
+        }
+
+        @Override
+        public void onComplete(UniversalRestResponse response) {
+            mNetworkingCount--;
+            switch (response.getClientResult()) {
+                case Ok : {
+                            forceLoadPayrollData();
+                    break;
+                }
+
+                default: {
+                    doOnDataLoadingFromServer_FailedRoutine();
+                    defaultHandler.onComplete(response);
+                }
+            }
+        }
+    }
+
     class ExpenseTypesCallback implements IRestClient.Callback {
 
         private DefaultRestClientResponseHandler defaultHandler;
@@ -890,7 +938,6 @@ public class DashboardActivity extends AutoLockActivity
             }
         }
     }
-
     //================================================================================
 
     private class DashboardFieldsLoadCallbackDriver implements LoaderManager.LoaderCallbacks<List<DashboardField>> {
@@ -913,7 +960,6 @@ public class DashboardActivity extends AutoLockActivity
         public void onLoaderReset(Loader<List<DashboardField>> loader) {
         }
     }
-
     private class WorkOrdersLoadCallbackDriver implements LoaderManager.LoaderCallbacks<List<WorkOrder>> {
         @Override
         public Loader<List<WorkOrder>> onCreateLoader(int id, Bundle args) {
@@ -953,13 +999,18 @@ public class DashboardActivity extends AutoLockActivity
         public void onLoaderReset(Loader<List<ExpenseTimesheetItem>> loader) {
         }
     }
-
     //--------------------------------------------------------------------------------
 
     private class DashboardFieldsListDataExtractor implements IDataSource<List<DashboardField>> {
         @Override
         public List<DashboardField> loadData(Application application, Bundle params) {
-            return  Dao.loadDashboardFields(DashboardActivity.this.getApplication());
+            return Dao.loadDashboardFields(DashboardActivity.this.getApplication());
+        }
+    }
+    private class BusinessCenterListDataExtractor implements IDataSource<List<BusinessCenter>> {
+        @Override
+        public List<BusinessCenter> loadData(Application application, Bundle params) {
+            return Dao.loadBusinessCenterFields(DashboardActivity.this.getApplication());
         }
     }
 
@@ -995,6 +1046,27 @@ public class DashboardActivity extends AutoLockActivity
             if (this.menuItem != null) {
                 this.menuItem.setEnabled(this.buttonEnableState);
             }
+        }
+    }
+
+    private class BusinessCenterLoadCallbackDriver implements LoaderManager.LoaderCallbacks<List<BusinessCenter>>
+    {
+        @Override
+        public Loader<List<BusinessCenter>> onCreateLoader(int id, Bundle args) {
+            BusinessCenterListDataExtractor dataExtractor = new BusinessCenterListDataExtractor();
+            DbAsyncLoader<List<BusinessCenter>> loader = new DbAsyncLoader<>(DashboardActivity.this.getApplication(), args);
+            loader.setDataSource(dataExtractor);
+            return loader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<BusinessCenter>> loader, List<BusinessCenter> data) {
+            dataModel.setBusinessData(data);
+            //notifyRevenueDataReceived();
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<BusinessCenter>> loader) {
         }
     }
 

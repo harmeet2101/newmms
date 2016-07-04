@@ -62,16 +62,16 @@ public class MBOMobileApplication extends Application
         String env = preferences.getString("env", "prod");
         if (env.equalsIgnoreCase("prod")) {
             ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PROD);
-            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+           /* Crashlytics crashlyticsKit = new Crashlytics.Builder()
                     .core(new CrashlyticsCore.Builder().disabled(false).build()).build();
-            Fabric.with(this, crashlyticsKit);
+            Fabric.with(this, crashlyticsKit);*/
         } else {
 
             ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PRE_PROD);
 
-            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+            /*Crashlytics crashlyticsKit = new Crashlytics.Builder()
                     .core(new CrashlyticsCore.Builder().disabled(true).build()).build();
-            Fabric.with(this, crashlyticsKit);
+            Fabric.with(this, crashlyticsKit);*/
         }
         /**
          * App PIN lock initialization

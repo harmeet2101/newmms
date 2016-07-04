@@ -5,33 +5,35 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
  */
 public class TableBusinessCenter {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
+    private String businessId;
     private String name;
     private String mboId;
-    private String balance;
+    private double balance;
 
 
     public TableBusinessCenter(){}
 
-    public TableBusinessCenter(long id)
+    public TableBusinessCenter(Long id)
     {
         this.id=id;
     }
 
-    public TableBusinessCenter(long id,String name,String mboId,String balance)
+    public TableBusinessCenter(Long id,String businessId,String name,String mboId,double balance)
     {
         this.id=id;
+        this.businessId=businessId;
         this.name=name;
         this.mboId=mboId;
         this.balance=balance;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,11 +53,19 @@ public class TableBusinessCenter {
         this.mboId = mboId;
     }
 
-    public String getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 }

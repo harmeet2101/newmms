@@ -73,7 +73,6 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig tableExpenseFieldValueDaoConfig;
     private final DaoConfig expenseType_2_ExpenseFieldDaoConfig;
     private final DaoConfig tableBusinessCenterDaoConfig;
-    private final DaoConfig tableBusinessAddressDaoConfig;
 
     private final TableBusinessManagerDao tableBusinessManagerDao;
     private final TableUserProfileDao tableUserProfileDao;
@@ -92,7 +91,6 @@ public class DaoSession extends AbstractDaoSession {
     private final TableExpenseFieldValueDao tableExpenseFieldValueDao;
     private final ExpenseType_2_ExpenseFieldDao expenseType_2_ExpenseFieldDao;
     private final TableBusinessCenterDao tableBusinessCenterDao;
-    private final TableBusinessAddressDao tableBusinessAddressDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -147,7 +145,6 @@ public class DaoSession extends AbstractDaoSession {
         expenseType_2_ExpenseFieldDaoConfig.initIdentityScope(type);
 
         tableBusinessCenterDaoConfig=daoConfigMap.get(TableBusinessCenterDao.class).clone();
-        tableBusinessAddressDaoConfig=daoConfigMap.get(TableBusinessAddressDao.class).clone();
 
         tableBusinessManagerDao = new TableBusinessManagerDao(tableBusinessManagerDaoConfig, this);
         tableUserProfileDao = new TableUserProfileDao(tableUserProfileDaoConfig, this);
@@ -166,7 +163,6 @@ public class DaoSession extends AbstractDaoSession {
         tableExpenseFieldValueDao = new TableExpenseFieldValueDao(tableExpenseFieldValueDaoConfig, this);
         expenseType_2_ExpenseFieldDao = new ExpenseType_2_ExpenseFieldDao(expenseType_2_ExpenseFieldDaoConfig, this);
         tableBusinessCenterDao=new TableBusinessCenterDao(tableBusinessCenterDaoConfig,this);
-        tableBusinessAddressDao=new TableBusinessAddressDao(tableBusinessAddressDaoConfig,this);
 
         registerDao(TableBusinessManager.class, tableBusinessManagerDao);
         registerDao(TableUserProfile.class, tableUserProfileDao);
@@ -185,7 +181,6 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(TableExpenseFieldValue.class, tableExpenseFieldValueDao);
         registerDao(ExpenseType_2_ExpenseField.class, expenseType_2_ExpenseFieldDao);
         registerDao(TableBusinessCenter.class,tableBusinessCenterDao);
-        registerDao(TableBusinessAddress.class,tableBusinessAddressDao);
     }
     
     public void clear() {
@@ -206,7 +201,6 @@ public class DaoSession extends AbstractDaoSession {
         tableExpenseFieldValueDaoConfig.getIdentityScope().clear();
         expenseType_2_ExpenseFieldDaoConfig.getIdentityScope().clear();
         tableBusinessCenterDaoConfig.getIdentityScope().clear();
-        tableBusinessAddressDaoConfig.getIdentityScope().clear();
     }
 
     public TableBusinessManagerDao getTableBusinessManagerDao() {
@@ -264,11 +258,6 @@ public class DaoSession extends AbstractDaoSession {
     public TableExpenseFieldDao getTableExpenseFieldDao() {
         return tableExpenseFieldDao;
     }
-
-    public TableBusinessAddressDao getTableBusinessAddressDao() {
-        return tableBusinessAddressDao;
-    }
-
     public TableBusinessCenterDao getTableBusinessCenterDao() {
         return tableBusinessCenterDao;
     }

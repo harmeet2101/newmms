@@ -14,53 +14,52 @@ public class BusinessCenter implements Serializable, Validatable {
 
     private static final String TAG = BusinessCenter.class.getSimpleName();
     @SerializedName("id")
-    private String id;
+    private Long id;
+    @SerializedName("businessId")
+    private String businessId;
     @SerializedName("name")
     private String name;
     @SerializedName("mboId")
     private String mboId;
     @SerializedName("balance")
-    private String balance;
-    @SerializedName("address")
-    private Address address;
+    private Double balance;
 
-    public BusinessCenter(){}
 
-    public BusinessCenter(String id,String name,String mboId,String balance,Address address)
+
+    public BusinessCenter(Long id,String businessId,String name,String mboId,Double balance)
     {
         this.id=id;
+        this.businessId=businessId;
         this.name=name;
         this.mboId=mboId;
         this.balance=balance;
-        this.address=address;
     }
     @Override
     public boolean isValid() {
         boolean result =
                 id != null &&
-                        //description != null &&
+                        businessId!=null &&
                         name != null &&
                         mboId != null &&
-                        balance != null &&
-                        address != null;
+                        balance != null;
 
         if (! result) {
 
             ValidationHelper.Screamer screamer = new ValidationHelper.Screamer(TAG, "");
             screamer.sayIfIsNull("id", id);
+            screamer.sayIfIsNull("businessId", businessId);
             screamer.sayIfIsNull("name", name);
             screamer.sayIfIsNull("mboId", mboId);
             screamer.sayIfIsNull("balance", balance);
-            screamer.sayIfIsNull("address", address);
         }
         return result;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,19 +79,19 @@ public class BusinessCenter implements Serializable, Validatable {
         this.mboId = mboId;
     }
 
-    public String getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getBusinessId() {
+        return businessId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 }

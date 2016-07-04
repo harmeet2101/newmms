@@ -12,6 +12,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableExpenseTypeDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableReceiptDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableUserProfileDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableBusinessManager;
 import com.mbopartners.mbomobile.data.db.generated.model.TableDashboardField;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
@@ -20,11 +21,13 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableExpenseType;
 import com.mbopartners.mbomobile.data.db.generated.model.TableReceipt;
 import com.mbopartners.mbomobile.data.db.generated.model.TableUserProfile;
 import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.rest.model.Converter;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.ExpenseField;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
 import com.mbopartners.mbomobile.ui.util.MboFormatter;
 
@@ -61,6 +64,14 @@ public class Dao {
         TableDashboardFieldDao dao = daoSession.getTableDashboardFieldDao();
         List<TableDashboardField> tableDashboardFields = dao.loadAll();
         return Converter.toWeb_DashboardField(tableDashboardFields);
+    }
+
+    public static List<BusinessCenter> loadBusinessCenterFields(Application application) {
+        DbAccessController dbAccessController = getDbAccessController(application);
+        DaoSession daoSession = dbAccessController.getDaoSession();
+        TableBusinessCenterDao dao = daoSession.getTableBusinessCenterDao();
+        List<TableBusinessCenter> tableBusinessCenter = dao.loadAll();
+        return Converter.toWeb_BusinessCenterField(tableBusinessCenter);
     }
 
     public static List<WorkOrder> loadWorkOrdersFullTree(Application application) {

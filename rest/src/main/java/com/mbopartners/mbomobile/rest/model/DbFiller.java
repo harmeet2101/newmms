@@ -16,12 +16,12 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableTimePeriodDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableTimeTaskDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableUserProfileDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpenseData;
 import com.mbopartners.mbomobile.data.db.generated.model.TableReceipt;
 import com.mbopartners.mbomobile.data.db.generated.model.TableTimeEntry;
 import com.mbopartners.mbomobile.data.db.generated.model.TableTimePeriod;
-import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.Company;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
@@ -37,6 +37,7 @@ import com.mbopartners.mbomobile.rest.model.response.TimePeriod;
 import com.mbopartners.mbomobile.rest.model.response.TimeTask;
 import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +76,11 @@ public class DbFiller {
         tableDashboardFieldDao.deleteAll();
     }
 
+    public static void clearTablesForBusinessCenter(DaoSession daoSession) {
+        TableBusinessCenterDao tableBusinessCenterDao = daoSession.getTableBusinessCenterDao();
+        tableBusinessCenterDao.deleteAll();
+    }
+
     public static void clearTablesForExpenses(DaoSession daoSession) {
         TableExpenseFieldValueDao tableExpenseFieldValueDao = daoSession.getTableExpenseFieldValueDao();
         tableExpenseFieldValueDao.deleteAll();
@@ -100,6 +106,16 @@ public class DbFiller {
         for (DashboardField dashboardField : dashboard.getDashboardData()) {
             insertDashboardField(dashboardField, dashboardId, daoSession);
         }
+    }
+
+    public static void insertAllBusinessCenter(BusinessCenter[] businessCenter, DaoSession daoSession) {
+        //long dashboardId = insertBusinessCenter(businessCenter, daoSession);
+
+        for(BusinessCenter businessCenter1:businessCenter)
+        {
+            long dashboardId = insertBusinessCenter(businessCenter1, daoSession);
+        }
+
     }
 
     public static void insertAllWorkOrders(WorkOrder[] workOrders, DaoSession daoSession) {
@@ -142,10 +158,16 @@ public class DbFiller {
     //
     // Scalar conversions
     //
-    // ================================================================================
+    // ===============================================================================
+
     public static long insertDasboard(Dashboard dashboard, DaoSession daoSession) {
         TableDashboardDao dao = daoSession.getTableDashboardDao();
         return dao.insert(Converter.toTable(dashboard));
+    }
+
+    public static long insertBusinessCenter(BusinessCenter businessCenter, DaoSession daoSession) {
+        TableBusinessCenterDao dao = daoSession.getTableBusinessCenterDao();
+        return dao.insert(Converter.toTable_businessCenter(businessCenter));
     }
 
     public static long insertDashboardField(DashboardField dashboardField, long dashboardId, DaoSession daoSession) {
