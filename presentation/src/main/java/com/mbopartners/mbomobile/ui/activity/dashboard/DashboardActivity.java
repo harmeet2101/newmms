@@ -501,7 +501,7 @@ public class DashboardActivity extends AutoLockActivity
         fetchDashboardData();
         fetchExpenseTypes();
         fetchWorkOrders();
-        fetchBusinessCenterData();
+        //fetchBusinessCenterData();
 
     }
 
@@ -514,14 +514,14 @@ public class DashboardActivity extends AutoLockActivity
         final IRestClient.Callback getWorkOrdersCallback = new WorkOrdersCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpenseTypesCallback = new ExpenseTypesCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpensesCallback = new ExpensesCallback(defaultRestClientResponseHandler);
-        final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
+        //final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
         restServiceHelper.clearCallbacks();
         restServiceHelper.registerCallback(RestApiContract.Method.getDashboards, getDashboardsCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getWorkOrdersList, getWorkOrdersCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpenseTypesList, getExpenseTypesCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpensesList, getExpensesCallback);
-        restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
+        //restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
     }
 
     /**

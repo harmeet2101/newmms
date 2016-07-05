@@ -26,7 +26,8 @@ public class ConfigurationController extends AbstractApplicationController {
     private static final String OAUTH_PROD_CLIENT_ID = "mbo-mobile";
     private static final String OAUTH_PROD_CLIENT_SECRET = "4eb69d74-b9ac-4052-acef-f5884bc8fd2e";
 
-
+    //private static final String DEV_HOSTNAME="http://test.tanders.mbopartners.com/api/";
+    private static final String DEV_HOSTNAME="http://66.208.23.234/";
     private SharedPreferencesController sharedPreferencesController;
     private EnvironmentConfiguration currentConfiguration;
 
@@ -134,6 +135,7 @@ public class ConfigurationController extends AbstractApplicationController {
         currentTermsAndConditionsLink = PowerHookManager.getVariableValue(POWER_HOOK__TERMS_AND_CONDITIONS_LINK);
 
         currentDevHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_HOSTNAME);
+        //currentDevHostname=DEV_HOSTNAME;
         currentProdHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_HOSTNAME);
         currentDevOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_OAUTH_HOSTNAME);
         currentProdOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_OAUTH_HOSTNAME);
