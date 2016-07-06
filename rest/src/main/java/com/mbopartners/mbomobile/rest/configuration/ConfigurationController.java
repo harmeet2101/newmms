@@ -134,8 +134,8 @@ public class ConfigurationController extends AbstractApplicationController {
         currentPrivacyPolicyLink = PowerHookManager.getVariableValue(POWER_HOOK__PRIVACY_POLICY_LINK);
         currentTermsAndConditionsLink = PowerHookManager.getVariableValue(POWER_HOOK__TERMS_AND_CONDITIONS_LINK);
 
-        currentDevHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_HOSTNAME);
-        //currentDevHostname=DEV_HOSTNAME;
+        //currentDevHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_HOSTNAME);
+        currentDevHostname=DEV_HOSTNAME;
         currentProdHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_HOSTNAME);
         currentDevOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_OAUTH_HOSTNAME);
         currentProdOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_OAUTH_HOSTNAME);

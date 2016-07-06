@@ -28,7 +28,7 @@ public class TableBusinessAddressDao extends AbstractDao<TableBusinessAddress, L
         public final static Property Line2 = new Property(2, String.class, "Line2", false, "LINE2");
         public final static Property City = new Property(3, String.class, "City", false, "CITY");
         public final static Property State = new Property(4, String.class, "State", false, "STATE");
-        public final static Property PostalCode = new Property(5, String.class, "PostalCode", false, "POSTALCODE");
+        public final static Property PostalCode = new Property(5, String.class, "PostalCode", false, "POSTAL_CODE");
     };
 
     public TableBusinessAddressDao(DaoConfig config) {
@@ -48,7 +48,7 @@ public class TableBusinessAddressDao extends AbstractDao<TableBusinessAddress, L
                 "\"LINE2\" TEXT NOT NULL ," + // 2: Line2
                 "\"CITY\" TEXT NOT NULL ," + // 3: City
                 "\"STATE\" TEXT NOT NULL ," + // 4: State
-                "\"POSTALCODE\" TEXT NOT NULL );" ); // 5: PostalCode
+                "\"POSTAL_CODE\" TEXT NOT NULL );" ); // 5: PostalCode
     }
 
     /** Drops the underlying database table. */

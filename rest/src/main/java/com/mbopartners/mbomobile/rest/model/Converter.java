@@ -73,8 +73,8 @@ public class Converter {
 
     public static TableBusinessCenter toTable_businessCenter(BusinessCenter businessCenter) {
         TableBusinessCenter tableBusinessCenter = new TableBusinessCenter(
+                null,
                 businessCenter.getId(),
-                businessCenter.getBusinessId(),
                 businessCenter.getName(),
                 businessCenter.getMboId(),
                 businessCenter.getBalance());
@@ -243,7 +243,7 @@ public class Converter {
     }
 
     public static BusinessCenter toWeb_businessCenter(TableBusinessCenter table) {
-        BusinessCenter businessCenter = new BusinessCenter(table.getId(),table.getBusinessId(),table.getName(),table.getMboId(),table.getBalance());
+        BusinessCenter businessCenter = new BusinessCenter(table.getBusinessId(),table.getName(),table.getMboId(),table.getBalance());
         return businessCenter;
     }
 

@@ -13,7 +13,7 @@ public class TableBusinessCenter {
     private double balance;
 
 
-    public TableBusinessCenter(){}
+
 
     public TableBusinessCenter(Long id)
     {

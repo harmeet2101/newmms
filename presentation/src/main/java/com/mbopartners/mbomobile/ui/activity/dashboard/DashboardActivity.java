@@ -43,6 +43,7 @@ import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.AutoLockActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.expense.ExpensePageFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.expense.ExpenseRecyclerViewAdapter;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.revenue.RevenuePageFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.timesheet.SmartSectionedRecyclerViewAdapter;
 import com.mbopartners.mbomobile.ui.activity.dashboard.timesheet.TimePageFragment;
@@ -72,7 +73,7 @@ public class DashboardActivity extends AutoLockActivity
         TimePageFragment.TimeFragmentInteractionListener,
         ExpensePageFragment.ExpensesInteractionListener,
         SmartSectionedRecyclerViewAdapter.IAddTimeCallbackListener,
-        ExpenseRecyclerViewAdapter.IExpenseCallbackListener {
+        ExpenseRecyclerViewAdapter.IExpenseCallbackListener,PayrollFragment.PayrollFragmentInteractionListener {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private static final String KEY_SAVED_INSTANCE_STATE__PAGE_INDEX = "int pageIndex";
@@ -84,6 +85,7 @@ public class DashboardActivity extends AutoLockActivity
     public static final int REVENUE_FRAGMENT_INDEX = 0;
     public static final int TIMES_FRAGMENT_INDEX = 1;
     public static final int EXPENSE_FRAGMENT_INDEX = 2;
+    public static final int PAYROLL_FRAGMENT_INDEX = 3;
 
     public static final int REVENUE_FRAGMENT_DATA_LOADER = 0;
     public static final int TIMES_FRAGMENT_DATA_LOADER = 1;
@@ -443,6 +445,13 @@ public class DashboardActivity extends AutoLockActivity
             revenuePageFragment.showRevenue();
         }
     }
+    private void notifyPayrollDataReceived() {
+        DashboardFragmentPagerAdapter fragmentPagerAdapter = (DashboardFragmentPagerAdapter) viewPager.getAdapter();
+        PayrollFragment payrollFragment = (PayrollFragment) fragmentPagerAdapter.getRegisteredFragment(PAYROLL_FRAGMENT_INDEX);
+        if (payrollFragment != null) {
+            payrollFragment.showPayroll();
+        }
+    }
 
     private void notifyTimesDataReceived() {
         DashboardFragmentPagerAdapter fragmentPagerAdapter = (DashboardFragmentPagerAdapter) viewPager.getAdapter();
@@ -498,10 +507,11 @@ public class DashboardActivity extends AutoLockActivity
         menuBusinessManagerButtonDescriptor.updateMenuItemAccessibility(false);
         clearHttpClientQueue();
         fetchUser();
+
         fetchDashboardData();
         fetchExpenseTypes();
         fetchWorkOrders();
-        //fetchBusinessCenterData();
+        fetchBusinessCenterData();
 
     }
 
@@ -514,14 +524,14 @@ public class DashboardActivity extends AutoLockActivity
         final IRestClient.Callback getWorkOrdersCallback = new WorkOrdersCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpenseTypesCallback = new ExpenseTypesCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getExpensesCallback = new ExpensesCallback(defaultRestClientResponseHandler);
-        //final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
+        final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
         restServiceHelper.clearCallbacks();
         restServiceHelper.registerCallback(RestApiContract.Method.getDashboards, getDashboardsCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getWorkOrdersList, getWorkOrdersCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpenseTypesList, getExpenseTypesCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getExpensesList, getExpensesCallback);
-        //restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
+        restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
     }
 
     /**
@@ -718,6 +728,9 @@ public class DashboardActivity extends AutoLockActivity
                 fetchExpenseTypes();
             }else if(pageIndex == REVENUE_FRAGMENT_INDEX){
                 fetchDashboardData();
+            }else if (pageIndex==PAYROLL_FRAGMENT_INDEX)
+            {
+                fetchBusinessCenterData();
             }
         }
     }
@@ -780,6 +793,8 @@ public class DashboardActivity extends AutoLockActivity
         else
         startActivity(ActivityIntentHelper.LogTimeActivityBuilder.getLogTimeActivity(this,workOrderId,timePeriodId,startDate));
     }
+
+
 
 
     // ================================================================================
@@ -1099,5 +1114,10 @@ public class DashboardActivity extends AutoLockActivity
     @Override
     public void callbackExpense() {
         startLogExpenses();
+    }
+
+    @Override
+    public List<BusinessCenter> getBusinessCenterData() {
+        return null;
     }
 }

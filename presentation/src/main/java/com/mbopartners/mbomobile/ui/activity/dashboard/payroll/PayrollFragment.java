@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ public class PayrollFragment extends Fragment {
     private PayrollRecyclerViewAdapter adapter;
     private List<PayrollField> payrollFields;
     private Context context;
-
+    private PayrollFragmentInteractionListener mListener = new InteractionListenerWrapper(null);
     public static PayrollFragment newInstance() {
         PayrollFragment fragment = new PayrollFragment();
         return fragment;
@@ -75,5 +77,43 @@ public class PayrollFragment extends Fragment {
     {
         super.onResume();
         Log.v(TAG, "onResume()");
+    }
+
+    public void showPayroll() {
+        Log.d(TAG, "showPayroll");
+
+        if (mListener == null) {
+            return;
+        }
+        List<BusinessCenter> fields = mListener.getBusinessCenterData();
+        //adapter.updateDataSource(fields, periodStr);
+    }
+
+    public interface PayrollFragmentInteractionListener {
+        List<BusinessCenter> getBusinessCenterData();
+        void onRefreshData();
+    }
+    private class InteractionListenerWrapper implements PayrollFragmentInteractionListener {
+        private final PayrollFragmentInteractionListener realListener;
+
+        public InteractionListenerWrapper(PayrollFragmentInteractionListener listener) {
+            this.realListener = listener;
+        }
+
+        @Override
+        public List<BusinessCenter> getBusinessCenterData() {
+            if (realListener != null) {
+                return realListener.getBusinessCenterData();
+            } else {
+                return Collections.EMPTY_LIST;
+            }
+        }
+
+        @Override
+        public void onRefreshData() {
+            if (realListener != null) {
+                realListener.onRefreshData();
+            }
+        }
     }
 }
