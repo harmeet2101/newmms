@@ -39,6 +39,8 @@ public class MboDaoGenerator {
         Entity expenseFieldValue = create_ExpenseFieldValue_Table();
         Entity business_center_table =create_business_center_table();
         Entity business_address_table =create_business_address_table();
+        Entity payroll_summary_table=create_payroll_summary_table();
+        Entity payroll_nextPayment_table=create_payroll_nextPayment_table();
 
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
 
@@ -270,6 +272,32 @@ public class MboDaoGenerator {
         table.addStringProperty("city");
         table.addStringProperty("state");
         table.addStringProperty("postalCode");
+        return table;
+    }
+
+    public static Entity create_payroll_summary_table()
+    {
+        Entity table = schema.addEntity("TablePayrollSummary");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("balance");
+        table.addStringProperty("summaryId");
+        table.addStringProperty("mboId");
+        table.addStringProperty("name");
+        return table;
+    }
+
+    public static Entity create_payroll_nextPayment_table()
+    {
+        Entity table = schema.addEntity("TablePayrollNextPayment");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addStringProperty("businessCenterId");
+        table.addStringProperty("calculationMethod");
+        table.addDateProperty("endDate");
+        table.addDateProperty("startDate");
+        table.addStringProperty("frequency");
+        table.addStringProperty("nextPaymentId");
+        table.addStringProperty("mboId");
         return table;
     }
 

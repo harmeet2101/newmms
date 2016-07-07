@@ -1,5 +1,6 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,6 +44,18 @@ public class PayrollFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.v(TAG, "onAttach()");
+        try {
+            mListener = new InteractionListenerWrapper((PayrollFragmentInteractionListener) activity);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement " + PayrollFragmentInteractionListener.class.getSimpleName());
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate()");
@@ -68,7 +81,7 @@ public class PayrollFragment extends Fragment {
         payrollRecyclerView = (RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         payrollRecyclerView.setHasFixedSize(true);
         payrollRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new PayrollRecyclerViewAdapter(context,payrollFields);
+        adapter = new PayrollRecyclerViewAdapter(context,mListener.getBusinessCenterData());
         payrollRecyclerView.setAdapter(adapter);
         return fragmentRootView;
     }
@@ -86,7 +99,7 @@ public class PayrollFragment extends Fragment {
             return;
         }
         List<BusinessCenter> fields = mListener.getBusinessCenterData();
-        //adapter.updateDataSource(fields, periodStr);
+        adapter.updateDataSource(fields);
     }
 
     public interface PayrollFragmentInteractionListener {

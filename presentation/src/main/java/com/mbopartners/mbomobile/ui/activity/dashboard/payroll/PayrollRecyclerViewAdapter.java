@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.ui.R;
 
@@ -29,10 +30,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private Context context;
     private List<PayrollField> payrollFields;
-    public PayrollRecyclerViewAdapter(Context context,List<PayrollField> payrollFields) {
+    private List<BusinessCenter> fields;
+
+    public PayrollRecyclerViewAdapter(Context context,List<BusinessCenter> fields) {
 
         this.context=context;
-        this.payrollFields=payrollFields;
+        this.fields=fields;
     }
 
     @Override
@@ -76,28 +79,39 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-          bindViewHolder_Normal((PayrollViewHolder) viewHolder, position);
+        if (fields == null) {
+
+        } else if (fields.isEmpty()) {
+
+        } else {
+            bindViewHolder_Normal((PayrollViewHolder) viewHolder, position);
+        }
+
     }
 
     @Override
     public int getItemCount() {
         int count = 0;
-        if (payrollFields == null) {
+        if (fields == null) {
             count = 1;
-        } else if (payrollFields.isEmpty()) {
+        } else if (fields.isEmpty()) {
             count = 1;
         } else {
-            count = payrollFields.size();
+            count = fields.size();
         }
         return count;
     }
 
+    public void updateDataSource(List<BusinessCenter> fields) {
+        this.fields = fields;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemViewType(int position) {
-        int itemViewType = 2;
-        if (payrollFields == null) {
+        int itemViewType = -1;
+        if (fields == null) {
             itemViewType = ITEM_VIEW_TYPE__LOADING;
-        } else if (payrollFields.isEmpty()) {
+        } else if (fields.isEmpty()) {
             itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         } else {
             itemViewType = ITEM_VIEW_TYPE__NORMAL;
@@ -132,16 +146,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void bindViewHolder_Normal(PayrollViewHolder viewHolder, int position) {
 
-        PayrollField payrollField=payrollFields.get(position);
-        viewHolder.payrollImageView.setImageResource(getPayrollImageId(payrollField.getName()));
-        viewHolder.company_name_TextView.setText(payrollField.getName());
-        boolean visibilityFlag=payrollField.getIsVisible();
-        if (visibilityFlag)
-            viewHolder.includeView.setVisibility(View.VISIBLE);
-        else
-            viewHolder.includeView.setVisibility(View.INVISIBLE);
-        viewHolder.work_order_name_TextView.setText(payrollField.getBalanceField());
-        viewHolder.periodTextview.setText(payrollField.getTimePeriodField());
+        //PayrollField payrollField=payrollFields.get(position);
+        viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
+        viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
+        viewHolder.work_order_name_TextView.setText("$"+fields.get(position).getBalance().toString());
+        //viewHolder.periodTextview.setText(payrollField.getTimePeriodField());
+        viewHolder.includeView.setVisibility(View.GONE);
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {

@@ -4,6 +4,7 @@ import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCe
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.model.ExpenseTimesheetItem;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ class DashboardActivityDataModel {
     private List<WorkOrder> workOrders;
     private List<ExpenseTimesheetItem> expenses;
     private List<BusinessCenter> businessCenterList;
+    private List<PayrollSummary> payrollSummaryList;
 
     public DashboardActivityDataModel() {
         initModel();
@@ -25,6 +27,7 @@ class DashboardActivityDataModel {
         initWorkOrderModel();
         initExpensesModel();
         initBusinessModel();
+        initPayrollModel();
     }
 
     public void onAllDataLoadingFailed() {
@@ -32,6 +35,7 @@ class DashboardActivityDataModel {
         workOrdersDataLoadingFailed();
         expensesDataLoadingFailed();
         businessCenterDataLoadingFailed();
+        payrollSummaryDataLoadingFailed();
     }
 
     public void onDataLoadingComplete() {
@@ -60,6 +64,11 @@ class DashboardActivityDataModel {
     public void initExpensesModel(){
         expenses = null;
     }
+
+    public void initPayrollModel(){
+        payrollSummaryList = null;
+    }
+
 
     public List<DashboardField> getDashboardData() {
         return dashboardData;
@@ -111,6 +120,11 @@ class DashboardActivityDataModel {
     {
         businessCenterList=new ArrayList<>();
     }
+    public void payrollSummaryDataLoadingFailed()
+    {
+        payrollSummaryList=new ArrayList<>();
+    }
+
     public List<BusinessCenter> getBusinessCenterList(){
         return businessCenterList;
     }
@@ -124,7 +138,12 @@ class DashboardActivityDataModel {
         }
     }
 
-    public void setBusinessData(BusinessCenter[] businessCenter) {
-        this.businessCenterList = Arrays.asList(businessCenter);
-    }
+
+    public void setPayrollSummaryData(List<PayrollSummary> payrollSummaryData) {
+        if (this.payrollSummaryList != null) {
+            this.payrollSummaryList.clear();
+            this.payrollSummaryList.addAll(payrollSummaryData);
+        } else {
+            payrollSummaryList = payrollSummaryData;
+        }    }
 }

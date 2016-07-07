@@ -17,8 +17,8 @@ public class TableNextPayment {
     private String frequency;
     private String nextPaymentId;
     private String mboId;
-    private ArrayList<TableDirectDeposits> tableDirectDeposits;
-    private ArrayList<TablePayrollDates> payrollDates;
+    /*private ArrayList<TableDirectDeposits> tableDirectDeposits;
+    private ArrayList<TablePayrollDates> payrollDates;*/
 
     public TableNextPayment(){}
 
@@ -27,13 +27,13 @@ public class TableNextPayment {
         this.id=id;
     }
 
-    public ArrayList<TableDirectDeposits> getTableDirectDeposits() {
+    /*public ArrayList<TableDirectDeposits> getTableDirectDeposits() {
         return tableDirectDeposits;
     }
 
     public void setTableDirectDeposits(ArrayList<TableDirectDeposits> tableDirectDeposits) {
         this.tableDirectDeposits = tableDirectDeposits;
-    }
+    }*/
 
     public TableNextPayment(Long id, double amount, String businessCenterId, String calculationMethod, Date endDate
             , Date startDate, String frequency, String nextPaymentId, String mboId)
@@ -50,13 +50,13 @@ public class TableNextPayment {
 
     }
 
-    public ArrayList<TablePayrollDates> getPayrollDates() {
+    /*public ArrayList<TablePayrollDates> getPayrollDates() {
         return payrollDates;
     }
 
     public void setPayrollDates(ArrayList<TablePayrollDates> payrollDates) {
         this.payrollDates = payrollDates;
-    }
+    }*/
 
     public Long getId() {
         return id;

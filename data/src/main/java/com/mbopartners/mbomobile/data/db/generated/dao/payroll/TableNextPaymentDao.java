@@ -57,7 +57,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
                 "\"startDate\" INTEGER NOT NULL,"+        //5.startDate
                 "\"frequency\" TEXT NOT NULL,"+           // 6.frequency
                 "\"nextPaymentId\" TEXT NOT NULL,"+       //   7.nextPaymentId
-                "\"mboId\" TEXT NOT NULL, );");           // 8: mboId
+                "\"mboId\" TEXT NOT NULL);");           // 8: mboId
     }
 
     /** Drops the underlying database table. */

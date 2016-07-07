@@ -7,27 +7,27 @@ public class TablePayrollSummary {
 
     private Long id;
     /** Not-null value. */
-    private TableBusinessAddress businessAddress;
+    /*private TableBusinessAddress businessAddress;*/
     private double balance;
     private String summaryId;
-    private TablePreviousPayment last_payroll;
+    /*private TablePreviousPayment last_payroll;*/
     private String mboId;
     private String name;
-    private TableNextPayment next_payroll;
+    /*private TableNextPayment next_payroll;*/
 
     public TablePayrollSummary(){}
 
-    public TablePayrollSummary(Long id, TableBusinessAddress businessAddress, double balance, String summaryId,
-                               TablePreviousPayment last_payroll, String mboId, String name, TableNextPayment next_payroll)
+    public TablePayrollSummary(Long id, /*TableBusinessAddress businessAddress,*/ double balance, String summaryId,
+                               /*TablePreviousPayment last_payroll, */String mboId, String name/*, TableNextPayment next_payroll*/)
     {
         this.id=id;
-        this.businessAddress=businessAddress;
+        /*this.businessAddress=businessAddress;*/
         this.balance=balance;
         this.summaryId=summaryId;
-        this.last_payroll=last_payroll;
+        /*this.last_payroll=last_payroll;*/
         this.mboId=mboId;
         this.name=name;
-        this.next_payroll=next_payroll;
+        /*this.next_payroll=next_payroll;*/
     }
 
     public Long getId() {
@@ -38,13 +38,13 @@ public class TablePayrollSummary {
         this.id = id;
     }
 
-    public TableBusinessAddress getBusinessAddress() {
+   /* public TableBusinessAddress getBusinessAddress() {
         return businessAddress;
     }
 
     public void setBusinessAddress(TableBusinessAddress businessAddress) {
         this.businessAddress = businessAddress;
-    }
+    }*/
 
     public double getBalance() {
         return balance;
@@ -62,13 +62,13 @@ public class TablePayrollSummary {
         this.summaryId = summaryId;
     }
 
-    public TablePreviousPayment getLast_payroll() {
+   /* public TablePreviousPayment getLast_payroll() {
         return last_payroll;
     }
 
     public void setLast_payroll(TablePreviousPayment last_payroll) {
         this.last_payroll = last_payroll;
-    }
+    }*/
 
     public String getMboId() {
         return mboId;
@@ -86,11 +86,11 @@ public class TablePayrollSummary {
         this.name = name;
     }
 
-    public TableNextPayment getNext_payroll() {
+    /*public TableNextPayment getNext_payroll() {
         return next_payroll;
     }
 
     public void setNext_payroll(TableNextPayment next_payroll) {
         this.next_payroll = next_payroll;
-    }
+    }*/
 }
