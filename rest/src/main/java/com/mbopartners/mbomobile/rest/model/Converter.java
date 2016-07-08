@@ -95,7 +95,7 @@ public class Converter {
         return tablePayrollSummary;
     }
 
-    public static TableNextPayment toTable_payroll_nexPayment(NextPayment nextPayment) {
+    public static TableNextPayment toTable_payroll_nexPayment(long nextPaymentRowId,NextPayment nextPayment) {
         TableNextPayment tableNextPayment = new TableNextPayment(
                 null,
                 nextPayment.getAmount(),
@@ -105,7 +105,7 @@ public class Converter {
                 nextPayment.getStartDate(),
                 nextPayment.getFrequency(),
                 nextPayment.getId(),
-                nextPayment.getMboId());
+                nextPayment.getMboId(),nextPaymentRowId);
         return tableNextPayment;
     }
     public static TableDashboard toTable(Dashboard dashboard) {
@@ -275,8 +275,13 @@ public class Converter {
     }
 
     public static PayrollSummary toWeb_PayrollSummary(TablePayrollSummary table) {
-        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),table.getMboId(),table.getBalance());
+        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),table.getMboId(),table.getBalance(),toWeb_nextPayment(table.getNext_payroll()));
         return payrollSummary;
+    }
+    public static NextPayment toWeb_nextPayment(TableNextPayment table) {
+        NextPayment nextPayment = new NextPayment(table.getAmount(),table.getBusinessCenterId(),table.getCalculationMethod(),table.getEndDate(),table.getStartDate(),
+                table.getFrequency(),table.getNextPaymentId(),table.getMboId());
+        return nextPayment;
     }
 
     public static WorkOrder toWeb(TableWorkOrder table) {
@@ -416,9 +421,12 @@ public class Converter {
         List<PayrollSummary> payrollSummaries = new ArrayList<>(table.size());
         for (TablePayrollSummary tableField : table) {
             payrollSummaries.add(toWeb_PayrollSummary(tableField));
+
         }
         return payrollSummaries;
     }
+
+
 
     public static List<TimeEntry> toWeb_TimeEntry(List<TableTimeEntry> table) {
         List<TimeEntry> timeEntries = new ArrayList<>(table.size());

@@ -129,6 +129,10 @@ class DashboardActivityDataModel {
         return businessCenterList;
     }
 
+    public List<PayrollSummary> getPayrollSummaryList(){
+        return payrollSummaryList;
+    }
+
     public void setBusinessData(List<BusinessCenter> fields) {
         if (this.businessCenterList != null) {
             this.businessCenterList.clear();

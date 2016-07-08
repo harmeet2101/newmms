@@ -20,7 +20,7 @@ import de.greenrobot.dao.internal.DaoConfig;
 public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Long> {
 
     public static final String TABLENAME = "TABLE_SUMMARY";
-
+    private DaoSession daoSession;
     /**
      * Properties of entity TablePayrollSummary.<br/>
      * Can be used for QueryBuilder and for referencing column names.
@@ -40,6 +40,7 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
 
     public TablePayrollSummaryDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -47,7 +48,7 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TABLE_SUMMARY\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," +     // 0: id
-                "\"balance\" REAL NOT NULL,"+                     // 1: amount
+                "\"balance\" REAL NOT NULL," +                     // 1: amount
                 "\"summaryId\" TEXT NOT NULL ," + // 2: businessCenterId
                 "\"mboId\" TEXT NOT NULL ," + // 3: calculationMethod
                 "\"name\" TEXT NOT NULL);");           // 8: mboId
@@ -71,6 +72,12 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
         stmt.bindString(3, entity.getSummaryId());
         stmt.bindString(4, entity.getMboId());
         stmt.bindString(5, entity.getName());
+    }
+
+    @Override
+    protected void attachEntity(TablePayrollSummary entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */

@@ -3,6 +3,7 @@ package com.mbopartners.mbomobile.rest.model.response.payroll_response;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 import ua.com.mobidev.android.mdrest.web.model.validation.Validatable;
 import ua.com.mobidev.android.mdrest.web.model.validation.ValidationHelper;
@@ -22,17 +23,20 @@ public class PayrollSummary  implements Serializable, Validatable {
     private String mboId;
     @SerializedName("balance")
     private Double balance;
+    @SerializedName("next_payroll")
+    private NextPayment next_payroll;
 
 
     public PayrollSummary(){}
 
-    public PayrollSummary(String id,String name,String mboId,Double balance)
+    public PayrollSummary(String id,String name,String mboId,Double balance,NextPayment next_payroll)
     {
 
         this.id=id;
         this.name=name;
         this.mboId=mboId;
         this.balance=balance;
+        this.next_payroll=next_payroll;
     }
     @Override
     public boolean isValid() {
@@ -40,7 +44,7 @@ public class PayrollSummary  implements Serializable, Validatable {
                 id!=null &&
                         name != null &&
                         mboId != null &&
-                        balance != null;
+                        balance != null && next_payroll!=null;
 
         if (! result) {
 
@@ -49,6 +53,7 @@ public class PayrollSummary  implements Serializable, Validatable {
             screamer.sayIfIsNull("name", name);
             screamer.sayIfIsNull("mboId", mboId);
             screamer.sayIfIsNull("balance", balance);
+            screamer.sayIfIsNull("next_payroll", next_payroll);
         }
         return result;
     }
@@ -85,5 +90,13 @@ public class PayrollSummary  implements Serializable, Validatable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public NextPayment getNext_payroll() {
+        return next_payroll;
+    }
+
+    public void setNext_payroll(NextPayment next_payroll) {
+        this.next_payroll = next_payroll;
     }
 }

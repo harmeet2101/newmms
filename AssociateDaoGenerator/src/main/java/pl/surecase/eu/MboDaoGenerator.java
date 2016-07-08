@@ -50,7 +50,7 @@ public class MboDaoGenerator {
         addToOneRelation(workOrder, company, "CompanyId");
         addOneToManyRelation(workOrder, timePeriod, "WorkOrderId", "TimePeriods");
         addOneToManyRelation(timePeriod, timeEntry, "TimePeriodId", "TimeEntries");
-
+        addOneToManyRelation(payroll_summary_table,payroll_nextPayment_table,"nextPaymentRowId","next_payroll");
         addToOneRelation_String(expenses, expenseType, "MboExpenseTypeId", "ExpenseType");
         //addToOneWithoutPropertyRelation(expenses, workOrder, "WorkOrder", "MboId");
         addOneToManyRelation(expenses, expenseData, "ExpenseId", "ExpenseData");

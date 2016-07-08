@@ -1,5 +1,13 @@
 package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
+import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+
+import java.util.List;
+
+import de.greenrobot.dao.DaoException;
+
 /**
  * Created by MboAdil on 5/7/16.
  */
@@ -7,27 +15,35 @@ public class TablePayrollSummary {
 
     private Long id;
     /** Not-null value. */
-    /*private TableBusinessAddress businessAddress;*/
     private double balance;
     private String summaryId;
-    /*private TablePreviousPayment last_payroll;*/
     private String mboId;
     private String name;
-    /*private TableNextPayment next_payroll;*/
+    private TableNextPayment next_payroll;
+
+    /** Used to resolve relations */
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    private transient TablePayrollSummaryDao myDao;
+    private Long tableNextPayment__resolvedKey;
 
     public TablePayrollSummary(){}
 
-    public TablePayrollSummary(Long id, /*TableBusinessAddress businessAddress,*/ double balance, String summaryId,
-                               /*TablePreviousPayment last_payroll, */String mboId, String name/*, TableNextPayment next_payroll*/)
+    public TablePayrollSummary(Long id, double balance, String summaryId,String mboId, String name)
     {
         this.id=id;
-        /*this.businessAddress=businessAddress;*/
+
         this.balance=balance;
         this.summaryId=summaryId;
-        /*this.last_payroll=last_payroll;*/
         this.mboId=mboId;
         this.name=name;
-        /*this.next_payroll=next_payroll;*/
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getTablePayrollSummaryDao() : null;
     }
 
     public Long getId() {
@@ -38,13 +54,6 @@ public class TablePayrollSummary {
         this.id = id;
     }
 
-   /* public TableBusinessAddress getBusinessAddress() {
-        return businessAddress;
-    }
-
-    public void setBusinessAddress(TableBusinessAddress businessAddress) {
-        this.businessAddress = businessAddress;
-    }*/
 
     public double getBalance() {
         return balance;
@@ -62,14 +71,6 @@ public class TablePayrollSummary {
         this.summaryId = summaryId;
     }
 
-   /* public TablePreviousPayment getLast_payroll() {
-        return last_payroll;
-    }
-
-    public void setLast_payroll(TablePreviousPayment last_payroll) {
-        this.last_payroll = last_payroll;
-    }*/
-
     public String getMboId() {
         return mboId;
     }
@@ -86,11 +87,55 @@ public class TablePayrollSummary {
         this.name = name;
     }
 
-    /*public TableNextPayment getNext_payroll() {
+    public TableNextPayment getNext_payroll() {
+        if (next_payroll == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableNextPaymentDao targetDao = daoSession.getTableNextPaymentDao();
+            List<TableNextPayment> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(next_payroll == null) {
+                    next_payroll = FieldsNew.get(0);
+                }
+            }
+        }
+
         return next_payroll;
     }
 
     public void setNext_payroll(TableNextPayment next_payroll) {
         this.next_payroll = next_payroll;
-    }*/
+    }
+
+
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    public synchronized void resetFields() {
+        next_payroll = null;
+    }
+
+    /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /** Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context. */
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
 }

@@ -156,11 +156,13 @@ public class DaoSession extends AbstractDaoSession {
         expenseType_2_ExpenseFieldDaoConfig.initIdentityScope(type);
 
         tableBusinessCenterDaoConfig=daoConfigMap.get(TableBusinessCenterDao.class).clone();
+        tableBusinessCenterDaoConfig.initIdentityScope(type);
         tableBusinessAddressDaoConfig=daoConfigMap.get(TableBusinessAddressDao.class).clone();
-
+        tableBusinessAddressDaoConfig.initIdentityScope(type);
         tablePayrollSummaryDaoConfig=daoConfigMap.get(TablePayrollSummaryDao.class).clone();
+        tablePayrollSummaryDaoConfig.initIdentityScope(type);
         tablePayrollNextPaymentDaoConfig=daoConfigMap.get(TableNextPaymentDao.class).clone();
-
+        tablePayrollNextPaymentDaoConfig.initIdentityScope(type);
         tableBusinessManagerDao = new TableBusinessManagerDao(tableBusinessManagerDaoConfig, this);
         tableUserProfileDao = new TableUserProfileDao(tableUserProfileDaoConfig, this);
         tableDashboardDao = new TableDashboardDao(tableDashboardDaoConfig, this);

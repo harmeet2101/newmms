@@ -17,6 +17,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableTimeTaskDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableUserProfileDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpenseData;
@@ -39,6 +40,7 @@ import com.mbopartners.mbomobile.rest.model.response.TimeTask;
 import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 
 import java.util.ArrayList;
@@ -84,7 +86,9 @@ public class DbFiller {
     }
     public static void clearTablesForPayrollSummary(DaoSession daoSession) {
         TablePayrollSummaryDao tablePayrollSummaryDao = daoSession.getTablePayrollSummaryDao();
+        TableNextPaymentDao tableNextPaymentDao=daoSession.getTableNextPaymentDao();
         tablePayrollSummaryDao.deleteAll();
+        tableNextPaymentDao.deleteAll();
     }
 
     public static void clearTablesForExpenses(DaoSession daoSession) {
@@ -115,18 +119,16 @@ public class DbFiller {
     }
 
     public static void insertAllBusinessCenter(BusinessCenter[] businessCenter, DaoSession daoSession) {
-        //long dashboardId = insertBusinessCenter(businessCenter, daoSession);
 
         for(BusinessCenter businessCenter1:businessCenter)
-        {
-            long dashboardId = insertBusinessCenter(businessCenter1, daoSession);
-        }
-
+            insertBusinessCenter(businessCenter1, daoSession);
     }
 
     public static void insertAllPayrollSummaryFields(PayrollSummary payrollSummary, DaoSession daoSession) {
 
-            insertPayrollSummaryField(payrollSummary, daoSession);
+            long nextPaymentId=insertPayrollSummaryField(payrollSummary, daoSession);
+            NextPayment nextPayment=payrollSummary.getNext_payroll();
+            insertNextPaymentField(nextPayment, nextPaymentId,daoSession);
     }
 
     public static void insertAllWorkOrders(WorkOrder[] workOrders, DaoSession daoSession) {
@@ -184,6 +186,10 @@ public class DbFiller {
     public static long insertPayrollSummaryField(PayrollSummary payrollSummary, DaoSession daoSession) {
         TablePayrollSummaryDao dao = daoSession.getTablePayrollSummaryDao();
         return dao.insert(Converter.toTable_payroll_summary(payrollSummary));
+    }
+    public static long insertNextPaymentField(NextPayment nextPayment, long nextPaymentId,DaoSession daoSession) {
+        TableNextPaymentDao dao = daoSession.getTableNextPaymentDao();
+        return dao.insert(Converter.toTable_payroll_nexPayment(nextPaymentId,nextPayment));
     }
 
     public static long insertDashboardField(DashboardField dashboardField, long dashboardId, DaoSession daoSession) {

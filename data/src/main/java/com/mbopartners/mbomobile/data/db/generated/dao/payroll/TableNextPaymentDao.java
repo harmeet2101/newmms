@@ -7,12 +7,18 @@ import android.database.sqlite.SQLiteStatement;
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.internal.SqlUtils;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by MboAdil on 5/7/16.
@@ -20,6 +26,10 @@ import de.greenrobot.dao.internal.DaoConfig;
 public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
 
     public static final String TABLENAME = "TABLE_NEXT_PAYMENT";
+    private DaoSession daoSession;
+
+    private Query<TableNextPayment> tableNextPayment_FieldsQuery;
+
 
     /**
      * Properties of entity TableNextPayment.<br/>
@@ -35,6 +45,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         public final static Property frequency = new Property(6, String.class, "frequency", false, "frequency");
         public final static Property nextPaymentId = new Property(7, String.class, "nextPaymentId", false, "nextPaymentId");
         public final static Property mboId = new Property(8, String.class, "mboId", false, "mboId");
+        public final static Property nextPaymentRowId = new Property(9, long.class, "nextPaymentRowId", false, "nextPaymentRowId");
     };
 
     public TableNextPaymentDao(DaoConfig config) {
@@ -57,7 +68,8 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
                 "\"startDate\" INTEGER NOT NULL,"+        //5.startDate
                 "\"frequency\" TEXT NOT NULL,"+           // 6.frequency
                 "\"nextPaymentId\" TEXT NOT NULL,"+       //   7.nextPaymentId
-                "\"mboId\" TEXT NOT NULL);");           // 8: mboId
+                "\"mboId\" TEXT NOT NULL,"+           // 8: mboId
+                "\"nextPaymentRowId\" INTEGER NOT NULL );");
     }
 
     /** Drops the underlying database table. */
@@ -82,6 +94,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         stmt.bindString(7, entity.getFrequency());
         stmt.bindString(8, entity.getNextPaymentId());
         stmt.bindString(9, entity.getMboId());
+        stmt.bindLong(10, entity.getNextPaymentRowId());
     }
 
     /** @inheritdoc */
@@ -104,7 +117,8 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
                 new Date(cursor.getLong(offset + 5)),
                 cursor.getString(offset + 6),
                 cursor.getString(offset + 7),
-                cursor.getString(offset + 8)
+                cursor.getString(offset + 8),
+                cursor.getLong(offset + 9)
 
         );
         return entity;
@@ -122,6 +136,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         entity.setFrequency(cursor.getString(offset + 6));
         entity.setNextPaymentId(cursor.getString(offset + 7));
         entity.setMboId(cursor.getString(offset + 8));
+        entity.setNextPaymentRowId(cursor.getLong(offset + 9));
     }
 
     /** @inheritdoc */
@@ -141,9 +156,120 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         }
     }
 
+
+
+
+
     /** @inheritdoc */
     @Override
     protected boolean isEntityUpdateable() {
         return true;
+    }
+
+    /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
+    public List<TableNextPayment> _queryTableDashboard_Fields(long nextPaymentRowId) {
+        synchronized (this) {
+            if (tableNextPayment_FieldsQuery == null) {
+                QueryBuilder<TableNextPayment> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.nextPaymentRowId.eq(null));
+                tableNextPayment_FieldsQuery = queryBuilder.build();
+            }
+        }
+        Query<TableNextPayment> query = tableNextPayment_FieldsQuery.forCurrentThread();
+        query.setParameter(0, nextPaymentRowId);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getTablePayrollSummaryDao().getAllColumns());
+            builder.append(" FROM TABLE_NEXT_PAYMENT T");
+            builder.append(" LEFT JOIN TABLE_NEXT_PAYMENT T0 ON T.\"nextPaymentRowId\"=T0.\"_id\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+
+    protected TableNextPayment loadCurrentDeep(Cursor cursor, boolean lock) {
+        TableNextPayment entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        TablePayrollSummary tablePayrollSummary = loadCurrentOther(daoSession.getTablePayrollSummaryDao(), cursor, offset);
+        if(tablePayrollSummary != null) {
+            entity.setTablePayrollSummary(tablePayrollSummary);
+        }
+
+        return entity;
+    }
+
+    public TableNextPayment loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<TableNextPayment> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<TableNextPayment> list = new ArrayList<TableNextPayment>(count);
+
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+
+    protected List<TableNextPayment> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<TableNextPayment> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
     }
 }

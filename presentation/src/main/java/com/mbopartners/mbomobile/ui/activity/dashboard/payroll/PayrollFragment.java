@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class PayrollFragment extends Fragment {
         payrollRecyclerView = (RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         payrollRecyclerView.setHasFixedSize(true);
         payrollRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new PayrollRecyclerViewAdapter(context,mListener.getBusinessCenterData());
+        adapter = new PayrollRecyclerViewAdapter(context,mListener.getBusinessCenterData(),mListener.getPayrollSummaryData());
         payrollRecyclerView.setAdapter(adapter);
         return fragmentRootView;
     }
@@ -104,6 +105,7 @@ public class PayrollFragment extends Fragment {
 
     public interface PayrollFragmentInteractionListener {
         List<BusinessCenter> getBusinessCenterData();
+        List<PayrollSummary> getPayrollSummaryData();
         void onRefreshData();
     }
     private class InteractionListenerWrapper implements PayrollFragmentInteractionListener {
@@ -117,6 +119,15 @@ public class PayrollFragment extends Fragment {
         public List<BusinessCenter> getBusinessCenterData() {
             if (realListener != null) {
                 return realListener.getBusinessCenterData();
+            } else {
+                return Collections.EMPTY_LIST;
+            }
+        }
+
+        @Override
+        public List<PayrollSummary> getPayrollSummaryData() {
+            if (realListener != null) {
+                return realListener.getPayrollSummaryData();
             } else {
                 return Collections.EMPTY_LIST;
             }

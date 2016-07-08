@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.List;
@@ -31,11 +32,13 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private Context context;
     private List<PayrollField> payrollFields;
     private List<BusinessCenter> fields;
+    private List<PayrollSummary> payrollSummaryList;
 
-    public PayrollRecyclerViewAdapter(Context context,List<BusinessCenter> fields) {
+    public PayrollRecyclerViewAdapter(Context context,List<BusinessCenter> fields,List<PayrollSummary> payrollSummaryList) {
 
         this.context=context;
         this.fields=fields;
+        this.payrollSummaryList=payrollSummaryList;
     }
 
     @Override

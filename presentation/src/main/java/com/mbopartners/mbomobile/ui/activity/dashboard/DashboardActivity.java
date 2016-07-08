@@ -1193,4 +1193,9 @@ public class DashboardActivity extends AutoLockActivity
     public List<BusinessCenter> getBusinessCenterData() {
         return dataModel.getBusinessCenterList();
     }
+
+    @Override
+    public List<PayrollSummary> getPayrollSummaryData() {
+        return dataModel.getPayrollSummaryList();
+    }
 }
