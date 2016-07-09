@@ -12,6 +12,7 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCe
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.DateUtil;
 
 import java.util.List;
 
@@ -23,7 +24,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
-    private static final int ITEM_VIEW_TYPE__NORMAL = 2;
+    private static final int ITEM_VIEW_TYPE__BUSINESS_CENTER = 2;
+    private static final int ITEM_VIEW_TYPE__NEXT_PAYROLL = 3;
+    private static final int ITEM_VIEW_TYPE__LAST_PAYROLL = 4;
 
     private static final String PAYROLL_BUSINESS_ACCOUNT = "Business Account Balance";
     private static final String PAYROLL_NEXT_PAYMENT = "Next Payment";
@@ -58,10 +61,22 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 viewHolder = new BulkViewHolder(view);
                 break;
             }
-            case ITEM_VIEW_TYPE__NORMAL : {
+            case ITEM_VIEW_TYPE__BUSINESS_CENTER : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.item_dashboard_payroll, parent, false);
-                viewHolder = new PayrollViewHolder(itemView);
+                viewHolder = new BusinessCenterViewHolder(itemView);
+                break;
+            }
+            case ITEM_VIEW_TYPE__NEXT_PAYROLL : {
+                View itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.item_dashboard_payroll, parent, false);
+                viewHolder = new NextPayrollViewHolder(itemView);
+                break;
+            }
+            case ITEM_VIEW_TYPE__LAST_PAYROLL : {
+                View itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.item_dashboard_payroll, parent, false);
+                viewHolder = new LastPayrollViewHolder(itemView);
                 break;
             }
 
@@ -82,13 +97,14 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (fields == null) {
-
-        } else if (fields.isEmpty()) {
-
-        } else {
-            bindViewHolder_Normal((PayrollViewHolder) viewHolder, position);
-        }
+        if (payrollSummaryList == null) {}
+        else if (payrollSummaryList.isEmpty()) {}
+        else if(position==0)
+            bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
+        else if(position==1)
+            bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
+        else if(position==2)
+            bindViewHolder_Last_Payroll((LastPayrollViewHolder) viewHolder, position);
 
     }
 
@@ -100,7 +116,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (fields.isEmpty()) {
             count = 1;
         } else {
-            count = fields.size();
+            count = 3;
         }
         return count;
     }
@@ -112,13 +128,16 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemViewType(int position) {
         int itemViewType = -1;
-        if (fields == null) {
-            itemViewType = ITEM_VIEW_TYPE__LOADING;
-        } else if (fields.isEmpty()) {
-            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
-        } else {
-            itemViewType = ITEM_VIEW_TYPE__NORMAL;
-        }
+        if (payrollSummaryList == null) {
+           return itemViewType = ITEM_VIEW_TYPE__LOADING;
+        } else if (payrollSummaryList.isEmpty()) {
+            return itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
+        }if(position==0)
+            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
+        if (position==1)
+            return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
+        if (position==2)
+            return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;
         return itemViewType;
     }
 
@@ -147,13 +166,28 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return imageId;
     };
 
-    public void bindViewHolder_Normal(PayrollViewHolder viewHolder, int position) {
+    public void bindViewHolder_BusinessCenter(BusinessCenterViewHolder viewHolder, int position) {
 
-        //PayrollField payrollField=payrollFields.get(position);
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
-        viewHolder.work_order_name_TextView.setText("$"+fields.get(position).getBalance().toString());
+        viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(position).getBalance().toString());
+        viewHolder.includeView.setVisibility(View.GONE);
+    }
+    public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
+
+
+        viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_NEXT_PAYMENT));
+        viewHolder.company_name_TextView.setText(PAYROLL_NEXT_PAYMENT);
+        viewHolder.work_order_name_TextView.setText("Unscheduled");
         //viewHolder.periodTextview.setText(payrollField.getTimePeriodField());
+
+    }
+    public void bindViewHolder_Last_Payroll(LastPayrollViewHolder viewHolder, int position) {
+
+        viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
+        viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
+        viewHolder.work_order_name_TextView.setText("$" + payrollSummaryList.get(payrollSummaryList.size() - 1).getNext_payroll().getAmount().toString());
+        viewHolder.periodTextview.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(payrollSummaryList.size()-1).getNext_payroll().getStartDate()));
         viewHolder.includeView.setVisibility(View.GONE);
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -162,14 +196,50 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public static class PayrollViewHolder extends RecyclerView.ViewHolder {
+    public static class BusinessCenterViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
         public TextView work_order_name_TextView;
         public TextView periodTextview;
         public View includeView;
-        public PayrollViewHolder(View itemView) {
+        public BusinessCenterViewHolder(View itemView) {
+            super(itemView);
+
+            this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);
+            this.company_name_TextView = (TextView) itemView.findViewById(R.id.company_name_TextView);
+            this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
+            this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
+            this.includeView=itemView.findViewById(R.id.includeview);
+        }
+    }
+
+    public static class NextPayrollViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView payrollImageView;
+        public TextView company_name_TextView;
+        public TextView work_order_name_TextView;
+        public TextView periodTextview;
+        public View includeView;
+        public NextPayrollViewHolder(View itemView) {
+            super(itemView);
+
+            this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);
+            this.company_name_TextView = (TextView) itemView.findViewById(R.id.company_name_TextView);
+            this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
+            this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
+            this.includeView=itemView.findViewById(R.id.includeview);
+        }
+    }
+
+    public static class LastPayrollViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView payrollImageView;
+        public TextView company_name_TextView;
+        public TextView work_order_name_TextView;
+        public TextView periodTextview;
+        public View includeView;
+        public LastPayrollViewHolder(View itemView) {
             super(itemView);
 
             this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);

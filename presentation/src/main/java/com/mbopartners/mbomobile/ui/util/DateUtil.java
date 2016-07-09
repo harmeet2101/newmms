@@ -167,6 +167,11 @@ public class DateUtil {
         return formatedDate;
     }
 
+    public static String getDateFormatted_payroll(Date date)
+    {
+        return String.format(FORMAT_DATE__DD_MM_YYYY,date);
+    }
+
     public static long daysBetween(Date d1, Date d2)
     {
         return ( (d2.getTime() - d1.getTime()) / (1000L * 60L * 60L * 24L));
