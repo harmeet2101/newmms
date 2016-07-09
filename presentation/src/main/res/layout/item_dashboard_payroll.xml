@@ -40,22 +40,38 @@
             android:textColor="@color/primary_dark_material_dark"
             android:textSize="16dp"
             tools:text="Business Account Balance"/>
-
-        <TextView
-            android:id="@+id/work_order_name_TextView"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:paddingEnd="8dp"
-            android:singleLine="true"
-            android:textColor="@color/company_name"
-            android:textSize="20dp"
-            tools:text="$200,000"
+            android:orientation="horizontal"
             android:layout_alignBottom="@+id/imageview"
-            android:layout_alignStart="@+id/company_name_TextView" />
+            android:layout_alignStart="@+id/company_name_TextView">
+            <TextView
+                android:id="@+id/work_order_name_TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:paddingEnd="8dp"
+                android:singleLine="true"
+                android:textColor="@color/company_name"
+                android:textSize="20dp"
+                tools:text="$200,000"
+                 />
+
+            <include layout="@layout/layout_payroll_schedule_button"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/includeview"
+                android:layout_alignTop="@+id/work_order_name_TextView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"></include>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/mbo_timesheet_time_period_TextView"
@@ -63,7 +79,7 @@
             android:layout_height="wrap_content"
 
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/work_order_name_TextView"
+            android:layout_below="@+id/linearLayout"
             android:layout_marginStart="80dp"
             android:layout_marginTop="-2dp"
             android:paddingEnd="8dp"
@@ -71,13 +87,7 @@
             android:textSize="12dp"
             tools:text="Date FROM - Date TO"/>
 
-        <include layout="@layout/layout_payroll_schedule_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/includeview"
-            android:layout_alignTop="@+id/work_order_name_TextView"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"></include>
+
 
     </RelativeLayout>
 

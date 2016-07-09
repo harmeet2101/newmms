@@ -18,6 +18,7 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.Company;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
@@ -36,6 +37,7 @@ import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,6 +109,15 @@ public class Converter {
                 nextPayment.getId(),
                 nextPayment.getMboId(),nextPaymentRowId);
         return tableNextPayment;
+    }
+    public static TablePreviousPayment toTable_payroll_prevPayment(long previousPaymentRowId,PreviousPayment previousPayment) {
+        TablePreviousPayment tablePreviousPayment = new TablePreviousPayment(
+                null,
+                previousPayment.getBusinessCenterId(),
+                previousPayment.getdate(),
+                previousPayment.getId(),
+                previousPayment.getMboId(),previousPaymentRowId);
+        return tablePreviousPayment;
     }
     public static TableDashboard toTable(Dashboard dashboard) {
         TableDashboard  tableDashboard = new TableDashboard(null, dashboard.getPurpose());
@@ -275,13 +286,18 @@ public class Converter {
     }
 
     public static PayrollSummary toWeb_PayrollSummary(TablePayrollSummary table) {
-        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),table.getMboId(),table.getBalance(),toWeb_nextPayment(table.getNext_payroll()));
+        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),table.getMboId(),table.getBalance(),toWeb_nextPayment(table.getNext_payroll()),toWeb_previousPayment(table.getLast_payroll()));
         return payrollSummary;
     }
     public static NextPayment toWeb_nextPayment(TableNextPayment table) {
         NextPayment nextPayment = new NextPayment(table.getAmount(),table.getBusinessCenterId(),table.getCalculationMethod(),table.getEndDate(),table.getStartDate(),
                 table.getFrequency(),table.getNextPaymentId(),table.getMboId());
         return nextPayment;
+    }
+    public static PreviousPayment toWeb_previousPayment(TablePreviousPayment table) {
+        PreviousPayment previousPayment = new PreviousPayment(table.getBusinessCenterId(),table.getDate(),
+                table.getPreviousPaymentId(),table.getMboId());
+        return previousPayment;
     }
 
     public static WorkOrder toWeb(TableWorkOrder table) {

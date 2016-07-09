@@ -29,7 +29,6 @@ public class PayrollFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private RecyclerView payrollRecyclerView;
     private PayrollRecyclerViewAdapter adapter;
-    private List<PayrollField> payrollFields;
     private Context context;
     private PayrollFragmentInteractionListener mListener = new InteractionListenerWrapper(null);
     public static PayrollFragment newInstance() {
@@ -38,10 +37,7 @@ public class PayrollFragment extends Fragment {
     }
 
     public PayrollFragment() {
-        payrollFields=new ArrayList<>();
-        payrollFields.add(new PayrollField("Business Account Balance",false,"$200,000",""));
-        payrollFields.add(new PayrollField("Next Payment",true,"Unscheduled",""));
-        payrollFields.add(new PayrollField("Last Payment",false,"$2,300","09/1/15-20/2/15"));
+
     }
 
     @Override
@@ -82,7 +78,7 @@ public class PayrollFragment extends Fragment {
         payrollRecyclerView = (RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         payrollRecyclerView.setHasFixedSize(true);
         payrollRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new PayrollRecyclerViewAdapter(context,mListener.getBusinessCenterData(),mListener.getPayrollSummaryData());
+        adapter = new PayrollRecyclerViewAdapter(context,mListener.getPayrollSummaryData());
         payrollRecyclerView.setAdapter(adapter);
         return fragmentRootView;
     }
@@ -99,7 +95,7 @@ public class PayrollFragment extends Fragment {
         if (mListener == null) {
             return;
         }
-        List<BusinessCenter> fields = mListener.getBusinessCenterData();
+        List<PayrollSummary> fields = mListener.getPayrollSummaryData();
         adapter.updateDataSource(fields);
     }
 

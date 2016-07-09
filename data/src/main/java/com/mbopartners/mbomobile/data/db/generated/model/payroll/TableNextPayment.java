@@ -23,8 +23,6 @@ public class TableNextPayment {
     private String frequency;
     private String nextPaymentId;
     private String mboId;
-    /*private ArrayList<TableDirectDeposits> tableDirectDeposits;
-    private ArrayList<TablePayrollDates> payrollDates;*/
 
     private long nextPaymentRowId;
 
@@ -70,7 +68,7 @@ public class TableNextPayment {
     public void setTablePayrollSummary(TablePayrollSummary tablePayrollSummary) {
 
         if (tablePayrollSummary == null) {
-            throw new DaoException("To-one property 'DashboardId' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'nextPaymentRowId' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.tablePayrollSummary = tablePayrollSummary;
@@ -96,14 +94,6 @@ public class TableNextPayment {
         this.mboId=mboId;
 
     }
-
-    /*public ArrayList<TablePayrollDates> getPayrollDates() {
-        return payrollDates;
-    }
-
-    public void setPayrollDates(ArrayList<TablePayrollDates> payrollDates) {
-        this.payrollDates = payrollDates;
-    }*/
 
     public Long getId() {
         return id;

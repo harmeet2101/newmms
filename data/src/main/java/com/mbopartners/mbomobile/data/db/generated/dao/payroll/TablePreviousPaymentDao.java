@@ -6,13 +6,19 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.internal.SqlUtils;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by MboAdil on 5/7/16.
@@ -20,7 +26,8 @@ import de.greenrobot.dao.internal.DaoConfig;
 public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, Long> {
 
     public static final String TABLENAME = "TABLE_PREVIOUS_PAYMENT";
-
+    private Query<TablePreviousPayment> tablePrevioustPayment_FieldsQuery;
+    private DaoSession daoSession;
     /**
      * Properties of entity TablePreviousPayment.<br/>
      * Can be used for QueryBuilder and for referencing column names.
@@ -31,6 +38,7 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
         public final static Property date = new Property(2, Date.class, "date", false, "date");
         public final static Property previousPaymentId = new Property(3, String.class, "previousPaymentId", false, "previousPaymentId");
         public final static Property mboId = new Property(4, String.class, "mboId", false, "mboId");
+        public final static Property previousPaymentRowId = new Property(5, long.class, "previousPaymentRowId", false, "previousPaymentRowId");
     };
 
     public TablePreviousPaymentDao(DaoConfig config) {
@@ -49,7 +57,8 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
                 "\"businessCenterId\" TEXT NOT NULL,"+// 1: businessCenterId
                 "\"date\" INTEGER NOT NULL ," + // 2: date
                 "\"previousPaymentId\" TEXT NOT NULL ," + // 3: previousPaymentId
-                "\"mboId\" TEXT NOT NULL );" ); // 4: mboId
+                "\"mboId\" TEXT NOT NULL," + // 4: mboId
+                "\"previousPaymentRowId\" INTEGER NOT NULL );");
     }
 
     /** Drops the underlying database table. */
@@ -70,6 +79,7 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
         stmt.bindLong(3, entity.getDate().getTime());
         stmt.bindString(4, entity.getPreviousPaymentId());
         stmt.bindString(5, entity.getMboId());
+        stmt.bindLong(6, entity.getPreviousPaymentRowId());
     }
 
     /** @inheritdoc */
@@ -86,7 +96,8 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
                 cursor.getString(offset + 1), // businessCenterId
                 new Date(cursor.getLong(offset + 2)), // date
                 cursor.getString(offset + 3), // previousPaymentId
-                cursor.getString(offset + 4)// mboId
+                cursor.getString(offset + 4),// mboId
+                cursor.getLong(offset + 5)
         );
         return entity;
     }
@@ -99,6 +110,7 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
         entity.setDate(new Date(cursor.getLong((offset + 2))));
         entity.setPreviousPaymentId(cursor.getString(offset + 3));
         entity.setMboId(cursor.getString(offset + 4));
+        entity.setPreviousPaymentRowId(cursor.getLong(offset + 5));
 
     }
 
@@ -123,5 +135,112 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
     @Override
     protected boolean isEntityUpdateable() {
         return true;
+    }
+
+    /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
+    public List<TablePreviousPayment> _queryTableDashboard_Fields(long previousPaymentRowId) {
+        synchronized (this) {
+            if (tablePrevioustPayment_FieldsQuery == null) {
+                QueryBuilder<TablePreviousPayment> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.previousPaymentRowId.eq(null));
+                tablePrevioustPayment_FieldsQuery = queryBuilder.build();
+            }
+        }
+        Query<TablePreviousPayment> query = tablePrevioustPayment_FieldsQuery.forCurrentThread();
+        query.setParameter(0, previousPaymentRowId);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getTablePayrollSummaryDao().getAllColumns());
+            builder.append(" FROM TABLE_NEXT_PAYMENT T");
+            builder.append(" LEFT JOIN TABLE_NEXT_PAYMENT T0 ON T.\"previousPaymentRowId\"=T0.\"_id\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+
+    protected TablePreviousPayment loadCurrentDeep(Cursor cursor, boolean lock) {
+        TablePreviousPayment entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        TablePayrollSummary tablePayrollSummary = loadCurrentOther(daoSession.getTablePayrollSummaryDao(), cursor, offset);
+        if(tablePayrollSummary != null) {
+            entity.setTablePayrollSummary(tablePayrollSummary);
+        }
+
+        return entity;
+    }
+
+    public TablePreviousPayment loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<TablePreviousPayment> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<TablePreviousPayment> list = new ArrayList<TablePreviousPayment>(count);
+
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+
+    protected List<TablePreviousPayment> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<TablePreviousPayment> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
     }
 }

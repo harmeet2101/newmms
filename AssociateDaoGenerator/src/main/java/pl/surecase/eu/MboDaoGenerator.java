@@ -41,7 +41,7 @@ public class MboDaoGenerator {
         Entity business_address_table =create_business_address_table();
         Entity payroll_summary_table=create_payroll_summary_table();
         Entity payroll_nextPayment_table=create_payroll_nextPayment_table();
-
+        Entity payroll_previousPayment_table=create_payroll_previousPayment_table();
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
 
         addOneToManyRelation(dashboard, dashboardFields, "DashboardId", "Fields");
@@ -51,6 +51,7 @@ public class MboDaoGenerator {
         addOneToManyRelation(workOrder, timePeriod, "WorkOrderId", "TimePeriods");
         addOneToManyRelation(timePeriod, timeEntry, "TimePeriodId", "TimeEntries");
         addOneToManyRelation(payroll_summary_table,payroll_nextPayment_table,"nextPaymentRowId","next_payroll");
+        addOneToManyRelation(payroll_summary_table,payroll_previousPayment_table,"previousPaymentRowId","last_payroll");
         addToOneRelation_String(expenses, expenseType, "MboExpenseTypeId", "ExpenseType");
         //addToOneWithoutPropertyRelation(expenses, workOrder, "WorkOrder", "MboId");
         addOneToManyRelation(expenses, expenseData, "ExpenseId", "ExpenseData");
@@ -64,6 +65,8 @@ public class MboDaoGenerator {
 //
         new DaoGenerator().generateAll(schema, args[0]);
     }
+
+
     // ================================================================================
     // Tables declaration
     // ================================================================================
@@ -301,6 +304,15 @@ public class MboDaoGenerator {
         return table;
     }
 
+    private static Entity create_payroll_previousPayment_table() {
+        Entity table = schema.addEntity("TablePayrollPreviousPayment");
+        table.addIdProperty().autoincrement();
+        table.addStringProperty("businessCenterId");
+        table.addDateProperty("date");
+        table.addStringProperty("nextPaymentId");
+        table.addStringProperty("mboId");
+        return table;
+    }
 
     // ================================================================================
     // End of Tables declaration

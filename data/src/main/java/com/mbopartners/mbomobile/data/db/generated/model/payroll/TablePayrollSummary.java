@@ -3,6 +3,7 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class TablePayrollSummary {
     private String mboId;
     private String name;
     private TableNextPayment next_payroll;
+    private TablePreviousPayment last_payroll;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -54,6 +56,26 @@ public class TablePayrollSummary {
         this.id = id;
     }
 
+    public TablePreviousPayment getLast_payroll() {
+
+        if (last_payroll == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePreviousPaymentDao targetDao = daoSession.getTablePreviousPaymentDao();
+            List<TablePreviousPayment> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(last_payroll == null) {
+                    last_payroll = FieldsNew.get(0);
+                }
+            }
+        }
+        return last_payroll;
+    }
+
+    public void setLast_payroll(TablePreviousPayment last_payroll) {
+        this.last_payroll = last_payroll;
+    }
 
     public double getBalance() {
         return balance;
@@ -113,6 +135,7 @@ public class TablePayrollSummary {
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetFields() {
         next_payroll = null;
+        last_payroll=null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

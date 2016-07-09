@@ -25,11 +25,13 @@ public class PayrollSummary  implements Serializable, Validatable {
     private Double balance;
     @SerializedName("next_payroll")
     private NextPayment next_payroll;
+    @SerializedName("last_payroll")
+    private PreviousPayment last_payroll;
 
 
     public PayrollSummary(){}
 
-    public PayrollSummary(String id,String name,String mboId,Double balance,NextPayment next_payroll)
+    public PayrollSummary(String id,String name,String mboId,Double balance,NextPayment next_payroll,PreviousPayment last_payroll)
     {
 
         this.id=id;
@@ -37,6 +39,7 @@ public class PayrollSummary  implements Serializable, Validatable {
         this.mboId=mboId;
         this.balance=balance;
         this.next_payroll=next_payroll;
+        this.last_payroll=last_payroll;
     }
     @Override
     public boolean isValid() {
@@ -54,6 +57,7 @@ public class PayrollSummary  implements Serializable, Validatable {
             screamer.sayIfIsNull("mboId", mboId);
             screamer.sayIfIsNull("balance", balance);
             screamer.sayIfIsNull("next_payroll", next_payroll);
+            screamer.sayIfIsNull("last_payroll", last_payroll);
         }
         return result;
     }
@@ -94,6 +98,14 @@ public class PayrollSummary  implements Serializable, Validatable {
 
     public NextPayment getNext_payroll() {
         return next_payroll;
+    }
+
+    public PreviousPayment getLast_payroll() {
+        return last_payroll;
+    }
+
+    public void setLast_payroll(PreviousPayment last_payroll) {
+        this.last_payroll = last_payroll;
     }
 
     public void setNext_payroll(NextPayment next_payroll) {

@@ -34,13 +34,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private Context context;
     private List<PayrollField> payrollFields;
-    private List<BusinessCenter> fields;
+
     private List<PayrollSummary> payrollSummaryList;
 
-    public PayrollRecyclerViewAdapter(Context context,List<BusinessCenter> fields,List<PayrollSummary> payrollSummaryList) {
+    public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList) {
 
         this.context=context;
-        this.fields=fields;
         this.payrollSummaryList=payrollSummaryList;
     }
 
@@ -111,9 +110,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         int count = 0;
-        if (fields == null) {
+        if (payrollSummaryList == null) {
             count = 1;
-        } else if (fields.isEmpty()) {
+        } else if (payrollSummaryList.isEmpty()) {
             count = 1;
         } else {
             count = 3;
@@ -121,8 +120,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return count;
     }
 
-    public void updateDataSource(List<BusinessCenter> fields) {
-        this.fields = fields;
+    public void updateDataSource(List<PayrollSummary> fields) {
+        this.payrollSummaryList = fields;
         notifyDataSetChanged();
     }
     @Override

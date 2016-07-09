@@ -109,7 +109,7 @@ public class ConfigurationController extends AbstractApplicationController {
             }
 
             default : {
-                /*result = new EnvironmentVariables(
+                result = new EnvironmentVariables(
                         this.currentLockTimeout,
                         this.currentProdHostname,
                         this.currentProdOAuthHostname,
@@ -120,17 +120,7 @@ public class ConfigurationController extends AbstractApplicationController {
                         this.currentTermsAndConditionsLink,
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
-                );*/result = new EnvironmentVariables(
-                        this.currentLockTimeout,
-                        this.currentDevHostname,
-                        this.currentDevOAuthHostname,
-                        this.currentSupportEmail,
-                        this.currentJoinUsLink,
-                        this.currentForgotPasswordLink,
-                        this.currentPrivacyPolicyLink,
-                        this.currentTermsAndConditionsLink,
-                        OAUTH_DEV_CLIENT_ID,
-                        OAUTH_DEV_CLIENT_SECRET);
+                );
             }
         }
         return result;
@@ -213,7 +203,7 @@ public class ConfigurationController extends AbstractApplicationController {
                 }
 
                 default : {
-                    result = PRE_PROD;
+                    result = PRODUCTION;
                 }
             }
             return result;

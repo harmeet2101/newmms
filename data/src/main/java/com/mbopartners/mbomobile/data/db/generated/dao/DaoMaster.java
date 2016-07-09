@@ -28,6 +28,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessAddr
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
 
@@ -60,6 +61,7 @@ public class DaoMaster extends AbstractDaoMaster {
         TableBusinessAddressDao.createTable(db,ifNotExists);
         TablePayrollSummaryDao.createTable(db,ifNotExists);
         TableNextPaymentDao.createTable(db,ifNotExists);
+        TablePreviousPaymentDao.createTable(db,ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
@@ -84,6 +86,7 @@ public class DaoMaster extends AbstractDaoMaster {
         TableBusinessAddressDao.dropTable(db,ifExists);
         TablePayrollSummaryDao.dropTable(db,ifExists);
         TableNextPaymentDao.dropTable(db,ifExists);
+        TablePreviousPaymentDao.dropTable(db,ifExists);
     }
     
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -135,6 +138,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(TableBusinessAddressDao.class);
         registerDaoClass(TablePayrollSummaryDao.class);
         registerDaoClass(TableNextPaymentDao.class);
+        registerDaoClass(TablePreviousPaymentDao.class);
     }
     
     public DaoSession newSession() {

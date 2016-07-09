@@ -19,6 +19,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpenseData;
 import com.mbopartners.mbomobile.data.db.generated.model.TableReceipt;
@@ -42,6 +43,7 @@ import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,8 +89,11 @@ public class DbFiller {
     public static void clearTablesForPayrollSummary(DaoSession daoSession) {
         TablePayrollSummaryDao tablePayrollSummaryDao = daoSession.getTablePayrollSummaryDao();
         TableNextPaymentDao tableNextPaymentDao=daoSession.getTableNextPaymentDao();
+        TablePreviousPaymentDao tablePreviousPaymentDao=daoSession.getTablePreviousPaymentDao();
         tablePayrollSummaryDao.deleteAll();
         tableNextPaymentDao.deleteAll();
+        tablePreviousPaymentDao.deleteAll();
+
     }
 
     public static void clearTablesForExpenses(DaoSession daoSession) {
@@ -128,7 +133,9 @@ public class DbFiller {
 
             long nextPaymentId=insertPayrollSummaryField(payrollSummary, daoSession);
             NextPayment nextPayment=payrollSummary.getNext_payroll();
+            PreviousPayment previousPayment=payrollSummary.getLast_payroll();
             insertNextPaymentField(nextPayment, nextPaymentId,daoSession);
+            insertPreviousPaymentField(previousPayment,nextPaymentId,daoSession);
     }
 
     public static void insertAllWorkOrders(WorkOrder[] workOrders, DaoSession daoSession) {
@@ -189,7 +196,11 @@ public class DbFiller {
     }
     public static long insertNextPaymentField(NextPayment nextPayment, long nextPaymentId,DaoSession daoSession) {
         TableNextPaymentDao dao = daoSession.getTableNextPaymentDao();
-        return dao.insert(Converter.toTable_payroll_nexPayment(nextPaymentId,nextPayment));
+        return dao.insert(Converter.toTable_payroll_nexPayment(nextPaymentId, nextPayment));
+    }
+    public static long insertPreviousPaymentField(PreviousPayment previousPayment, long previousPaymentId,DaoSession daoSession) {
+        TablePreviousPaymentDao dao = daoSession.getTablePreviousPaymentDao();
+        return dao.insert(Converter.toTable_payroll_prevPayment(previousPaymentId,previousPayment));
     }
 
     public static long insertDashboardField(DashboardField dashboardField, long dashboardId, DaoSession daoSession) {

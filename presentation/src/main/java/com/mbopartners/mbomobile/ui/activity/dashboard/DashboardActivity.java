@@ -1130,7 +1130,7 @@ public class DashboardActivity extends AutoLockActivity
         @Override
         public void onLoadFinished(Loader<List<BusinessCenter>> loader, List<BusinessCenter> data) {
             dataModel.setBusinessData(data);
-            notifyPayrollDataReceived();
+            //notifyPayrollDataReceived();
         }
 
         @Override

@@ -13,7 +13,7 @@ import ua.com.mobidev.android.mdrest.web.model.validation.ValidationHelper;
  */
 public class NextPayment implements Serializable, Validatable {
 
-    private static final String TAG = BusinessCenter.class.getSimpleName();
+    private static final String TAG = NextPayment.class.getSimpleName();
 
     @SerializedName("id")
     private String id;
