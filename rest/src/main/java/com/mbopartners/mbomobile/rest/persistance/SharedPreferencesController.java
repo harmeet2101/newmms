@@ -25,6 +25,7 @@ public class SharedPreferencesController extends AbstractApplicationController{
     private static final String EMPTY_USER_LOGIN_NAME = "";
     private static final String EMPTY_USER_LOGIN_TOKEN = null;
     private static final String FIRST_TIME_LAUNCH="firstTimeLaunch";
+    private static final String PAYROLL_TAB="payrollTab";
     private final SharedPreferences sharedPreferences;
 
     public SharedPreferencesController(Context context) {
@@ -131,5 +132,14 @@ public class SharedPreferencesController extends AbstractApplicationController{
     public void setFlagFirstTimeLaunch_logout()
     {
         sharedPreferences.edit().putBoolean(FIRST_TIME_LAUNCH,true).apply();
+    }
+
+    public void setPayrollTabVisible()
+    {
+        sharedPreferences.edit().putBoolean(PAYROLL_TAB,true).apply();
+    }
+    public boolean isPayrollTabVisible()
+    {
+        return sharedPreferences.getBoolean(PAYROLL_TAB,false);
     }
 }

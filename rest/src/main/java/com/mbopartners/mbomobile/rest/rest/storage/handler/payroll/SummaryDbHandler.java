@@ -13,7 +13,7 @@ import com.mbopartners.mbomobile.rest.rest.storage.handler.MboDbHandler;
  * Created by MboAdil on 7/7/16.
  */
 public class SummaryDbHandler   extends MboDbHandler<PayrollSummaryRequest, PayrollSummary, RestServerApiException> {
-    private static final String TAG = BusinessCenterDbHandler.class.getSimpleName();
+    private static final String TAG = SummaryDbHandler.class.getSimpleName();
 
     @Override
     public void handleRegistration(PayrollSummaryRequest request) {

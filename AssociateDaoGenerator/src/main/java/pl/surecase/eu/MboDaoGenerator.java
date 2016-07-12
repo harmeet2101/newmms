@@ -284,7 +284,6 @@ public class MboDaoGenerator {
         table.addIdProperty().autoincrement();
         table.addDoubleProperty("balance");
         table.addStringProperty("summaryId");
-        table.addStringProperty("mboId");
         table.addStringProperty("name");
         return table;
     }

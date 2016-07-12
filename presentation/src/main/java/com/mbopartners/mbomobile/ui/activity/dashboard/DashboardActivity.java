@@ -34,6 +34,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.TimePeriod;
+import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
@@ -123,6 +124,8 @@ public class DashboardActivity extends AutoLockActivity
     private int mNetworkingCount = 0;
     private IRestClient restServiceHelper;
     private DefaultRestClientResponseHandler defaultRestClientResponseHandler;
+    private boolean isNonBillableAllowed;
+    private int tabCount;
     @Override
     protected void onNewIntent(Intent intent) {
         Log.v(TAG, "onNewIntent()");
@@ -140,7 +143,9 @@ public class DashboardActivity extends AutoLockActivity
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
-
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null)
+        isNonBillableAllowed=bundle.getBoolean("isNonBillableAlowed");
         SYSTEM_LOCALE = Locale.getDefault().getCountry();
         Log.d("locale", SYSTEM_LOCALE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -160,7 +165,11 @@ public class DashboardActivity extends AutoLockActivity
         downloadingProgressBar=(ProgressBar)findViewById(R.id.progressBar);
         downloadingProgressBar.setVisibility(View.INVISIBLE);
         setupToolbarLogo();
-        setupTabs();
+        if (isNonBillableAllowed)
+            tabCount=4;
+        else tabCount=3;
+
+        setupTabs(tabCount);
 
     }
 
@@ -313,9 +322,10 @@ public class DashboardActivity extends AutoLockActivity
         }
     }
    private  TabLayout tabLayout;
-    private void setupTabs() {
+    private void setupTabs(int count) {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        DashboardFragmentPagerAdapter pagerAdapter = new DashboardFragmentPagerAdapter(getSupportFragmentManager(), DashboardActivity.this);
+
+        DashboardFragmentPagerAdapter pagerAdapter = new DashboardFragmentPagerAdapter(getSupportFragmentManager(), DashboardActivity.this,count);
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -412,8 +422,10 @@ public class DashboardActivity extends AutoLockActivity
         forceLoadRevenueData();
         forceLoadTimesData();
         forceLoadExpenseData();
-        forceLoadPayrollData();
-        forceLoadPayrollSummaryData();
+        if(tabCount>3) {
+            forceLoadPayrollData();
+            forceLoadPayrollSummaryData();
+        }
     }
 
     private void forceLoadRevenueData() {
@@ -446,6 +458,7 @@ public class DashboardActivity extends AutoLockActivity
         notifyRevenueDataReceived();
         notifyTimesDataReceived();
         notifyExpensesDataReceived();
+        if(tabCount>3)
         notifyPayrollDataReceived();
     }
 
@@ -522,9 +535,10 @@ public class DashboardActivity extends AutoLockActivity
         fetchDashboardData();
         fetchExpenseTypes();
         fetchWorkOrders();
-        fetchBusinessCenterData();
-        fetchPayrollSummaryData();
-
+        if(tabCount>3) {
+            fetchBusinessCenterData();
+            fetchPayrollSummaryData();
+        }
     }
 
     /**
@@ -832,6 +846,8 @@ public class DashboardActivity extends AutoLockActivity
             mNetworkingCount--;
             switch (response.getClientResult()) {
                 case Ok : {
+                    UserProfile userProfile=(UserProfile)response.getResponseEntity();
+                    isNonBillableAlowed=userProfile.getNonbillableAllowed();
                     menuBusinessManagerButtonDescriptor.updateMenuItemAccessibility(true);
                     break;
                 }
@@ -843,6 +859,7 @@ public class DashboardActivity extends AutoLockActivity
         }
     }
 
+    private boolean isNonBillableAlowed;
     class DashboardsCallback implements IRestClient.Callback {
         private DefaultRestClientResponseHandler defaultHandler;
 
@@ -1130,7 +1147,7 @@ public class DashboardActivity extends AutoLockActivity
         @Override
         public void onLoadFinished(Loader<List<BusinessCenter>> loader, List<BusinessCenter> data) {
             dataModel.setBusinessData(data);
-            //notifyPayrollDataReceived();
+            notifyPayrollDataReceived();
         }
 
         @Override
@@ -1150,7 +1167,7 @@ public class DashboardActivity extends AutoLockActivity
         @Override
         public void onLoadFinished(Loader<List<PayrollSummary>> loader, List<PayrollSummary> data) {
             dataModel.setPayrollSummaryData(data);
-            notifyPayrollDataReceived();
+          //  notifyPayrollDataReceived();
         }
 
         @Override

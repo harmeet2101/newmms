@@ -32,7 +32,7 @@ public class TablePayrollSummary {
 
     public TablePayrollSummary(){}
 
-    public TablePayrollSummary(Long id, double balance, String summaryId,String mboId, String name)
+    public TablePayrollSummary(Long id, double balance, String summaryId,/*String mboId,*/ String name)
     {
         this.id=id;
 
@@ -65,7 +65,7 @@ public class TablePayrollSummary {
             TablePreviousPaymentDao targetDao = daoSession.getTablePreviousPaymentDao();
             List<TablePreviousPayment> FieldsNew = targetDao._queryTableDashboard_Fields(id);
             synchronized (this) {
-                if(last_payroll == null) {
+                if(last_payroll == null&& FieldsNew.size()!=0) {
                     last_payroll = FieldsNew.get(0);
                 }
             }
@@ -93,13 +93,13 @@ public class TablePayrollSummary {
         this.summaryId = summaryId;
     }
 
-    public String getMboId() {
+    /*public String getMboId() {
         return mboId;
     }
 
     public void setMboId(String mboId) {
         this.mboId = mboId;
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -117,7 +117,7 @@ public class TablePayrollSummary {
             TableNextPaymentDao targetDao = daoSession.getTableNextPaymentDao();
             List<TableNextPayment> FieldsNew = targetDao._queryTableDashboard_Fields(id);
             synchronized (this) {
-                if(next_payroll == null) {
+                if(next_payroll == null&& FieldsNew.size()!=0) {
                     next_payroll = FieldsNew.get(0);
                 }
             }

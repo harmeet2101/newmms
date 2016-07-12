@@ -29,8 +29,8 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property balance = new Property(1, Double.class, "balance", false, "balance");
         public final static Property summaryId = new Property(2, String.class, "summaryId", false, "summaryId");
-        public final static Property mboId = new Property(3, String.class, "mboId", false, "mboId");
-        public final static Property name = new Property(4, String.class, "name", false, "name");
+        //public final static Property mboId = new Property(3, String.class, "mboId", false, "mboId");
+        public final static Property name = new Property(3, String.class, "name", false, "name");
 
     };
 
@@ -50,7 +50,7 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," +     // 0: id
                 "\"balance\" REAL NOT NULL," +                     // 1: amount
                 "\"summaryId\" TEXT NOT NULL ," + // 2: businessCenterId
-                "\"mboId\" TEXT NOT NULL ," + // 3: calculationMethod
+                //"\"mboId\" TEXT NOT NULL," + // 3: calculationMethod
                 "\"name\" TEXT NOT NULL);");           // 8: mboId
     }
 
@@ -70,8 +70,8 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
         }
         stmt.bindDouble(2, entity.getBalance());
         stmt.bindString(3, entity.getSummaryId());
-        stmt.bindString(4, entity.getMboId());
-        stmt.bindString(5, entity.getName());
+        //stmt.bindString(4, entity.getMboId());
+        stmt.bindString(4, entity.getName());
     }
 
     @Override
@@ -95,8 +95,8 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0),
                 cursor.getDouble(offset + 1),
                 cursor.getString(offset + 2),
-                cursor.getString(offset + 3),
-                cursor.getString(offset + 4)
+                cursor.getString(offset + 3)/*,
+                cursor.getString(offset + 4)*/
         );
         return entity;
     }
@@ -107,8 +107,8 @@ public class TablePayrollSummaryDao extends AbstractDao<TablePayrollSummary, Lon
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setBalance(cursor.getDouble(offset + 1));
         entity.setSummaryId(cursor.getString(offset + 2));
-        entity.setMboId(cursor.getString(offset + 3));
-        entity.setName(cursor.getString(offset + 4));
+        //entity.setMboId(cursor.getString(offset + 3));
+        entity.setName(cursor.getString(offset + 3));
     }
 
     /** @inheritdoc */

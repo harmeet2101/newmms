@@ -92,7 +92,7 @@ public class Converter {
                 null,
                 payrollSummary.getBalance(),
                 payrollSummary.getId(),
-                payrollSummary.getMboId(),
+                /*payrollSummary.getMboId(),*/
                 payrollSummary.getName());
         return tablePayrollSummary;
     }
@@ -286,18 +286,26 @@ public class Converter {
     }
 
     public static PayrollSummary toWeb_PayrollSummary(TablePayrollSummary table) {
-        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),table.getMboId(),table.getBalance(),toWeb_nextPayment(table.getNext_payroll()),toWeb_previousPayment(table.getLast_payroll()));
+        PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),/*table.getMboId(),*/table.getBalance(),toWeb_nextPayment(table.getNext_payroll()),toWeb_previousPayment(table.getLast_payroll()));
         return payrollSummary;
     }
     public static NextPayment toWeb_nextPayment(TableNextPayment table) {
-        NextPayment nextPayment = new NextPayment(table.getAmount(),table.getBusinessCenterId(),table.getCalculationMethod(),table.getEndDate(),table.getStartDate(),
-                table.getFrequency(),table.getNextPaymentId(),table.getMboId());
+        NextPayment nextPayment=null;
+        if(table!=null) {
+            nextPayment = new NextPayment(table.getAmount(), table.getBusinessCenterId(), table.getCalculationMethod(), table.getEndDate(), table.getStartDate(),
+                    table.getFrequency(), table.getNextPaymentId(), table.getMboId());
+            return nextPayment;
+        }else
         return nextPayment;
     }
     public static PreviousPayment toWeb_previousPayment(TablePreviousPayment table) {
-        PreviousPayment previousPayment = new PreviousPayment(table.getBusinessCenterId(),table.getDate(),
-                table.getPreviousPaymentId(),table.getMboId());
-        return previousPayment;
+        PreviousPayment previousPayment = null;
+        if (table != null) {
+            previousPayment = new PreviousPayment(table.getBusinessCenterId(), table.getDate(),
+                    table.getPreviousPaymentId(), table.getMboId());
+            return previousPayment;
+        }else
+            return previousPayment;
     }
 
     public static WorkOrder toWeb(TableWorkOrder table) {

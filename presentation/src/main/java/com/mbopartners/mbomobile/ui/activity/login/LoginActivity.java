@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbopartners.mbomobile.rest.configuration.ConfigurationController;
+import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 import com.mbopartners.mbomobile.rest.rest.client.IRestClient;
 import com.mbopartners.mbomobile.rest.rest.client.request.RestApiContract;
@@ -52,7 +53,7 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
     private int redTextColor;
     private int redHintColor;
     private String USER_NAME;
-
+    private  IRestClient restServiceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +63,15 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
         UiUtils.hideActionBar(this);
         setContentView(R.layout.mbo_activity_login);
 
-        final IRestClient restServiceHelper = getRestServiceHelper();
+        restServiceHelper = getRestServiceHelper();
 
         restServiceHelper.clearCallbacks();
         DefaultRestClientResponseHandler defaultRestClientResponseHandler = new DefaultRestClientResponseHandler(this);
         final IRestClient.Callback loginCallback = new OAuthLoginCallback(defaultRestClientResponseHandler);
+        final IRestClient.Callback getUserProfileCallback = new UserProfileCallback(defaultRestClientResponseHandler);
         restServiceHelper.registerCallback(RestApiContract.Method.oAuth, loginCallback);
+        restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
+
         final Context context = this;
 
         editTextUserName = (EditText) findViewById(R.id.mbo_editText_login_username);
@@ -137,6 +141,7 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
             showProgressDialog(getString(R.string.mbo_Login_ProgressDialog_title), getString(R.string.mbo_Login_ProgressDialog_message));
             String grantType = "password";
             restServiceHelper.authenticateOauth(context, userName, password, grantType);
+
         }
     }
 
@@ -187,25 +192,13 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
             switch (response.getClientResult()) {
                 case Ok: {
                     turnToNormalColors();
-                    AppLockManager.getInstance().getCurrentAppLock().forceUnlockPermission();
-                    boolean b = AppLockManager.getInstance().getCurrentAppLock().getNotNowFlag();
 
-                    /*Log.d("bbbbbbbb", String.valueOf(b));
-                    Log.d("bbbbbbbb", USER_NAME);
-                    Log.d("bbbbbbbb", editTextUserName.getText().toString());*/
-                    if (USER_NAME.equals(editTextUserName.getText().toString()) && b) {
-                        startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
-                        LoginActivity.this.finish();
-                    } else if (!USER_NAME.equals(editTextUserName.getText().toString()) && b) {
-                        AppLockManager.getInstance().getCurrentAppLock().setLockModeLoginLock01();
-                        startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
-                        LoginActivity.this.finish();
-                    } else if (!b) {
-                        startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
-                        LoginActivity.this.finish();
-                    }
-//                    startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
-//                    LoginActivity.this.finish();
+                    restServiceHelper.getUserProfile(LoginActivity.this);
+                    AppLockManager.getInstance().getCurrentAppLock().forceUnlockPermission();
+                    b = AppLockManager.getInstance().getCurrentAppLock().getNotNowFlag();
+
+
+
                     break;
                 }
                 case HttpError: {
@@ -239,7 +232,52 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
             }
         }
     }
+    class UserProfileCallback implements IRestClient.Callback {
+        private DefaultRestClientResponseHandler defaultHandler;
 
+        public UserProfileCallback(DefaultRestClientResponseHandler defaultHandler) {
+            this.defaultHandler = defaultHandler;
+        }
+
+        @Override
+        public void onComplete(UniversalRestResponse response) {
+
+            switch (response.getClientResult()) {
+                case Ok : {
+                    UserProfile userProfile=(UserProfile)response.getResponseEntity();
+                    isNonBillableAlowed=userProfile.getNonbillableAllowed();
+
+
+                    setDataForPayrollTab(b,isNonBillableAlowed);
+
+//                    startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
+//                    LoginActivity.this.finish();
+                    break;
+                }
+                default: {
+                    setDataForPayrollTab(b,true);
+                   // defaultHandler.onComplete(response);
+                }
+            }
+        }
+    }
+    private void setDataForPayrollTab(boolean b,boolean isNonBillableAlowed)
+    {
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("isNonBillableAlowed",isNonBillableAlowed);
+        if (USER_NAME.equals(editTextUserName.getText().toString()) && b) {
+            startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this,bundle));
+            LoginActivity.this.finish();
+        } else if (!USER_NAME.equals(editTextUserName.getText().toString()) && b) {
+            AppLockManager.getInstance().getCurrentAppLock().setLockModeLoginLock01();
+            startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this,bundle));
+            LoginActivity.this.finish();
+        } else if (!b) {
+            startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this,bundle));
+            LoginActivity.this.finish();
+        }
+    }
+    private boolean isNonBillableAlowed,b;
     private void clearPassword() {
         editTextPassword.setText("");
     }

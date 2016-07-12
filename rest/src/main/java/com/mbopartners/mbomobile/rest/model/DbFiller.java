@@ -134,8 +134,14 @@ public class DbFiller {
             long nextPaymentId=insertPayrollSummaryField(payrollSummary, daoSession);
             NextPayment nextPayment=payrollSummary.getNext_payroll();
             PreviousPayment previousPayment=payrollSummary.getLast_payroll();
-            insertNextPaymentField(nextPayment, nextPaymentId,daoSession);
-            insertPreviousPaymentField(previousPayment,nextPaymentId,daoSession);
+            if (nextPayment!=null) {
+                if(nextPayment.isValid())
+                insertNextPaymentField(nextPayment, nextPaymentId, daoSession);
+            }if(previousPayment!=null){
+                if(previousPayment.isValid())
+                insertPreviousPaymentField(previousPayment,nextPaymentId,daoSession);
+            }
+
     }
 
     public static void insertAllWorkOrders(WorkOrder[] workOrders, DaoSession daoSession) {

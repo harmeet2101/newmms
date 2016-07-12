@@ -125,6 +125,10 @@ public class ActivityIntentHelper {
             return getDashboardActivity(context, DashboardActivity.REVENUE_FRAGMENT_INDEX);
         }
 
+        public static Intent getDashboardActivityRevenuePage(Context context,Bundle bundle) {
+            return getDashboardActivity(context, DashboardActivity.REVENUE_FRAGMENT_INDEX,bundle);
+        }
+
         public static Intent getDashboardActivityTimePage(Context context) {
             return getDashboardActivity(context, DashboardActivity.TIMES_FRAGMENT_INDEX);
         }
