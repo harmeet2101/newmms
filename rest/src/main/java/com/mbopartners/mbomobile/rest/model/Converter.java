@@ -16,7 +16,9 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableTimeTask;
 import com.mbopartners.mbomobile.data.db.generated.model.TableUserProfile;
 import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
@@ -35,7 +37,9 @@ import com.mbopartners.mbomobile.rest.model.response.TimeTask;
 import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
@@ -118,6 +122,21 @@ public class Converter {
                 previousPayment.getId(),
                 previousPayment.getMboId(),previousPaymentRowId);
         return tablePreviousPayment;
+    }
+
+    public static TableBusinessWithHolding toTable_payroll_businessWithHolding(long businessWithHoldingRowId,BusinessWithHolding businessWithHolding) {
+        TableBusinessWithHolding tableBusinessWithHolding = new TableBusinessWithHolding(
+                null,
+                businessWithHoldingRowId);
+        return tableBusinessWithHolding;
+    }
+
+    public static TablePayrollAmount toTable_payroll_business_payrollAmount(long payrollAmountRowId,PayrollAmount payrollAmount) {
+        TablePayrollAmount tablePayrollAmount = new TablePayrollAmount(
+                null,
+                payrollAmount.getAmount(),payrollAmount.getAmountMtd(),payrollAmount.getAmountYtd(),payrollAmount.getName(),
+                payrollAmountRowId);
+        return tablePayrollAmount;
     }
     public static TableDashboard toTable(Dashboard dashboard) {
         TableDashboard  tableDashboard = new TableDashboard(null, dashboard.getPurpose());
@@ -306,6 +325,25 @@ public class Converter {
             return previousPayment;
         }else
             return previousPayment;
+    }
+
+    public static BusinessWithHolding toWeb_businessWithHolding(TableBusinessWithHolding table) {
+        BusinessWithHolding businessWithHolding = null;
+        if (table != null) {
+            businessWithHolding = new BusinessWithHolding(toWeb_payrollPayment(table.getPayrollAmount()));
+            return businessWithHolding;
+        }else
+            return businessWithHolding;
+    }
+
+    public static PayrollAmount toWeb_payrollPayment(TablePayrollAmount table) {
+        PayrollAmount payrollAmount = null;
+        if (table != null) {
+            payrollAmount = new PayrollAmount(table.getAmount(), table.getAmountMtd(),
+                    table.getAmountYtd(), table.getName());
+            return payrollAmount;
+        }else
+            return payrollAmount;
     }
 
     public static WorkOrder toWeb(TableWorkOrder table) {

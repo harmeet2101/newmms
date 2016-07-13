@@ -58,7 +58,7 @@ public class TableNextPayment {
             TablePayrollSummaryDao targetDao = daoSession.getTablePayrollSummaryDao();
             TablePayrollSummary tablePayrollSummary = targetDao.load(__key);
             synchronized (this) {
-                tablePayrollSummary = tablePayrollSummary;
+                this.tablePayrollSummary = tablePayrollSummary;
                 tablePayrollSummary__resolvedKey = __key;
             }
         }

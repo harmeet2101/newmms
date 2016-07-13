@@ -42,6 +42,8 @@ public class MboDaoGenerator {
         Entity payroll_summary_table=create_payroll_summary_table();
         Entity payroll_nextPayment_table=create_payroll_nextPayment_table();
         Entity payroll_previousPayment_table=create_payroll_previousPayment_table();
+        Entity payroll_businessWithHolding_table=create_payroll_businessWithHolding_table();
+        Entity payroll_businessHolding_payment_amount_table=create_businessHolding_payment_amount_table();
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
 
         addOneToManyRelation(dashboard, dashboardFields, "DashboardId", "Fields");
@@ -52,6 +54,8 @@ public class MboDaoGenerator {
         addOneToManyRelation(timePeriod, timeEntry, "TimePeriodId", "TimeEntries");
         addOneToManyRelation(payroll_summary_table,payroll_nextPayment_table,"nextPaymentRowId","next_payroll");
         addOneToManyRelation(payroll_summary_table,payroll_previousPayment_table,"previousPaymentRowId","last_payroll");
+        addOneToManyRelation(payroll_previousPayment_table,payroll_businessWithHolding_table,"businessWithHoldingRowId","businessWithholding");
+        addOneToManyRelation(payroll_businessHolding_payment_amount_table,payroll_businessWithHolding_table,"paymentAmountRowId","payrollAmount");
         addToOneRelation_String(expenses, expenseType, "MboExpenseTypeId", "ExpenseType");
         //addToOneWithoutPropertyRelation(expenses, workOrder, "WorkOrder", "MboId");
         addOneToManyRelation(expenses, expenseData, "ExpenseId", "ExpenseData");
@@ -65,6 +69,8 @@ public class MboDaoGenerator {
 //
         new DaoGenerator().generateAll(schema, args[0]);
     }
+
+
 
 
     // ================================================================================
@@ -310,6 +316,25 @@ public class MboDaoGenerator {
         table.addDateProperty("date");
         table.addStringProperty("nextPaymentId");
         table.addStringProperty("mboId");
+        return table;
+    }
+
+    private static Entity create_payroll_businessWithHolding_table() {
+
+        Entity table = schema.addEntity("TableBusinessWithHolding");
+        table.addIdProperty().autoincrement();
+
+        return table;
+    }
+
+    private static Entity create_businessHolding_payment_amount_table() {
+
+        Entity table = schema.addEntity("TableBusinessPaymentAmount");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
         return table;
     }
 

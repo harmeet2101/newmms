@@ -26,7 +26,9 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableExpenseFieldValueDao
 import com.mbopartners.mbomobile.data.db.generated.dao.ExpenseType_2_ExpenseFieldDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessAddressDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
@@ -62,6 +64,8 @@ public class DaoMaster extends AbstractDaoMaster {
         TablePayrollSummaryDao.createTable(db,ifNotExists);
         TableNextPaymentDao.createTable(db,ifNotExists);
         TablePreviousPaymentDao.createTable(db,ifNotExists);
+        TableBusinessWithHoldingDao.createTable(db,ifNotExists);
+        TablePayrollAmountDao.createTable(db,ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
@@ -87,6 +91,8 @@ public class DaoMaster extends AbstractDaoMaster {
         TablePayrollSummaryDao.dropTable(db,ifExists);
         TableNextPaymentDao.dropTable(db,ifExists);
         TablePreviousPaymentDao.dropTable(db,ifExists);
+        TableBusinessWithHoldingDao.dropTable(db,ifExists);
+        TablePayrollAmountDao.dropTable(db,ifExists);
     }
     
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -139,6 +145,8 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(TablePayrollSummaryDao.class);
         registerDaoClass(TableNextPaymentDao.class);
         registerDaoClass(TablePreviousPaymentDao.class);
+        registerDaoClass(TableBusinessWithHoldingDao.class);
+        registerDaoClass(TablePayrollAmountDao.class);
     }
     
     public DaoSession newSession() {

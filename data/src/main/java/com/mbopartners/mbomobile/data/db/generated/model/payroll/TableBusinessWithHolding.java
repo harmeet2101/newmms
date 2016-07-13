@@ -1,6 +1,14 @@
 package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
+import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.dao.DaoException;
 
 /**
  * Created by MboAdil on 5/7/16.
@@ -9,21 +17,68 @@ public class TableBusinessWithHolding {
 
     private Long  id;
     /** Not-null value. */
-    private ArrayList<TableAmount>  businessExpenses;
-    private ArrayList<TableAmount> payrollAmount;
-    private ArrayList<TableAmount> payrollTaxes;
+    private TablePayrollAmount payrollAmount;
+    private long businessWithHoldingRowId;
 
+
+    /** Used to resolve relations */
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    private transient TableBusinessWithHoldingDao myDao;
+
+    private TablePreviousPayment tablePreviousPayment;
+    private Long tablePreviousPayment__resolvedKey;
+
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getTableBusinessWithHoldingDao() : null;
+    }
+
+    public TablePreviousPayment getTablePreviousPayment() {
+
+        long __key = this.businessWithHoldingRowId;
+        if (tablePreviousPayment__resolvedKey == null || !tablePreviousPayment__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePreviousPaymentDao targetDao = daoSession.getTablePreviousPaymentDao();
+            TablePreviousPayment tablePreviousPayment = targetDao.load(__key);
+            synchronized (this) {
+                tablePreviousPayment = tablePreviousPayment;
+                tablePreviousPayment__resolvedKey = __key;
+            }
+        }
+        return tablePreviousPayment;
+    }
+
+    public void setTablePreviousPayment(TablePreviousPayment tablePreviousPayment) {
+        if (tablePreviousPayment == null) {
+            throw new DaoException("To-one property 'businessWithHoldingRowId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.tablePreviousPayment = tablePreviousPayment;
+            businessWithHoldingRowId = tablePreviousPayment.getId();
+            tablePreviousPayment__resolvedKey = businessWithHoldingRowId;
+        }
+        this.tablePreviousPayment = tablePreviousPayment;
+    }
+
+    public long getBusinessWithHoldingRowId() {
+        return businessWithHoldingRowId;
+    }
+
+    public void setBusinessWithHoldingRowId(long businessWithHoldingRowId) {
+        this.businessWithHoldingRowId = businessWithHoldingRowId;
+    }
 
     public TableBusinessWithHolding(){}
 
 
-    public TableBusinessWithHolding(Long id, ArrayList<TableAmount> businessExpenses, ArrayList<TableAmount> payrollAmount
-            , ArrayList<TableAmount> payrollTaxes)
+    public TableBusinessWithHolding(Long id, long businessWithHoldingRowId)
     {
         this.id=id;
-        this.businessExpenses=businessExpenses;
-        this.payrollAmount=payrollAmount;
-        this.payrollTaxes=payrollTaxes;
+        this.businessWithHoldingRowId=businessWithHoldingRowId;
     }
 
     public Long getId() {
@@ -34,27 +89,48 @@ public class TableBusinessWithHolding {
         this.id = id;
     }
 
-    public ArrayList<TableAmount> getBusinessExpenses() {
-        return businessExpenses;
-    }
+    public TablePayrollAmount getPayrollAmount() {
 
-    public void setBusinessExpenses(ArrayList<TableAmount> businessExpenses) {
-        this.businessExpenses = businessExpenses;
-    }
-
-    public ArrayList<TableAmount> getPayrollAmount() {
+        if (payrollAmount == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePayrollAmountDao targetDao = daoSession.getTablePayrollAmountDao();
+            List<TablePayrollAmount> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(payrollAmount == null&& FieldsNew.size()!=0) {
+                    payrollAmount = FieldsNew.get(0);
+                }
+            }
+        }
         return payrollAmount;
     }
 
-    public void setPayrollAmount(ArrayList<TableAmount> payrollAmount) {
+    public void setPayrollAmount(TablePayrollAmount payrollAmount) {
         this.payrollAmount = payrollAmount;
     }
 
-    public ArrayList<TableAmount> getPayrollTaxes() {
-        return payrollTaxes;
+    /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
     }
 
-    public void setPayrollTaxes(ArrayList<TableAmount> payrollTaxes) {
-        this.payrollTaxes = payrollTaxes;
+    /** Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context. */
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
     }
 }

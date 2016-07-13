@@ -98,11 +98,11 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (payrollSummaryList == null) {}
         else if (payrollSummaryList.isEmpty()) {}
-        else
-            bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
-       /* else if(position==1)
+        else if(position==0)
+            bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
+       else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
-        else if(position==2)
+        /*else if(position==2)
             bindViewHolder_Last_Payroll((LastPayrollViewHolder) viewHolder, position);*/
 
     }
@@ -115,7 +115,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (payrollSummaryList.isEmpty()) {
             count = 1;
         } else if(payrollSummaryList.get(0).getNext_payroll()==null||payrollSummaryList.get(0).getLast_payroll()==null){
-            count = 1;
+            count = 2;
         }
         return count;
     }
@@ -131,11 +131,11 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
            //return itemViewType = ITEM_VIEW_TYPE__LOADING;
         } else if (payrollSummaryList.isEmpty()) {
            // return itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
-        }else
+        }else if(position==0)
             itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
-        /*if (position==1)
+        else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
-        if (position==2)
+        /*if (position==2)
             return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;*/
         return itemViewType;
     }

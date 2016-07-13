@@ -1,10 +1,12 @@
 package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.dao.DaoException;
 
@@ -19,7 +21,7 @@ public class TablePreviousPayment {
     private Date date;
     private String previousPaymentId;
     private String mboId;
-
+    private TableBusinessWithHolding businessWithholding;
     public long getPreviousPaymentRowId() {
         return previousPaymentRowId;
     }
@@ -54,7 +56,7 @@ public class TablePreviousPayment {
             TablePayrollSummaryDao targetDao = daoSession.getTablePayrollSummaryDao();
             TablePayrollSummary tablePayrollSummary = targetDao.load(__key);
             synchronized (this) {
-                tablePayrollSummary = tablePayrollSummary;
+                this.tablePayrollSummary = tablePayrollSummary;
                 tablePayrollSummary__resolvedKey = __key;
             }
         }
@@ -128,6 +130,26 @@ public class TablePreviousPayment {
 
     public void setMboId(String mboId) {
         this.mboId = mboId;
+    }
+
+    public TableBusinessWithHolding getBusinessWithholding() {
+        if (businessWithholding == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableBusinessWithHoldingDao targetDao = daoSession.getTableBusinessWithHoldingDao();
+            List<TableBusinessWithHolding> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(businessWithholding == null&& FieldsNew.size()!=0) {
+                    businessWithholding = FieldsNew.get(0);
+                }
+            }
+        }
+        return businessWithholding;
+    }
+
+    public void setBusinessWithholding(TableBusinessWithHolding businessWithholding) {
+        this.businessWithholding = businessWithholding;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

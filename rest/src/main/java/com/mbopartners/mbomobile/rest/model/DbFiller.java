@@ -17,7 +17,9 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableTimeTaskDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableUserProfileDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
@@ -41,7 +43,9 @@ import com.mbopartners.mbomobile.rest.model.response.TimeTask;
 import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
@@ -90,10 +94,13 @@ public class DbFiller {
         TablePayrollSummaryDao tablePayrollSummaryDao = daoSession.getTablePayrollSummaryDao();
         TableNextPaymentDao tableNextPaymentDao=daoSession.getTableNextPaymentDao();
         TablePreviousPaymentDao tablePreviousPaymentDao=daoSession.getTablePreviousPaymentDao();
+        TableBusinessWithHoldingDao tableBusinessWithHoldingDao=daoSession.getTableBusinessWithHoldingDao();
+        TablePayrollAmountDao tablePayrollAmountDao=daoSession.getTablePayrollAmountDao();
         tablePayrollSummaryDao.deleteAll();
         tableNextPaymentDao.deleteAll();
         tablePreviousPaymentDao.deleteAll();
-
+        tableBusinessWithHoldingDao.deleteAll();
+        tablePayrollAmountDao.deleteAll();
     }
 
     public static void clearTablesForExpenses(DaoSession daoSession) {
@@ -134,13 +141,19 @@ public class DbFiller {
             long nextPaymentId=insertPayrollSummaryField(payrollSummary, daoSession);
             NextPayment nextPayment=payrollSummary.getNext_payroll();
             PreviousPayment previousPayment=payrollSummary.getLast_payroll();
+
             if (nextPayment!=null) {
                 if(nextPayment.isValid())
                 insertNextPaymentField(nextPayment, nextPaymentId, daoSession);
             }if(previousPayment!=null){
-                if(previousPayment.isValid())
-                insertPreviousPaymentField(previousPayment,nextPaymentId,daoSession);
-            }
+                if(previousPayment.isValid()) {
+                    long prevId=insertPreviousPaymentField(previousPayment, nextPaymentId, daoSession);
+                    /*BusinessWithHolding businessWithHolding = previousPayment.getBusinessWithholding();
+                    long businessId=insertBusinessWithHoldingField(businessWithHolding, prevId, daoSession);
+                    PayrollAmount payrollAmount=businessWithHolding.getPayrollAmount();
+                    insertBusiness_payrollAmountField(payrollAmount, businessId, daoSession);*/
+                }
+        }
 
     }
 
@@ -206,7 +219,16 @@ public class DbFiller {
     }
     public static long insertPreviousPaymentField(PreviousPayment previousPayment, long previousPaymentId,DaoSession daoSession) {
         TablePreviousPaymentDao dao = daoSession.getTablePreviousPaymentDao();
-        return dao.insert(Converter.toTable_payroll_prevPayment(previousPaymentId,previousPayment));
+        return dao.insert(Converter.toTable_payroll_prevPayment(previousPaymentId, previousPayment));
+    }
+    public static long insertBusinessWithHoldingField(BusinessWithHolding businessWithHolding, long nextPaymentId,DaoSession daoSession) {
+        TableBusinessWithHoldingDao dao = daoSession.getTableBusinessWithHoldingDao();
+        return dao.insert(Converter.toTable_payroll_businessWithHolding(nextPaymentId, businessWithHolding));
+    }
+
+    public static long insertBusiness_payrollAmountField(PayrollAmount payrollAmount, long nextPaymentId,DaoSession daoSession) {
+        TablePayrollAmountDao dao = daoSession.getTablePayrollAmountDao();
+        return dao.insert(Converter.toTable_payroll_business_payrollAmount(nextPaymentId, payrollAmount));
     }
 
     public static long insertDashboardField(DashboardField dashboardField, long dashboardId, DaoSession daoSession) {
