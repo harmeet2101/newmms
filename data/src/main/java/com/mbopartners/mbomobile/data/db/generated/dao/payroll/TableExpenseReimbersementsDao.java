@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessWithHolding;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableExpenseReimbersements;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
- * Created by MboAdil on 13/7/16.
+ * Created by MboAdil on 15/7/16.
  */
-public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long> {
+public class TableExpenseReimbersementsDao extends AbstractDao<TableExpenseReimbersements, Long> {
 
-    public static final String TABLENAME = "TABLE_PAYROLL_AMOUNT";
-    private Query<TablePayrollAmount> tableBusinessPaymentAmount_FieldsQuery;
+    public static final String TABLENAME = "TABLE_PERSON_EXPENSE_REIMBERSEMENTS";
+    private Query<TableExpenseReimbersements> tablePersonExpenseReimbersements_FieldsQuery;
     private DaoSession daoSession;
 
     /**
@@ -37,14 +37,14 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
         public final static Property amountMtd = new Property(2, Double.class, "amountMtd", false, "amountMtd");
         public final static Property amountYtd = new Property(3, Double.class, "amountYtd", false, "amountYtd");
         public final static Property name = new Property(4, String.class, "name", false, "name");
-        public final static Property paymentAmountRowId = new Property(5, long.class, "paymentAmountRowId", false, "paymentAmountRowId");
+        public final static Property expenseReimbursementsRowId = new Property(5, long.class, "expenseReimbursementsRowId", false, "expenseReimbursementsRowId");
     };
 
-    public TablePayrollAmountDao(DaoConfig config) {
+    public TableExpenseReimbersementsDao(DaoConfig config) {
         super(config);
     }
 
-    public TablePayrollAmountDao(DaoConfig config, DaoSession daoSession) {
+    public TableExpenseReimbersementsDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
         this.daoSession=daoSession;
     }
@@ -52,23 +52,23 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_PAYROLL_AMOUNT\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_PERSON_EXPENSE_REIMBERSEMENTS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"amount\" REAL NOT NULL," +// 1: amount
                 "\"amountMtd\" REAL NOT NULL ," + // 2: amountMtd
                 "\"amountYtd\" REAL NOT NULL ," + // 3: amountYtd
                 "\"name\" TEXT NOT NULL," +
-                "\"paymentAmountRowId\" INTEGER NOT NULL);");
+                "\"expenseReimbursementsRowId\" INTEGER NOT NULL);");
     }
 
     /** Drops the underlying database table. */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_PAYROLL_AMOUNT\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_PERSON_EXPENSE_REIMBERSEMENTS\"";
         db.execSQL(sql);
     }
     /** @inheritdoc */
     @Override
-    protected void bindValues(SQLiteStatement stmt, TablePayrollAmount entity) {
+    protected void bindValues(SQLiteStatement stmt, TableExpenseReimbersements entity) {
         stmt.clearBindings();
 
         Long id = entity.getId();
@@ -90,8 +90,8 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
 
     /** @inheritdoc */
     @Override
-    public TablePayrollAmount readEntity(Cursor cursor, int offset) {
-        TablePayrollAmount entity = new TablePayrollAmount( //
+    public TableExpenseReimbersements readEntity(Cursor cursor, int offset) {
+        TableExpenseReimbersements entity = new TableExpenseReimbersements( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
                 cursor.getDouble(offset + 1), // amount
                 cursor.getDouble(offset + 2), // amountMtd
@@ -104,7 +104,7 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
 
     /** @inheritdoc */
     @Override
-    public void readEntity(Cursor cursor, TablePayrollAmount entity, int offset) {
+    public void readEntity(Cursor cursor, TableExpenseReimbersements entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setAmount(cursor.getInt(offset + 1));
         entity.setAmountMtd(cursor.getDouble(offset + 2));
@@ -116,14 +116,14 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
 
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(TablePayrollAmount entity, long rowId) {
+    protected Long updateKeyAfterInsert(TableExpenseReimbersements entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
 
     /** @inheritdoc */
     @Override
-    public Long getKey(TablePayrollAmount entity) {
+    public Long getKey(TableExpenseReimbersements entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -132,7 +132,7 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
     }
 
     @Override
-    protected void attachEntity(TablePayrollAmount entity) {
+    protected void attachEntity(TableExpenseReimbersements entity) {
         super.attachEntity(entity);
         entity.__setDaoSession(daoSession);
     }
@@ -145,16 +145,16 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
 
 
     /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
-    public List<TablePayrollAmount> _queryTableDashboard_Fields(long paymentAmountRowId) {
+    public List<TableExpenseReimbersements> _queryTableDashboard_Fields(long expenseReimbursementsRowId) {
         synchronized (this) {
-            if (tableBusinessPaymentAmount_FieldsQuery == null) {
-                QueryBuilder<TablePayrollAmount> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.paymentAmountRowId.eq(null));
-                tableBusinessPaymentAmount_FieldsQuery = queryBuilder.build();
+            if (tablePersonExpenseReimbersements_FieldsQuery == null) {
+                QueryBuilder<TableExpenseReimbersements> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.expenseReimbursementsRowId.eq(null));
+                tablePersonExpenseReimbersements_FieldsQuery = queryBuilder.build();
             }
         }
-        Query<TablePayrollAmount> query = tableBusinessPaymentAmount_FieldsQuery.forCurrentThread();
-        query.setParameter(0, paymentAmountRowId);
+        Query<TableExpenseReimbersements> query = tablePersonExpenseReimbersements_FieldsQuery.forCurrentThread();
+        query.setParameter(0, expenseReimbursementsRowId);
         return query.list();
     }
 
@@ -166,27 +166,27 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getTableBusinessWithHoldingDao().getAllColumns());
-            builder.append(" FROM TABLE_PAYROLL_AMOUNT T");
-            builder.append(" LEFT JOIN TABLE_PAYROLL_AMOUNT T0 ON T.\"paymentAmountRowId\"=T0.\"_id\"");
+            builder.append(" FROM TABLE_PERSON_EXPENSE_REIMBERSEMENTS T");
+            builder.append(" LEFT JOIN TABLE_PERSON_EXPENSE_REIMBERSEMENTS T0 ON T.\"expenseReimbursementsRowId\"=T0.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
         return selectDeep;
     }
 
-    protected TablePayrollAmount loadCurrentDeep(Cursor cursor, boolean lock) {
-        TablePayrollAmount entity = loadCurrent(cursor, 0, lock);
+    protected TableExpenseReimbersements loadCurrentDeep(Cursor cursor, boolean lock) {
+        TableExpenseReimbersements entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
-        TableBusinessWithHolding tableBusinessWithHolding = loadCurrentOther(daoSession.getTableBusinessWithHoldingDao(), cursor, offset);
-        if(tableBusinessWithHolding != null) {
-            entity.setTableBusinessWithHolding(tableBusinessWithHolding);
+        TablePersonalWithHolding tablePersonalWithHolding = loadCurrentOther(daoSession.getTablePersonWithHoldingDao(), cursor, offset);
+        if(tablePersonalWithHolding != null) {
+            entity.setTablePersonalWithHolding(tablePersonalWithHolding);
         }
 
         return entity;
     }
 
-    public TablePayrollAmount loadDeep(Long key) {
+    public TableExpenseReimbersements loadDeep(Long key) {
         assertSinglePk();
         if (key == null) {
             return null;
@@ -214,9 +214,9 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
     }
 
     /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<TablePayrollAmount> loadAllDeepFromCursor(Cursor cursor) {
+    public List<TableExpenseReimbersements> loadAllDeepFromCursor(Cursor cursor) {
         int count = cursor.getCount();
-        List<TablePayrollAmount> list = new ArrayList<TablePayrollAmount>(count);
+        List<TableExpenseReimbersements> list = new ArrayList<TableExpenseReimbersements>(count);
 
         if (cursor.moveToFirst()) {
             if (identityScope != null) {
@@ -236,7 +236,7 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
         return list;
     }
 
-    protected List<TablePayrollAmount> loadDeepAllAndCloseCursor(Cursor cursor) {
+    protected List<TableExpenseReimbersements> loadDeepAllAndCloseCursor(Cursor cursor) {
         try {
             return loadAllDeepFromCursor(cursor);
         } finally {
@@ -246,7 +246,7 @@ public class TablePayrollAmountDao extends AbstractDao<TablePayrollAmount, Long>
 
 
     /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<TablePayrollAmount> queryDeep(String where, String... selectionArg) {
+    public List<TableExpenseReimbersements> queryDeep(String where, String... selectionArg) {
         Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
         return loadDeepAllAndCloseCursor(cursor);
     }

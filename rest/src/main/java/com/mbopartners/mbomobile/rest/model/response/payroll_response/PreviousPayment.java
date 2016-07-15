@@ -25,6 +25,8 @@ public class PreviousPayment implements Serializable, Validatable {
     private String mboId;
     @SerializedName("businessWithholding")
     private BusinessWithHolding businessWithholding;
+    @SerializedName("personalWithholding")
+    private PersonWithHolding personalWithholding;
 
 
 
@@ -56,6 +58,15 @@ public class PreviousPayment implements Serializable, Validatable {
         this.mboId=mboId;
         this.businessWithholding=businessWithHolding;
 
+    }
+    public PreviousPayment(String businessCenterId,Date date,String id,String mboId,BusinessWithHolding businessWithHolding,PersonWithHolding personalWithholding)
+    {
+        this.businessCenterId=businessCenterId;
+        this.date=date;
+        this.id=id;
+        this.mboId=mboId;
+        this.businessWithholding=businessWithHolding;
+        this.personalWithholding=personalWithholding;
     }
     @Override
     public boolean isValid() {
@@ -106,5 +117,13 @@ public class PreviousPayment implements Serializable, Validatable {
 
     public void setMboId(String mboId) {
         this.mboId = mboId;
+    }
+
+    public PersonWithHolding getPersonalWithholding() {
+        return personalWithholding;
+    }
+
+    public void setPersonalWithholding(PersonWithHolding personalWithholding) {
+        this.personalWithholding = personalWithholding;
     }
 }

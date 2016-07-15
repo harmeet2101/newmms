@@ -157,6 +157,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity" />
         </activity>
+
+        <activity android:name=".activity.dashboard.payroll.PreviousPaymentsActivity"
+            android:label="@string/title_activity_payroll_previous_payments"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity" />
+        </activity>
     </application>
 
 </manifest>

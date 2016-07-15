@@ -46,6 +46,7 @@ import com.mbopartners.mbomobile.ui.activity.AutoLockActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.expense.ExpensePageFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.expense.ExpenseRecyclerViewAdapter;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollFragment;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollRecyclerViewAdapter;
 import com.mbopartners.mbomobile.ui.activity.dashboard.revenue.RevenuePageFragment;
 import com.mbopartners.mbomobile.ui.activity.dashboard.timesheet.SmartSectionedRecyclerViewAdapter;
 import com.mbopartners.mbomobile.ui.activity.dashboard.timesheet.TimePageFragment;
@@ -75,7 +76,7 @@ public class DashboardActivity extends AutoLockActivity
         TimePageFragment.TimeFragmentInteractionListener,
         ExpensePageFragment.ExpensesInteractionListener,
         SmartSectionedRecyclerViewAdapter.IAddTimeCallbackListener,
-        ExpenseRecyclerViewAdapter.IExpenseCallbackListener,PayrollFragment.PayrollFragmentInteractionListener {
+        ExpenseRecyclerViewAdapter.IExpenseCallbackListener,PayrollFragment.PayrollFragmentInteractionListener,PayrollRecyclerViewAdapter.IPreviousCallbackListener {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private static final String KEY_SAVED_INSTANCE_STATE__PAGE_INDEX = "int pageIndex";
@@ -829,7 +830,10 @@ public class DashboardActivity extends AutoLockActivity
         startActivity(ActivityIntentHelper.LogTimeActivityBuilder.getLogTimeActivity(this,workOrderId,timePeriodId,startDate));
     }
 
-
+    @Override
+    public void callbackPrevious() {
+        //startActivity(ActivityIntentHelper.PayrollActivityBuilder.getActivity(DashboardActivity.this));
+    }
 
 
     // ================================================================================

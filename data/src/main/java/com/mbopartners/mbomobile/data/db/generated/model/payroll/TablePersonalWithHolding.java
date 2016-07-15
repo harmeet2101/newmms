@@ -2,7 +2,17 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
 
 
+import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableExpenseReimbersementsDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.dao.DaoException;
 
 /**
  * Created by MboAdil on 5/7/16.
@@ -12,39 +22,28 @@ public class TablePersonalWithHolding {
 
     private Long id;
     /** Not-null value. */
-    private ArrayList<TableAmount>  afterTaxDeductions;
-    private ArrayList<TableAmount> beforeTaxDeductions;
-    private ArrayList<TableAmount> deposits;
-    private ArrayList<TableAmount> expenseReimbursements;
-    private ArrayList<TableAmount> grossAmount;
-    private ArrayList<TableAmount> netAmount;
-    private ArrayList<TableAmount> paycheckAmount;
-    private ArrayList<TableAmount> payrollTaxes;
-    private ArrayList<TableAmount> miscellaneousDeductions;
-    private String federalAllowance,federalStatus,livedInState,workedInState;
+    private long personWithHoldingRowId;
+    private TablePersonGrossAmount grossAmount;
+    private List<TablePersonPayrollTaxes> payrollTaxes;
+    private List<TableExpenseReimbersements> expenseReimbursements;
+    private transient DaoSession daoSession;
 
+    /** Used for active entity operations. */
+    private transient TablePersonWithHoldingDao myDao;
+
+    private TablePreviousPayment tablePreviousPayment;
+    private Long tablePreviousPayment__resolvedKey;
+
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getTablePersonWithHoldingDao() : null;
+    }
     public TablePersonalWithHolding(){}
 
-    public TablePersonalWithHolding(Long id, ArrayList<TableAmount> afterTaxDeductions, ArrayList<TableAmount> beforeTaxDeductions
-            , ArrayList<TableAmount> deposits, ArrayList<TableAmount> expenseReimbursements, ArrayList<TableAmount> grossAmount
-            , ArrayList<TableAmount> netAmount, ArrayList<TableAmount> paycheckAmount, ArrayList<TableAmount> payrollTaxes
-            , ArrayList<TableAmount> miscellaneousDeductions, String federalAllowance, String federalStatus
-            , String livedInState, String workedInState)
+    public TablePersonalWithHolding(Long id, long personWithHoldingRowId)
     {
-      this.id=id;
-        this.afterTaxDeductions=afterTaxDeductions;
-        this.beforeTaxDeductions=beforeTaxDeductions;
-        this.deposits=deposits;
-        this.expenseReimbursements=expenseReimbursements;
-        this.grossAmount=grossAmount;
-        this.netAmount=netAmount;
-        this.paycheckAmount=paycheckAmount;
-        this.payrollTaxes=payrollTaxes;
-        this.miscellaneousDeductions=miscellaneousDeductions;
-        this.federalAllowance=federalAllowance;
-        this.federalStatus=federalStatus;
-        this.livedInState=livedInState;
-        this.workedInState=workedInState;
+        this.id=id;
+        this.personWithHoldingRowId=personWithHoldingRowId;
     }
 
     public Long getId() {
@@ -55,107 +54,127 @@ public class TablePersonalWithHolding {
         this.id = id;
     }
 
-    public ArrayList<TableAmount> getAfterTaxDeductions() {
-        return afterTaxDeductions;
+    public long getPersonWithHoldingRowId() {
+        return personWithHoldingRowId;
     }
 
-    public void setAfterTaxDeductions(ArrayList<TableAmount> afterTaxDeductions) {
-        this.afterTaxDeductions = afterTaxDeductions;
+    public void setPersonWithHoldingRowId(long personWithHoldingRowId) {
+        this.personWithHoldingRowId = personWithHoldingRowId;
     }
 
-    public ArrayList<TableAmount> getBeforeTaxDeductions() {
-        return beforeTaxDeductions;
+
+    public TablePreviousPayment getTablePreviousPayment() {
+
+        long __key = this.personWithHoldingRowId;
+        if (tablePreviousPayment__resolvedKey == null || !tablePreviousPayment__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePreviousPaymentDao targetDao = daoSession.getTablePreviousPaymentDao();
+            TablePreviousPayment tablePreviousPayment = targetDao.load(__key);
+            synchronized (this) {
+
+                this.tablePreviousPayment = tablePreviousPayment;
+                tablePreviousPayment__resolvedKey = __key;
+            }
+        }
+        return tablePreviousPayment;
     }
 
-    public void setBeforeTaxDeductions(ArrayList<TableAmount> beforeTaxDeductions) {
-        this.beforeTaxDeductions = beforeTaxDeductions;
+    public void setTablePreviousPayment(TablePreviousPayment tablePreviousPayment) {
+        if (tablePreviousPayment == null) {
+            throw new DaoException("To-one property 'personWithHoldingRowId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.tablePreviousPayment = tablePreviousPayment;
+            personWithHoldingRowId = tablePreviousPayment.getId();
+            tablePreviousPayment__resolvedKey = personWithHoldingRowId;
+        }
+        this.tablePreviousPayment = tablePreviousPayment;
     }
 
-    public ArrayList<TableAmount> getDeposits() {
-        return deposits;
-    }
-
-    public void setDeposits(ArrayList<TableAmount> deposits) {
-        this.deposits = deposits;
-    }
-
-    public ArrayList<TableAmount> getExpenseReimbursements() {
-        return expenseReimbursements;
-    }
-
-    public void setExpenseReimbursements(ArrayList<TableAmount> expenseReimbursements) {
-        this.expenseReimbursements = expenseReimbursements;
-    }
-
-    public ArrayList<TableAmount> getGrossAmount() {
+    public TablePersonGrossAmount getGrossAmount() {
+        if (grossAmount == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonGrossAmountDao targetDao = daoSession.getTablePersonGrossAmountDao();
+            List<TablePersonGrossAmount> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(grossAmount == null&& FieldsNew.size()!=0) {
+                    grossAmount = FieldsNew.get(0);
+                }
+            }
+        }
         return grossAmount;
     }
 
-    public void setGrossAmount(ArrayList<TableAmount> grossAmount) {
+    public void setGrossAmount(TablePersonGrossAmount grossAmount) {
         this.grossAmount = grossAmount;
     }
 
-    public ArrayList<TableAmount> getNetAmount() {
-        return netAmount;
-    }
-
-    public void setNetAmount(ArrayList<TableAmount> netAmount) {
-        this.netAmount = netAmount;
-    }
-
-    public ArrayList<TableAmount> getPaycheckAmount() {
-        return paycheckAmount;
-    }
-
-    public void setPaycheckAmount(ArrayList<TableAmount> paycheckAmount) {
-        this.paycheckAmount = paycheckAmount;
-    }
-
-    public ArrayList<TableAmount> getPayrollTaxes() {
+    public List<TablePersonPayrollTaxes> getPayrollTaxes() {
+        if (payrollTaxes == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonPayrollTaxesDao targetDao = daoSession.getTablePersonPayrollTaxesDao();
+            List<TablePersonPayrollTaxes> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(payrollTaxes == null&& FieldsNew.size()!=0) {
+                    payrollTaxes = FieldsNew;
+                }
+            }
+        }
         return payrollTaxes;
     }
 
-    public void setPayrollTaxes(ArrayList<TableAmount> payrollTaxes) {
+    public void setPayrollTaxes(List<TablePersonPayrollTaxes> payrollTaxes) {
         this.payrollTaxes = payrollTaxes;
     }
 
-    public ArrayList<TableAmount> getMiscellaneousDeductions() {
-        return miscellaneousDeductions;
+    public List<TableExpenseReimbersements> getExpenseReimbursements() {
+
+        if (expenseReimbursements == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableExpenseReimbersementsDao targetDao = daoSession.getTableExpenseReimbersementsDao();
+            List<TableExpenseReimbersements> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(expenseReimbursements == null&& FieldsNew.size()!=0) {
+                    expenseReimbursements = FieldsNew;
+                }
+            }
+        }
+        return expenseReimbursements;
     }
 
-    public void setMiscellaneousDeductions(ArrayList<TableAmount> miscellaneousDeductions) {
-        this.miscellaneousDeductions = miscellaneousDeductions;
+    public void setExpenseReimbursements(List<TableExpenseReimbersements> expenseReimbursements) {
+        this.expenseReimbursements = expenseReimbursements;
+    }
+    /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
     }
 
-    public String getFederalAllowance() {
-        return federalAllowance;
+    /** Convenient call for {@link AbstractDao#update(Object)}. Entity must attached to an entity context. */
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
     }
 
-    public void setFederalAllowance(String federalAllowance) {
-        this.federalAllowance = federalAllowance;
+    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
     }
 
-    public String getFederalStatus() {
-        return federalStatus;
-    }
-
-    public void setFederalStatus(String federalStatus) {
-        this.federalStatus = federalStatus;
-    }
-
-    public String getLivedInState() {
-        return livedInState;
-    }
-
-    public void setLivedInState(String livedInState) {
-        this.livedInState = livedInState;
-    }
-
-    public String getWorkedInState() {
-        return workedInState;
-    }
-
-    public void setWorkedInState(String workedInState) {
-        this.workedInState = workedInState;
-    }
 }

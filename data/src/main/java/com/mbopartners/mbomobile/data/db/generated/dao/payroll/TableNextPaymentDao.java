@@ -54,6 +54,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
 
     public TableNextPaymentDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession=daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -61,14 +62,14 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TABLE_NEXT_PAYMENT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," +     // 0: id
-                "\"amount\" REAL NOT NULL,"+                     // 1: amount
+                "\"amount\" REAL NOT NULL," +                     // 1: amount
                 "\"businessCenterId\" TEXT NOT NULL ," + // 2: businessCenterId
                 "\"calculationMethod\" TEXT NOT NULL ," + // 3: calculationMethod
-                "\"endDate\" INTEGER NOT NULL,"+          // 4.endDate
-                "\"startDate\" INTEGER NOT NULL,"+        //5.startDate
-                "\"frequency\" TEXT NOT NULL,"+           // 6.frequency
-                "\"nextPaymentId\" TEXT NOT NULL,"+       //   7.nextPaymentId
-                "\"mboId\" TEXT NOT NULL,"+           // 8: mboId
+                "\"endDate\" INTEGER NOT NULL," +          // 4.endDate
+                "\"startDate\" INTEGER NOT NULL," +        //5.startDate
+                "\"frequency\" TEXT NOT NULL," +           // 6.frequency
+                "\"nextPaymentId\" TEXT NOT NULL," +       //   7.nextPaymentId
+                "\"mboId\" TEXT NOT NULL," +           // 8: mboId
                 "\"nextPaymentRowId\" INTEGER NOT NULL );");
     }
 
@@ -76,6 +77,12 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_NEXT_PAYMENT\"";
         db.execSQL(sql);
+    }
+
+    @Override
+    protected void attachEntity(TableNextPayment entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
     /** @inheritdoc */
     @Override

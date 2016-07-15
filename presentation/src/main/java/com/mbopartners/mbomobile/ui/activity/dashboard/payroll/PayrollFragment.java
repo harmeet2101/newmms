@@ -78,7 +78,7 @@ public class PayrollFragment extends Fragment {
         payrollRecyclerView = (RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         payrollRecyclerView.setHasFixedSize(true);
         payrollRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new PayrollRecyclerViewAdapter(context,mListener.getPayrollSummaryData());
+        adapter = new PayrollRecyclerViewAdapter(getActivity(),mListener.getPayrollSummaryData());
         payrollRecyclerView.setAdapter(adapter);
         return fragmentRootView;
     }

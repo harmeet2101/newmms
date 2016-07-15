@@ -1,17 +1,20 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.toast.ActivityToaster;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
 
 import java.util.List;
@@ -36,11 +39,14 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<PayrollField> payrollFields;
 
     private List<PayrollSummary> payrollSummaryList;
+    private IPreviousCallbackListener iPreviousCallbackListener;
+
 
     public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList) {
 
         this.context=context;
         this.payrollSummaryList=payrollSummaryList;
+        this.iPreviousCallbackListener=(IPreviousCallbackListener)context;
     }
 
     @Override
@@ -72,12 +78,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 viewHolder = new NextPayrollViewHolder(itemView);
                 break;
             }
-            case ITEM_VIEW_TYPE__LAST_PAYROLL : {
+            /*case ITEM_VIEW_TYPE__LAST_PAYROLL : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.item_dashboard_payroll, parent, false);
                 viewHolder = new LastPayrollViewHolder(itemView);
                 break;
-            }
+            }*/
 
             default : {
                 viewHolder = null;
@@ -102,8 +108,6 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
        else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
-        /*else if(position==2)
-            bindViewHolder_Last_Payroll((LastPayrollViewHolder) viewHolder, position);*/
 
     }
 
@@ -114,9 +118,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             count = 1;
         } else if (payrollSummaryList.isEmpty()) {
             count = 1;
-        } else if(payrollSummaryList.get(0).getNext_payroll()==null||payrollSummaryList.get(0).getLast_payroll()==null){
+        } else
             count = 2;
-        }
+
         return count;
     }
 
@@ -130,13 +134,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if (payrollSummaryList == null) {
            //return itemViewType = ITEM_VIEW_TYPE__LOADING;
         } else if (payrollSummaryList.isEmpty()) {
-           // return itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
+           //itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         }else if(position==0)
-            itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
+            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
         else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
-        /*if (position==2)
-            return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;*/
+
         return itemViewType;
     }
 
@@ -178,15 +181,13 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_NEXT_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_NEXT_PAYMENT);
         viewHolder.work_order_name_TextView.setText("Unscheduled");
-        //viewHolder.periodTextview.setText(payrollField.getTimePeriodField());
+
 
     }
     public void bindViewHolder_Last_Payroll(LastPayrollViewHolder viewHolder, int position) {
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
-        //viewHolder.work_order_name_TextView.setText("$" + payrollSummaryList.get(payrollSummaryList.size() - 1).getNext_payroll().getAmount().toString());
-        //viewHolder.periodTextview.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(payrollSummaryList.size()-1).getNext_payroll().getStartDate()));
         viewHolder.includeView.setVisibility(View.GONE);
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -213,7 +214,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public static class NextPayrollViewHolder extends RecyclerView.ViewHolder {
+    public class NextPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -228,6 +229,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
+            this.itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            iPreviousCallbackListener.callbackPrevious();
         }
     }
 
@@ -247,5 +254,10 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
         }
+    }
+
+
+    public interface IPreviousCallbackListener{
+        void callbackPrevious();
     }
 }

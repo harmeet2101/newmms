@@ -50,4 +50,5 @@ dependencies {
     compile project(':MDFramework')
 
 
+    compile 'de.greenrobot:greendao-generator:2.0.0'
 }

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollAmount;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import ua.com.mobidev.android.mdrest.web.model.validation.Validatable;
 import ua.com.mobidev.android.mdrest.web.model.validation.ValidationHelper;
@@ -17,17 +19,34 @@ public class BusinessWithHolding implements Serializable,Validatable {
 
     @SerializedName("payrollAmount")
     private PayrollAmount payrollAmount;
+    @SerializedName("businessExpenses")
+    private List<BusinessExpenses> businessExpenses = new ArrayList<BusinessExpenses>();
+    @SerializedName("payrollTaxes")
+    private List<BusinessPayrollTaxes> payrollTaxes = new ArrayList<BusinessPayrollTaxes>();
 
 
     public BusinessWithHolding(PayrollAmount payrollAmount)
     {
         this.payrollAmount=payrollAmount;
     }
+
+    public BusinessWithHolding(PayrollAmount payrollAmount,List<BusinessExpenses> businessExpenses)
+    {
+        this.payrollAmount=payrollAmount;
+        this.businessExpenses=businessExpenses;
+    }
+    public BusinessWithHolding(PayrollAmount payrollAmount,List<BusinessExpenses> businessExpenses,List<BusinessPayrollTaxes> payrollTaxes)
+    {
+        this.payrollAmount=payrollAmount;
+        this.businessExpenses=businessExpenses;
+        this.payrollTaxes=payrollTaxes;
+    }
+
     @Override
     public boolean isValid() {
         boolean result =
-                payrollAmount!=null/* &&
-                        name != null &&
+                payrollAmount!=null &&
+                        businessExpenses != null /*&&
                         mboId != null &&
                         balance != null && next_payroll!=null*/;
 
@@ -35,11 +54,9 @@ public class BusinessWithHolding implements Serializable,Validatable {
 
             ValidationHelper.Screamer screamer = new ValidationHelper.Screamer(TAG, "");
             screamer.sayIfIsNull("payrollAmount", payrollAmount);
-            /*screamer.sayIfIsNull("name", name);
-            //screamer.sayIfIsNull("mboId", mboId);
-            screamer.sayIfIsNull("balance", balance);*//*
-            screamer.sayIfIsNull("next_payroll", next_payroll);
-            screamer.sayIfIsNull("last_payroll", last_payroll);*/
+            screamer.sayIfIsNull("businessExpenses", businessExpenses);
+            screamer.sayIfIsNull("payrollTaxes", payrollTaxes);
+
         }
         return result;
     }
@@ -52,4 +69,22 @@ public class BusinessWithHolding implements Serializable,Validatable {
     public void setPayrollAmount(PayrollAmount payrollAmount) {
         this.payrollAmount = payrollAmount;
     }
+
+    public List<BusinessExpenses> getBusinessExpenses() {
+        return businessExpenses;
+    }
+
+    public void setBusinessExpenses(List<BusinessExpenses> businessExpenses) {
+        this.businessExpenses = businessExpenses;
+    }
+
+    public List<BusinessPayrollTaxes> getPayrollTaxes() {
+        return payrollTaxes;
+    }
+
+    public void setPayrollTaxes(List<BusinessPayrollTaxes> payrollTaxes) {
+        this.payrollTaxes = payrollTaxes;
+    }
+
+
 }

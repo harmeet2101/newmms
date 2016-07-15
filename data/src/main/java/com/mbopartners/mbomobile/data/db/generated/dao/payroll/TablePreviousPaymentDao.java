@@ -47,6 +47,7 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
 
     public TablePreviousPaymentDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession=daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -177,6 +178,12 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
         }
 
         return entity;
+    }
+
+    @Override
+    protected void attachEntity(TablePreviousPayment entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     public TablePreviousPayment loadDeep(Long key) {

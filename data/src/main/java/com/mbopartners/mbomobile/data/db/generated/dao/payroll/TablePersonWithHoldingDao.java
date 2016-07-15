@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessWithHolding;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
 
 import java.util.ArrayList;
@@ -19,24 +20,24 @@ import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
- * Created by MboAdil on 13/7/16.
+ * Created by MboAdil on 14/7/16.
  */
-public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHolding, Long> {
+public class TablePersonWithHoldingDao extends AbstractDao<TablePersonalWithHolding, Long> {
 
-    public static final String TABLENAME = "TABLE_BUSINESS_HOLDING";
-    private Query<TableBusinessWithHolding> tableBusinessWithHolding_FieldsQuery;
+    public static final String TABLENAME = "TABLE_PERSON_HOLDING";
+    private Query<TablePersonalWithHolding> tablePersonWithHolding_FieldsQuery;
     private DaoSession daoSession;
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property businessWithHoldingRowId = new Property(1, long.class, "businessWithHoldingRowId", false, "businessWithHoldingRowId");
+        public final static Property personWithHoldingRowId = new Property(1, long.class, "personWithHoldingRowId", false, "personWithHoldingRowId");
     };
 
-    public TableBusinessWithHoldingDao(DaoConfig config) {
+    public TablePersonWithHoldingDao(DaoConfig config) {
         super(config);
     }
 
-    public TableBusinessWithHoldingDao(DaoConfig config, DaoSession daoSession) {
+    public TablePersonWithHoldingDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
         this.daoSession=daoSession;
     }
@@ -44,26 +45,26 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_BUSINESS_HOLDING\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_PERSON_HOLDING\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"businessWithHoldingRowId\" INTEGER NOT NULL );");
+                "\"personWithHoldingRowId\" INTEGER NOT NULL );");
     }
 
     /** Drops the underlying database table. */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_BUSINESS_HOLDING\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_PERSON_HOLDING\"";
         db.execSQL(sql);
     }
     /** @inheritdoc */
     @Override
-    protected void bindValues(SQLiteStatement stmt, TableBusinessWithHolding entity) {
+    protected void bindValues(SQLiteStatement stmt, TablePersonalWithHolding entity) {
         stmt.clearBindings();
 
         Long id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getBusinessWithHoldingRowId());
+        stmt.bindLong(2, entity.getPersonWithHoldingRowId());
     }
 
     /** @inheritdoc */
@@ -74,8 +75,8 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    public TableBusinessWithHolding readEntity(Cursor cursor, int offset) {
-        TableBusinessWithHolding entity = new TableBusinessWithHolding( //
+    public TablePersonalWithHolding readEntity(Cursor cursor, int offset) {
+        TablePersonalWithHolding entity = new TablePersonalWithHolding( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
                 cursor.getLong(offset + 1)
         );
@@ -84,22 +85,22 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    public void readEntity(Cursor cursor, TableBusinessWithHolding entity, int offset) {
+    public void readEntity(Cursor cursor, TablePersonalWithHolding entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setBusinessWithHoldingRowId(cursor.getLong(offset + 1));
+        entity.setPersonWithHoldingRowId(cursor.getLong(offset + 1));
 
     }
 
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(TableBusinessWithHolding entity, long rowId) {
+    protected Long updateKeyAfterInsert(TablePersonalWithHolding entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
 
     /** @inheritdoc */
     @Override
-    public Long getKey(TableBusinessWithHolding entity) {
+    public Long getKey(TablePersonalWithHolding entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -107,7 +108,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         }
     }
     @Override
-    protected void attachEntity(TableBusinessWithHolding entity) {
+    protected void attachEntity(TablePersonalWithHolding entity) {
         super.attachEntity(entity);
         entity.__setDaoSession(daoSession);
     }
@@ -119,16 +120,16 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     }
 
     /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
-    public List<TableBusinessWithHolding> _queryTableDashboard_Fields(long businessWithHoldingRowId) {
+    public List<TablePersonalWithHolding> _queryTableDashboard_Fields(long personWithHoldingRowId) {
         synchronized (this) {
-            if (tableBusinessWithHolding_FieldsQuery == null) {
-                QueryBuilder<TableBusinessWithHolding> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.businessWithHoldingRowId.eq(null));
-                tableBusinessWithHolding_FieldsQuery = queryBuilder.build();
+            if (tablePersonWithHolding_FieldsQuery == null) {
+                QueryBuilder<TablePersonalWithHolding> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.personWithHoldingRowId.eq(null));
+                tablePersonWithHolding_FieldsQuery = queryBuilder.build();
             }
         }
-        Query<TableBusinessWithHolding> query = tableBusinessWithHolding_FieldsQuery.forCurrentThread();
-        query.setParameter(0, businessWithHoldingRowId);
+        Query<TablePersonalWithHolding> query = tablePersonWithHolding_FieldsQuery.forCurrentThread();
+        query.setParameter(0, personWithHoldingRowId);
         return query.list();
     }
 
@@ -140,16 +141,16 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getTablePreviousPaymentDao().getAllColumns());
-            builder.append(" FROM TABLE_BUSINESS_HOLDING T");
-            builder.append(" LEFT JOIN TABLE_BUSINESS_HOLDING T0 ON T.\"businessWithHoldingRowId\"=T0.\"_id\"");
+            builder.append(" FROM TABLE_PERSON_HOLDING T");
+            builder.append(" LEFT JOIN TABLE_PERSON_HOLDING T0 ON T.\"personWithHoldingRowId\"=T0.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
         return selectDeep;
     }
 
-    protected TableBusinessWithHolding loadCurrentDeep(Cursor cursor, boolean lock) {
-        TableBusinessWithHolding entity = loadCurrent(cursor, 0, lock);
+    protected TablePersonalWithHolding loadCurrentDeep(Cursor cursor, boolean lock) {
+        TablePersonalWithHolding entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
         TablePreviousPayment tablePreviousPayment = loadCurrentOther(daoSession.getTablePreviousPaymentDao(), cursor, offset);
@@ -160,7 +161,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return entity;
     }
 
-    public TableBusinessWithHolding loadDeep(Long key) {
+    public TablePersonalWithHolding loadDeep(Long key) {
         assertSinglePk();
         if (key == null) {
             return null;
@@ -188,9 +189,9 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     }
 
     /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<TableBusinessWithHolding> loadAllDeepFromCursor(Cursor cursor) {
+    public List<TablePersonalWithHolding> loadAllDeepFromCursor(Cursor cursor) {
         int count = cursor.getCount();
-        List<TableBusinessWithHolding> list = new ArrayList<TableBusinessWithHolding>(count);
+        List<TablePersonalWithHolding> list = new ArrayList<TablePersonalWithHolding>(count);
 
         if (cursor.moveToFirst()) {
             if (identityScope != null) {
@@ -210,7 +211,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return list;
     }
 
-    protected List<TableBusinessWithHolding> loadDeepAllAndCloseCursor(Cursor cursor) {
+    protected List<TablePersonalWithHolding> loadDeepAllAndCloseCursor(Cursor cursor) {
         try {
             return loadAllDeepFromCursor(cursor);
         } finally {
@@ -220,7 +221,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
 
     /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<TableBusinessWithHolding> queryDeep(String where, String... selectionArg) {
+    public List<TablePersonalWithHolding> queryDeep(String where, String... selectionArg) {
         Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
         return loadDeepAllAndCloseCursor(cursor);
     }

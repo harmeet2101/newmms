@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessWithHolding;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonGrossAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,24 +19,32 @@ import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
- * Created by MboAdil on 13/7/16.
+ * Created by MboAdil on 15/7/16.
  */
-public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHolding, Long> {
+public class TablePersonGrossAmountDao extends AbstractDao<TablePersonGrossAmount, Long> {
 
-    public static final String TABLENAME = "TABLE_BUSINESS_HOLDING";
-    private Query<TableBusinessWithHolding> tableBusinessWithHolding_FieldsQuery;
+    public static final String TABLENAME = "TABLE_GROSS_AMOUNT";
+    private Query<TablePersonGrossAmount> tablePersonGrossAmount_FieldsQuery;
     private DaoSession daoSession;
 
+    /**
+     * Properties of entity TableAmount.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property businessWithHoldingRowId = new Property(1, long.class, "businessWithHoldingRowId", false, "businessWithHoldingRowId");
+        public final static Property amount = new Property(1, Double.class, "amount", false, "amount");
+        public final static Property amountMtd = new Property(2, Double.class, "amountMtd", false, "amountMtd");
+        public final static Property amountYtd = new Property(3, Double.class, "amountYtd", false, "amountYtd");
+        public final static Property name = new Property(4, String.class, "name", false, "name");
+        public final static Property grossAmountRowId = new Property(5, long.class, "grossAmountRowId", false, "grossAmountRowId");
     };
 
-    public TableBusinessWithHoldingDao(DaoConfig config) {
+    public TablePersonGrossAmountDao(DaoConfig config) {
         super(config);
     }
 
-    public TableBusinessWithHoldingDao(DaoConfig config, DaoSession daoSession) {
+    public TablePersonGrossAmountDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
         this.daoSession=daoSession;
     }
@@ -44,26 +52,34 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_BUSINESS_HOLDING\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_GROSS_AMOUNT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"businessWithHoldingRowId\" INTEGER NOT NULL );");
+                "\"amount\" REAL NOT NULL," +// 1: amount
+                "\"amountMtd\" REAL NOT NULL ," + // 2: amountMtd
+                "\"amountYtd\" REAL NOT NULL ," + // 3: amountYtd
+                "\"name\" TEXT NOT NULL," +
+                "\"grossAmountRowId\" INTEGER NOT NULL);");
     }
 
     /** Drops the underlying database table. */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_BUSINESS_HOLDING\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_GROSS_AMOUNT\"";
         db.execSQL(sql);
     }
     /** @inheritdoc */
     @Override
-    protected void bindValues(SQLiteStatement stmt, TableBusinessWithHolding entity) {
+    protected void bindValues(SQLiteStatement stmt, TablePersonGrossAmount entity) {
         stmt.clearBindings();
 
         Long id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getBusinessWithHoldingRowId());
+        stmt.bindDouble(2, entity.getAmount());
+        stmt.bindDouble(3, entity.getAmountMtd());
+        stmt.bindDouble(4, entity.getAmountYtd());
+        stmt.bindString(5, entity.getName());
+        stmt.bindLong(6, entity.getPaymentAmountRowId());
     }
 
     /** @inheritdoc */
@@ -74,40 +90,49 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    public TableBusinessWithHolding readEntity(Cursor cursor, int offset) {
-        TableBusinessWithHolding entity = new TableBusinessWithHolding( //
+    public TablePersonGrossAmount readEntity(Cursor cursor, int offset) {
+        TablePersonGrossAmount entity = new TablePersonGrossAmount( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-                cursor.getLong(offset + 1)
+                cursor.getDouble(offset + 1), // amount
+                cursor.getDouble(offset + 2), // amountMtd
+                cursor.getDouble(offset + 3), // amountYtd
+                cursor.getString(offset + 4),// name
+                cursor.getLong(offset + 5)
         );
         return entity;
     }
 
     /** @inheritdoc */
     @Override
-    public void readEntity(Cursor cursor, TableBusinessWithHolding entity, int offset) {
+    public void readEntity(Cursor cursor, TablePersonGrossAmount entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setBusinessWithHoldingRowId(cursor.getLong(offset + 1));
+        entity.setAmount(cursor.getInt(offset + 1));
+        entity.setAmountMtd(cursor.getDouble(offset + 2));
+        entity.setAmountYtd(cursor.getDouble(offset + 3));
+        entity.setName(cursor.getString(offset + 4));
+        entity.setPaymentAmountRowId(cursor.getLong(offset + 5));
 
     }
 
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(TableBusinessWithHolding entity, long rowId) {
+    protected Long updateKeyAfterInsert(TablePersonGrossAmount entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
 
     /** @inheritdoc */
     @Override
-    public Long getKey(TableBusinessWithHolding entity) {
+    public Long getKey(TablePersonGrossAmount entity) {
         if(entity != null) {
             return entity.getId();
         } else {
             return null;
         }
     }
+
     @Override
-    protected void attachEntity(TableBusinessWithHolding entity) {
+    protected void attachEntity(TablePersonGrossAmount entity) {
         super.attachEntity(entity);
         entity.__setDaoSession(daoSession);
     }
@@ -118,17 +143,18 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return true;
     }
 
+
     /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
-    public List<TableBusinessWithHolding> _queryTableDashboard_Fields(long businessWithHoldingRowId) {
+    public List<TablePersonGrossAmount> _queryTableDashboard_Fields(long grossAmountRowId) {
         synchronized (this) {
-            if (tableBusinessWithHolding_FieldsQuery == null) {
-                QueryBuilder<TableBusinessWithHolding> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.businessWithHoldingRowId.eq(null));
-                tableBusinessWithHolding_FieldsQuery = queryBuilder.build();
+            if (tablePersonGrossAmount_FieldsQuery == null) {
+                QueryBuilder<TablePersonGrossAmount> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.grossAmountRowId.eq(null));
+                tablePersonGrossAmount_FieldsQuery = queryBuilder.build();
             }
         }
-        Query<TableBusinessWithHolding> query = tableBusinessWithHolding_FieldsQuery.forCurrentThread();
-        query.setParameter(0, businessWithHoldingRowId);
+        Query<TablePersonGrossAmount> query = tablePersonGrossAmount_FieldsQuery.forCurrentThread();
+        query.setParameter(0, grossAmountRowId);
         return query.list();
     }
 
@@ -139,28 +165,28 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
             StringBuilder builder = new StringBuilder("SELECT ");
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getTablePreviousPaymentDao().getAllColumns());
-            builder.append(" FROM TABLE_BUSINESS_HOLDING T");
-            builder.append(" LEFT JOIN TABLE_BUSINESS_HOLDING T0 ON T.\"businessWithHoldingRowId\"=T0.\"_id\"");
+            SqlUtils.appendColumns(builder, "T0", daoSession.getTablePersonWithHoldingDao().getAllColumns());
+            builder.append(" FROM TABLE_GROSS_AMOUNT T");
+            builder.append(" LEFT JOIN TABLE_GROSS_AMOUNT T0 ON T.\"grossAmountRowId\"=T0.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
         return selectDeep;
     }
 
-    protected TableBusinessWithHolding loadCurrentDeep(Cursor cursor, boolean lock) {
-        TableBusinessWithHolding entity = loadCurrent(cursor, 0, lock);
+    protected TablePersonGrossAmount loadCurrentDeep(Cursor cursor, boolean lock) {
+        TablePersonGrossAmount entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
-        TablePreviousPayment tablePreviousPayment = loadCurrentOther(daoSession.getTablePreviousPaymentDao(), cursor, offset);
-        if(tablePreviousPayment != null) {
-            entity.setTablePreviousPayment(tablePreviousPayment);
+        TablePersonalWithHolding tablePersonalWithHolding = loadCurrentOther(daoSession.getTablePersonWithHoldingDao(), cursor, offset);
+        if(tablePersonalWithHolding != null) {
+            entity.setTablePersonalWithHolding(tablePersonalWithHolding);
         }
 
         return entity;
     }
 
-    public TableBusinessWithHolding loadDeep(Long key) {
+    public TablePersonGrossAmount loadDeep(Long key) {
         assertSinglePk();
         if (key == null) {
             return null;
@@ -188,9 +214,9 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     }
 
     /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<TableBusinessWithHolding> loadAllDeepFromCursor(Cursor cursor) {
+    public List<TablePersonGrossAmount> loadAllDeepFromCursor(Cursor cursor) {
         int count = cursor.getCount();
-        List<TableBusinessWithHolding> list = new ArrayList<TableBusinessWithHolding>(count);
+        List<TablePersonGrossAmount> list = new ArrayList<TablePersonGrossAmount>(count);
 
         if (cursor.moveToFirst()) {
             if (identityScope != null) {
@@ -210,7 +236,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return list;
     }
 
-    protected List<TableBusinessWithHolding> loadDeepAllAndCloseCursor(Cursor cursor) {
+    protected List<TablePersonGrossAmount> loadDeepAllAndCloseCursor(Cursor cursor) {
         try {
             return loadAllDeepFromCursor(cursor);
         } finally {
@@ -220,8 +246,9 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
 
     /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<TableBusinessWithHolding> queryDeep(String where, String... selectionArg) {
+    public List<TablePersonGrossAmount> queryDeep(String where, String... selectionArg) {
         Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
         return loadDeepAllAndCloseCursor(cursor);
     }
 }
+

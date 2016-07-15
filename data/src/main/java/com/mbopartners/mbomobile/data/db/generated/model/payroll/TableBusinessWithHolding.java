@@ -1,7 +1,10 @@
 package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessExpensesDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessPayrollTaxesDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableExpenseReimbersementsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 
@@ -18,6 +21,9 @@ public class TableBusinessWithHolding {
     private Long  id;
     /** Not-null value. */
     private TablePayrollAmount payrollAmount;
+    private List<TableBusinessExpenses> businessExpenses;
+    private List<TableBusinessPayrollTaxes> payrollTaxes;
+
     private long businessWithHoldingRowId;
 
 
@@ -35,6 +41,27 @@ public class TableBusinessWithHolding {
         myDao = daoSession != null ? daoSession.getTableBusinessWithHoldingDao() : null;
     }
 
+    public List<TableBusinessPayrollTaxes> getPayrollTaxes() {
+        if (payrollTaxes == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableBusinessPayrollTaxesDao targetDao = daoSession.getTableBusinessPayrollTaxesDao();
+            List<TableBusinessPayrollTaxes> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(payrollTaxes == null&& FieldsNew.size()!=0) {
+                    payrollTaxes = FieldsNew;
+                }
+            }
+        }
+
+        return payrollTaxes;
+    }
+
+    public void setPayrollTaxes(List<TableBusinessPayrollTaxes> payrollTaxes) {
+        this.payrollTaxes = payrollTaxes;
+    }
+
     public TablePreviousPayment getTablePreviousPayment() {
 
         long __key = this.businessWithHoldingRowId;
@@ -45,6 +72,7 @@ public class TableBusinessWithHolding {
             TablePreviousPaymentDao targetDao = daoSession.getTablePreviousPaymentDao();
             TablePreviousPayment tablePreviousPayment = targetDao.load(__key);
             synchronized (this) {
+
                 tablePreviousPayment = tablePreviousPayment;
                 tablePreviousPayment__resolvedKey = __key;
             }
@@ -108,6 +136,29 @@ public class TableBusinessWithHolding {
 
     public void setPayrollAmount(TablePayrollAmount payrollAmount) {
         this.payrollAmount = payrollAmount;
+    }
+
+    public List<TableBusinessExpenses> getBusinessExpenses() {
+
+        if (businessExpenses == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableBusinessExpensesDao targetDao = daoSession.getTableBusinessExpensesDao();
+            List<TableBusinessExpenses> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(businessExpenses == null&& FieldsNew.size()!=0) {
+                    businessExpenses = FieldsNew;
+                }
+            }
+        }
+        return businessExpenses;
+    }
+
+
+
+    public void setBusinessExpenses(ArrayList<TableBusinessExpenses> businessExpenses) {
+        this.businessExpenses = businessExpenses;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

@@ -3,6 +3,7 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class TablePreviousPayment {
     private String previousPaymentId;
     private String mboId;
     private TableBusinessWithHolding businessWithholding;
+    private TablePersonalWithHolding personalWithholding;
     public long getPreviousPaymentRowId() {
         return previousPaymentRowId;
     }
@@ -150,6 +152,27 @@ public class TablePreviousPayment {
 
     public void setBusinessWithholding(TableBusinessWithHolding businessWithholding) {
         this.businessWithholding = businessWithholding;
+    }
+
+    public TablePersonalWithHolding getPersonalWithholding() {
+
+        if (personalWithholding == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonWithHoldingDao targetDao = daoSession.getTablePersonWithHoldingDao();
+            List<TablePersonalWithHolding> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(personalWithholding == null&& FieldsNew.size()!=0) {
+                    personalWithholding = FieldsNew.get(0);
+                }
+            }
+        }
+        return personalWithholding;
+    }
+
+    public void setPersonalWithholding(TablePersonalWithHolding personalWithholding) {
+        this.personalWithholding = personalWithholding;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

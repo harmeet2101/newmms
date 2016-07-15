@@ -43,8 +43,18 @@ public class MboDaoGenerator {
         Entity payroll_nextPayment_table=create_payroll_nextPayment_table();
         Entity payroll_previousPayment_table=create_payroll_previousPayment_table();
         Entity payroll_businessWithHolding_table=create_payroll_businessWithHolding_table();
+        Entity payroll_personWithHolding_table=create_payroll_personeWithHolding_table();
+        Entity payroll_personHolding_payrollTaxes_table=create_personHolding_payrollTaxes_table();
         Entity payroll_businessHolding_payment_amount_table=create_businessHolding_payment_amount_table();
+        Entity payroll_businessHolding_businessExpenses_table=create_businessHolding_businessExpenses_table();
+        Entity payroll_businessHolding_payrollTaxes_table=create_businessHolding_payrollTaxes_table();
+        Entity payroll_personal_expenseReimbersements_table=create_personal_expenseReimbersements_table();
+
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
+
+        Entity payroll_personWithHolding_gross_amount_table=create_businessHolding_gross_amount_table();
+
+
 
         addOneToManyRelation(dashboard, dashboardFields, "DashboardId", "Fields");
 
@@ -52,10 +62,19 @@ public class MboDaoGenerator {
         addToOneRelation(workOrder, company, "CompanyId");
         addOneToManyRelation(workOrder, timePeriod, "WorkOrderId", "TimePeriods");
         addOneToManyRelation(timePeriod, timeEntry, "TimePeriodId", "TimeEntries");
+
         addOneToManyRelation(payroll_summary_table,payroll_nextPayment_table,"nextPaymentRowId","next_payroll");
         addOneToManyRelation(payroll_summary_table,payroll_previousPayment_table,"previousPaymentRowId","last_payroll");
         addOneToManyRelation(payroll_previousPayment_table,payroll_businessWithHolding_table,"businessWithHoldingRowId","businessWithholding");
+        addOneToManyRelation(payroll_previousPayment_table,payroll_personWithHolding_table,"personWithHoldingRowId","personWithHoldingRowId");
+        addOneToManyRelation(payroll_personHolding_payrollTaxes_table,payroll_personWithHolding_table,"personPayrollTaxesRowId","payrollTaxes");
+        addOneToManyRelation(payroll_personal_expenseReimbersements_table,payroll_personWithHolding_table,"expenseReimbursementsRowId","expenseReimbursements");
+
         addOneToManyRelation(payroll_businessHolding_payment_amount_table,payroll_businessWithHolding_table,"paymentAmountRowId","payrollAmount");
+        addOneToManyRelation(payroll_businessHolding_businessExpenses_table,payroll_businessWithHolding_table,"businessExpensesRowId","businessExpenses");
+        addOneToManyRelation(payroll_businessHolding_payrollTaxes_table,payroll_businessWithHolding_table,"businessPayrollTaxesRowId","payrollTaxes");
+        addOneToManyRelation(payroll_personWithHolding_gross_amount_table,payroll_personWithHolding_table,"grossAmountRowId","grossAmount");
+
         addToOneRelation_String(expenses, expenseType, "MboExpenseTypeId", "ExpenseType");
         //addToOneWithoutPropertyRelation(expenses, workOrder, "WorkOrder", "MboId");
         addOneToManyRelation(expenses, expenseData, "ExpenseId", "ExpenseData");
@@ -327,6 +346,14 @@ public class MboDaoGenerator {
         return table;
     }
 
+    private static Entity create_payroll_personeWithHolding_table() {
+        Entity table = schema.addEntity("TablePersonWithHolding");
+        table.addIdProperty().autoincrement();
+
+        return table;
+
+    }
+
     private static Entity create_businessHolding_payment_amount_table() {
 
         Entity table = schema.addEntity("TableBusinessPaymentAmount");
@@ -337,6 +364,62 @@ public class MboDaoGenerator {
         table.addStringProperty("name");
         return table;
     }
+
+    private static Entity create_businessHolding_businessExpenses_table() {
+
+        Entity table = schema.addEntity("TableBusinessHoldingExpense");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
+
+    private static Entity create_businessHolding_payrollTaxes_table() {
+
+        Entity table = schema.addEntity("TableBusinessHoldingPayrollTaxes");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
+
+    private static Entity create_businessHolding_gross_amount_table() {
+        Entity table = schema.addEntity("TablePersonWithHoldingGrossAmount");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+
+    }
+
+    private static Entity create_personHolding_payrollTaxes_table() {
+
+        Entity table = schema.addEntity("TablePersonHoldingPayrollTaxes");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
+
+    private static Entity create_personal_expenseReimbersements_table() {
+
+        Entity table = schema.addEntity("TablePersonalExpenseReimbersements");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
+
 
     // ================================================================================
     // End of Tables declaration

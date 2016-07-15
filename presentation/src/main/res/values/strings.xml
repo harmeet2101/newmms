@@ -31,6 +31,7 @@
     <string name="title_activity_choose_time_period">Choose Project</string>
     <string name="title_activity_choose_expense_type">Expense</string>
     <string name="title_activity_log_expense">Expense Type</string>
+    <string name="title_activity_payroll_previous_payments">Previous Payments</string>
 
 
     <!-- Menu -->
