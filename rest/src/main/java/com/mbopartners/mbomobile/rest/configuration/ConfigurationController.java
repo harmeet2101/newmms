@@ -27,7 +27,11 @@ public class ConfigurationController extends AbstractApplicationController {
     private static final String OAUTH_PROD_CLIENT_SECRET = "4eb69d74-b9ac-4052-acef-f5884bc8fd2e";
 
     private static final String DEV_HOSTNAME="http://test.tanders.mbopartners.com/api/";
+
+    //private static final String DEV_HOSTNAME="http://66.208.23.234/";
+
     public static final String PAYROLL_DEV_HOSTNAME="http://66.208.23.234/";
+
     private SharedPreferencesController sharedPreferencesController;
     private EnvironmentConfiguration currentConfiguration;
 
@@ -121,17 +125,6 @@ public class ConfigurationController extends AbstractApplicationController {
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
                 );
-                /*result = new EnvironmentVariables(
-                        this.currentLockTimeout,
-                        this.currentDevHostname,
-                        this.currentDevOAuthHostname,
-                        this.currentSupportEmail,
-                        this.currentJoinUsLink,
-                        this.currentForgotPasswordLink,
-                        this.currentPrivacyPolicyLink,
-                        this.currentTermsAndConditionsLink,
-                        OAUTH_DEV_CLIENT_ID,
-                        OAUTH_DEV_CLIENT_SECRET);*/
             }
         }
         return result;
