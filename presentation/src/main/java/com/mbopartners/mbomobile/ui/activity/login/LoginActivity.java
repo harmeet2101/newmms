@@ -255,8 +255,8 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
                     break;
                 }
                 default: {
-                    setDataForPayrollTab(b,true);
-                   // defaultHandler.onComplete(response);
+                    //setDataForPayrollTab(b,true);
+                   defaultHandler.onComplete(response);
                 }
             }
         }

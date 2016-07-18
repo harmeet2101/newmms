@@ -67,7 +67,7 @@ public class PayrollFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                refreshData();
             }
         });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -134,6 +134,23 @@ public class PayrollFragment extends Fragment {
             if (realListener != null) {
                 realListener.onRefreshData();
             }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        Log.v(TAG, "onDetach()");
+        super.onDetach();
+        mListener = new InteractionListenerWrapper(null);
+    }
+
+
+    private void refreshData() {
+        if (mListener == null) {
+            return;
+        } else {
+            swipeContainer.setRefreshing(false);
+            mListener.onRefreshData();
         }
     }
 }

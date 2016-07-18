@@ -116,14 +116,14 @@ public class RestServiceHelper extends AbstractApplicationController implements 
 
     @Override
     public RequestDescriptor getBusinessCenterList(Context context) {
-        BusinessCenterRequest request = new BusinessCenterRequest(configurationController.getCurrentEnvironmentVariables().hostname);
+        BusinessCenterRequest request = new BusinessCenterRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
         addStandardRequesrHeaders(request);
         sendRequest(request, context);
         return request.getRequestDescriptor();
     }
     @Override
     public RequestDescriptor getPayrollSummaryList(Context context) {
-        PayrollSummaryRequest request = new PayrollSummaryRequest(configurationController.getCurrentEnvironmentVariables().hostname);
+        PayrollSummaryRequest request = new PayrollSummaryRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
         addStandardRequesrHeaders(request);
         sendRequest(request, context);
         return request.getRequestDescriptor();

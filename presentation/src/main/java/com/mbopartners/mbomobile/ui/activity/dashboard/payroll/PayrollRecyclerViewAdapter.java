@@ -78,12 +78,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 viewHolder = new NextPayrollViewHolder(itemView);
                 break;
             }
-            /*case ITEM_VIEW_TYPE__LAST_PAYROLL : {
+            case ITEM_VIEW_TYPE__LAST_PAYROLL : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.item_dashboard_payroll, parent, false);
                 viewHolder = new LastPayrollViewHolder(itemView);
                 break;
-            }*/
+            }
 
             default : {
                 viewHolder = null;
@@ -108,7 +108,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
        else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
-
+        else if(position==2)
+            bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (payrollSummaryList.isEmpty()) {
             count = 1;
         } else
-            count = 2;
+            count = 3;
 
         return count;
     }
@@ -132,13 +133,15 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public int getItemViewType(int position) {
         int itemViewType = -1;
         if (payrollSummaryList == null) {
-           //return itemViewType = ITEM_VIEW_TYPE__LOADING;
+           return itemViewType = ITEM_VIEW_TYPE__LOADING;
         } else if (payrollSummaryList.isEmpty()) {
-           //itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
+           itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         }else if(position==0)
             return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
         else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
+        else if(position==2)
+            return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;
 
         return itemViewType;
     }
@@ -173,6 +176,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
         viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
+        //viewHolder.work_order_name_TextView.setText("$ 2,450");
         viewHolder.includeView.setVisibility(View.GONE);
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -189,6 +193,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
         viewHolder.includeView.setVisibility(View.GONE);
+        viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
+        //viewHolder.work_order_name_TextView.setText("$ 2,450");
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {

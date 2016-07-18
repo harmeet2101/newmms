@@ -133,7 +133,7 @@ class DashboardActivityDataModel {
         return payrollSummaryList;
     }
 
-    public void setBusinessData(List<BusinessCenter> fields) {
+    public void     setBusinessData(List<BusinessCenter> fields) {
         if (this.businessCenterList != null) {
             this.businessCenterList.clear();
             this.businessCenterList.addAll(fields);

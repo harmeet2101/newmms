@@ -211,6 +211,7 @@ public class VolleyGsonRequestBuilder implements IRestHttpClient {
         }
     }
 
+
     @Override
     public void shutDown() {
         status = SHUTTING_DOWN;
