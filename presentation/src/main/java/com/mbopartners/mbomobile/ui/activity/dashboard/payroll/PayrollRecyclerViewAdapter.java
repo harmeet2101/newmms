@@ -175,8 +175,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
-       // viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
-        viewHolder.work_order_name_TextView.setText("$ 2,450");
+        viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
+        //viewHolder.work_order_name_TextView.setText("$ 2,450");
         viewHolder.includeView.setVisibility(View.GONE);
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -193,8 +193,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
         viewHolder.includeView.setVisibility(View.GONE);
-        //viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
-        viewHolder.work_order_name_TextView.setText("$ 2,450");
+        viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getBalance().toString());
+        //viewHolder.work_order_name_TextView.setText("$ 2,450");
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
