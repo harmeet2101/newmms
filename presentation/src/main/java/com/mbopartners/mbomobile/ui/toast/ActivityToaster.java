@@ -16,7 +16,7 @@ public class ActivityToaster {
         if (text != null) {
             DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
             float density = displayMetrics.density;
-            Toast toast = Toast.makeText(activity, text,  Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(activity, text,  Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, (int)(83 * density));
             toast.show();
         }
@@ -24,7 +24,7 @@ public class ActivityToaster {
     public static void showToastLongMessage (Activity activity, int id) {
         DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
         float density = displayMetrics.density;
-        Toast toast = Toast.makeText(activity, id, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(activity, id, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, (int)(83 * density));
         toast.show();
     }

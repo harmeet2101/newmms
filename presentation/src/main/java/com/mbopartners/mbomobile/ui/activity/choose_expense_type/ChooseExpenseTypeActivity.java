@@ -66,7 +66,7 @@ public class ChooseExpenseTypeActivity extends AutoLockActivity
             }
         };
         getSupportLoaderManager().initLoader(LOADER__WORK_ORDERS__ID, loaderParam,loaderCallbacks);
-    }
+        }
 
     @Override
     protected void onResume() {

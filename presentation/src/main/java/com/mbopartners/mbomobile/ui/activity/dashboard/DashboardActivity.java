@@ -38,6 +38,7 @@ import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 import com.mbopartners.mbomobile.rest.rest.client.IRestClient;
 import com.mbopartners.mbomobile.rest.rest.client.request.RestApiContract;
@@ -61,6 +62,8 @@ import com.mbopartners.mbomobile.ui.util.Communicator;
 import com.mbopartners.mbomobile.ui.util.DefaultRestClientResponseHandler;
 import com.mbopartners.mbomobile.ui.util.Security;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -509,6 +512,8 @@ public class DashboardActivity extends AutoLockActivity
     //New Expense Button Pressed
     private void startLogExpenses() {
         startActivityForResult(ActivityIntentHelper.ChoseLogExpenseTypeActivityBuilder.getActivity(this),2);
+
+
     }
 
     private static final String KEY__CHOOSE_MODE = "for LogTime or LogExpense Mode";
@@ -832,7 +837,17 @@ public class DashboardActivity extends AutoLockActivity
 
     @Override
     public void callbackPrevious() {
-        //startActivity(ActivityIntentHelper.PayrollActivityBuilder.getActivity(DashboardActivity.this));
+        PreviousPayment previousPayment=dataModel.getPayrollSummaryList().get(0).getLast_payroll();
+        if(previousPayment!=null)
+        {
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("PARAMETERS AS SERIALIZABLE",previousPayment);
+            bundle.putSerializable("summaryList", (Serializable) dataModel.getPayrollSummaryList());
+            Intent intent=ActivityIntentHelper.PayrollActivityBuilder.getActivity(DashboardActivity.this);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+
     }
 
 

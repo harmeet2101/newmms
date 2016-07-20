@@ -9,6 +9,7 @@ import com.mbopartners.mbomobile.ui.activity.about.AboutActivity;
 import com.mbopartners.mbomobile.ui.activity.choose_expense_type.ChooseExpenseTypeActivity;
 import com.mbopartners.mbomobile.ui.activity.choose_workorder.ChooseWorkOrderActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollWithHoldings;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentsActivity;
 import com.mbopartners.mbomobile.ui.activity.joinus.JoinUsActivity;
 import com.mbopartners.mbomobile.ui.activity.logexpense.LogExpenseActivity;
@@ -191,7 +192,7 @@ public class ActivityIntentHelper {
             TimePeriodParameters parameters = new TimePeriodParameters(workOrderId, timePeriodId, null);
             //Log.d("params",workOrderId+" ; "+timePeriodId+" submittable "+isSubmittable);
             bundle.putSerializable(KEY__PARAMETERS_AS_SERIALIZABLE, parameters);
-            bundle.putBoolean("isSubmittable",isSubmittable);
+            bundle.putBoolean("isSubmittable", isSubmittable);
             intent.putExtras(bundle);
             return intent;
         }
@@ -315,6 +316,36 @@ public class ActivityIntentHelper {
         public static Intent getActivity(Context context) {
             Intent intent = getNewStandardIntent(context, ChooseExpenseTypeActivity.class);
             return intent;
+        }
+    }
+    public static class ChoosePreviousPaymentsActivityBuilder {
+        public static final String ACTIVITY_STATE_KEY__ACTIVE_PAGE_NUMBER = "Active page number";
+        public static Intent getActivity(Context context) {
+            Intent intent = getNewStandardIntent(context, PayrollWithHoldings.class);
+            return intent;
+        }
+
+
+        public static int getPageIndex(Activity activity) {
+            int pageIndex = PayrollWithHoldings.DO_NOT_CHANGE_INDEX;
+            if (activity.getClass() == PayrollWithHoldings.class) {
+                Intent intent = activity.getIntent();
+                pageIndex = getPageIndex(intent);
+            }
+            return pageIndex;
+        }
+
+        public static int getPageIndex(Intent intent) {
+            int pageIndex = PayrollWithHoldings.DO_NOT_CHANGE_INDEX;
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                pageIndex = bundle.getInt(ACTIVITY_STATE_KEY__ACTIVE_PAGE_NUMBER);
+            }
+            return pageIndex;
+        }
+
+        public static int getPageIndex(Bundle bundle) {
+            return bundle.getInt(ACTIVITY_STATE_KEY__ACTIVE_PAGE_NUMBER, PayrollWithHoldings.DO_NOT_CHANGE_INDEX);
         }
     }
 

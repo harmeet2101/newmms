@@ -4,31 +4,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
-
-   <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:theme="@style/mbo_AppBar_grey"
         app:popupTheme="@style/mbo_AppBar_PopupMenu_grey"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        style="@style/Mbo_CustomTabLayout"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
         />
 
-    <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment"
-        android:name="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentFragment"
-        tools:layout="@layout/fragment_payroll_previous_payments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_below="@+id/sliding_tabs"
         android:layout_alignParentStart="true" />
+
+
+
     <View
-        android:layout_below="@+id/toolbar"
+        android:id="@+id/divider"
+        android:layout_below="@+id/sliding_tabs"
         android:background="@drawable/bar_shadow"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mbo_shadow_height"/>

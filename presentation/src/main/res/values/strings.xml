@@ -32,6 +32,7 @@
     <string name="title_activity_choose_expense_type">Expense</string>
     <string name="title_activity_log_expense">Expense Type</string>
     <string name="title_activity_payroll_previous_payments">Previous Payments</string>
+    <string name="title_activity_payroll_previous_payments_holdings">Withholdings</string>
 
 
     <!-- Menu -->
@@ -59,7 +60,8 @@
     <string name="mbo_dashboard_expenses_text">Recent Expenses</string>
     <string name="mbo_PIN_screen_action_logout">LOGOUT</string>
     <string name="mbo_dashboard_payroll_text">Payroll</string>
-
+    <string name="mbo_businesswithholding_payroll_text">Estimates Business Withholdings</string>
+    <string name="mbo_personalwithholding_payroll_text">Estimates Earnings Statement</string>
     <!-- EditText hints -->
     <string name="mbo_Login_hint_Login">Username</string>
     <string name="mbo_Login_hint_Password">Password</string>
@@ -147,6 +149,8 @@
     <string name="tab_dashboard_title_time">Time</string>
     <string name="tab_dashboard_title_expense">Expenses</string>
     <string name="tab_dashboard_title_payroll">Payroll</string>
+    <string name="tab_withholding_title_business">Personal Withholdings</string>
+    <string name="tab_withholding_title_personal">Business Withholdings</string>
 
     <string name="title_activity_simple_activity_with_fragment">SimpleActivityWithFragment</string>
     <string name="action_settings">Settings</string>

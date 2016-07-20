@@ -248,15 +248,15 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
                     isNonBillableAlowed=userProfile.getNonbillableAllowed();
 
 
-                    setDataForPayrollTab(b,isNonBillableAlowed);
+                   setDataForPayrollTab(b,isNonBillableAlowed);
 
 //                    startActivity(ActivityIntentHelper.DashboardActivityBuilder.getDashboardActivityRevenuePage(LoginActivity.this));
 //                    LoginActivity.this.finish();
                     break;
                 }
                 default: {
-                    //setDataForPayrollTab(b,true);
-                   defaultHandler.onComplete(response);
+                    setDataForPayrollTab(b, true);
+                   //defaultHandler.onComplete(response);
                 }
             }
         }
