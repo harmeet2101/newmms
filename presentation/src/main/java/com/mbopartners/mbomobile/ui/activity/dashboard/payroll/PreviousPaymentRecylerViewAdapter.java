@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getName());
         viewHolder.paymentAmountTextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount());
+        viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(0).getLast_payroll().getdate()));
         if(position==payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size()-1)
             viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
 
