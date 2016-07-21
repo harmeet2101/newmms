@@ -220,7 +220,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public class NextPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class NextPayrollViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -235,16 +235,16 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
-            this.itemView.setOnClickListener(this);
+            /*this.itemView.setOnClickListener(this);*/
         }
-
+/*
         @Override
         public void onClick(View v) {
             iPreviousCallbackListener.callbackPrevious();
-        }
+        }*/
     }
 
-    public static class LastPayrollViewHolder extends RecyclerView.ViewHolder {
+    public  class LastPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -259,7 +259,14 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
+            this.itemView.setOnClickListener(this);
+
         }
+        @Override
+        public void onClick(View v) {
+            iPreviousCallbackListener.callbackPrevious();
+        }
+
     }
 
 

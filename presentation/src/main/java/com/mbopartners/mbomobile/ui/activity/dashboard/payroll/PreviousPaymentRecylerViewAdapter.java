@@ -49,12 +49,12 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType)
         {
-            /*case ITEM_VIEW_TYPE__LOADING:{
+            case ITEM_VIEW_TYPE__LOADING:{
                 final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading_list_simple, parent, false);
                 fillParent(parent, view);
                 viewHolder = new BulkViewHolder(view);
                 break;
-            }
+            }/*
             case ITEM_VIEW_TYPE__EMPTY_LIST:{
                 final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_timeshseet_list, parent, false);
                 ((TextView) view.findViewById(R.id.empty_section_TextView)).setText(R.string.mbo_dashboard_revenue_empty_list);
@@ -84,8 +84,12 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     @Override
     public int getItemViewType(int position) {
         int itemViewType = -1;
-
+        if(payrollSummaryList==null)
+            itemViewType=ITEM_VIEW_TYPE__LOADING;
+        else
         itemViewType=ITEM_VIEW_TYPE__PAYROLL;
+    /*    else if(position==1)
+            itemViewType=ITEM_VIEW_TYPE__REIMBERSEMENTS;*/
         return itemViewType;
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -96,11 +100,10 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        /*if (personWithHolding == null) {}
-        else*/
-            bindViewHolder_payroll((PreviousPaymentViewHolder) holder, position);
-        /*else if(position==1)
-            bindViewHolder_Reimbersement((ReimbersementPaymentViewHolder) holder, position);*/
+        if (payrollSummaryList == null) {
+
+        }else
+            bindViewHolder_payroll((PreviousPaymentViewHolder)holder,position);
 
 
     }
@@ -123,7 +126,11 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     @Override
     public int getItemCount() {
         int itemCount;
-        if (payrollSummaryList != null)  {
+        if(payrollSummaryList==null)
+        {
+            itemCount=0;
+        }
+        else if (payrollSummaryList != null)  {
 
                 itemCount=payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size();
         } else {
