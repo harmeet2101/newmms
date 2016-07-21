@@ -109,6 +109,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getName());
         viewHolder.paymentAmountTextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount());
+       /*Adiing date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(0).getLast_payroll().getdate()));
         if(position==payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size()-1)
             viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
