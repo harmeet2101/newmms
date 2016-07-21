@@ -108,6 +108,8 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getName());
         viewHolder.paymentAmountTextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount());
+        if(position==payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size()-1)
+            viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
 
     }
     public void bindViewHolder_Reimbersement(ReimbersementPaymentViewHolder viewHolder, int position) {
@@ -136,12 +138,14 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         public TextView paymentNameTextview;
         public TextView paymentAmountTextView;
         public TextView paymentDateTextView;
+        public View dividerLineView;
         public PreviousPaymentViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
             paymentNameTextview=(TextView)itemView.findViewById(R.id.paymentTextview);
             paymentAmountTextView=(TextView)itemView.findViewById(R.id.amount);
             paymentDateTextView=(TextView)itemView.findViewById(R.id.dateTextview);
+            dividerLineView=itemView.findViewById(R.id.divider);
             itemView.setOnClickListener(this);
         }
 

@@ -59,6 +59,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:id="@+id/divider"
         android:layout_below="@+id/loopImageView"
         android:background="@color/mbo_color_grey_delimiter_30"></View>
 </RelativeLayout>

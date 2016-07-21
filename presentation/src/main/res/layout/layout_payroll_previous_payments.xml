@@ -24,6 +24,7 @@
         android:name="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentFragment"
         tools:layout="@layout/fragment_payroll_previous_payments"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true" />

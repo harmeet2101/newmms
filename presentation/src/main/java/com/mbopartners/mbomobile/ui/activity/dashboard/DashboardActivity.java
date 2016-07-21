@@ -920,7 +920,7 @@ public class DashboardActivity extends AutoLockActivity
             switch (response.getClientResult()) {
                 case Ok: {
                             forceLoadPayrollData();
-
+                    doDataLoadingFromServer_Step_4();
                     break;
                 }
 
@@ -1186,7 +1186,7 @@ public class DashboardActivity extends AutoLockActivity
         @Override
         public void onLoadFinished(Loader<List<PayrollSummary>> loader, List<PayrollSummary> data) {
             dataModel.setPayrollSummaryData(data);
-          //  notifyPayrollDataReceived();
+            notifyPayrollDataReceived();
         }
 
         @Override
