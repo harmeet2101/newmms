@@ -27,13 +27,14 @@ public class PersonWithHolding implements Serializable,Validatable {
     @Override
     public boolean isValid() {
         boolean result =
-                grossAmount!=null;
+                grossAmount!=null && payrollTaxes!=null&& expenseReimbursements!=null;
 
         if (! result) {
 
             ValidationHelper.Screamer screamer = new ValidationHelper.Screamer(TAG, "");
             screamer.sayIfIsNull("grossAmount", grossAmount);
             screamer.sayIfIsNull("payrollTaxes", payrollTaxes);
+            screamer.sayIfIsNull("expenseReimbursements", expenseReimbursements);
 
 
         }

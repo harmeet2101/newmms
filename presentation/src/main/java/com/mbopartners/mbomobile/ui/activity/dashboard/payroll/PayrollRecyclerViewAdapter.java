@@ -40,6 +40,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private List<PayrollSummary> payrollSummaryList;
     private IPreviousCallbackListener iPreviousCallbackListener;
+    private String card_1_amount,card_2_amount,card_3_amount;
 
 
     public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList) {
@@ -175,8 +176,13 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
+        if(payrollSummaryList!=null && payrollSummaryList.get(0).getBalance()!=null)
+        card_1_amount=payrollSummaryList.get(0).getBalance().toString();
+
+        if(card_1_amount!=null)
         viewHolder.work_order_name_TextView.setText("$" + payrollSummaryList.get(0).getBalance().toString());
-        //viewHolder.work_order_name_TextView.setText("$ 2,450");
+        else
+            viewHolder.work_order_name_TextView.setText("N/A");
         viewHolder.includeView.setVisibility(View.GONE);
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -185,8 +191,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_NEXT_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_NEXT_PAYMENT);
         try{
-            if(payrollSummaryList.get(0).getNext_payroll().getAmount()!=null||payrollSummaryList.get(0).getNext_payroll().getAmount()!=0) {
-            viewHolder.work_order_name_TextView.setText("$" + payrollSummaryList.get(0).getNext_payroll().getAmount());
+            if(payrollSummaryList!=null && payrollSummaryList.get(0).getNext_payroll()!=null &&
+                    payrollSummaryList.get(0).getNext_payroll().getAmount()!=null||
+                    payrollSummaryList.get(0).getNext_payroll().getAmount()!=0)
+            {
+                card_2_amount=payrollSummaryList.get(0).getNext_payroll().getAmount().toString();
+            viewHolder.work_order_name_TextView.setText("$" + card_2_amount);
             viewHolder.includeView.setVisibility(View.GONE);
             }else {
             viewHolder.work_order_name_TextView.setText("Unscheduled");
@@ -205,8 +215,14 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
         viewHolder.includeView.setVisibility(View.GONE);
-        viewHolder.work_order_name_TextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getBusinessWithholding().getPayrollAmount().getAmount());
-        //viewHolder.work_order_name_TextView.setText("$ 2,450");
+        if(payrollSummaryList.get(0).getLast_payroll()!=null&&
+                payrollSummaryList.get(0).getLast_payroll().getBusinessWithholding() != null) {
+            card_3_amount=String.valueOf(payrollSummaryList.get(0).getLast_payroll().
+                    getBusinessWithholding().getPayrollAmount().getAmount());
+
+                viewHolder.work_order_name_TextView.setText("$" +card_3_amount);
+        }else
+            viewHolder.work_order_name_TextView.setText("N/A");
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {

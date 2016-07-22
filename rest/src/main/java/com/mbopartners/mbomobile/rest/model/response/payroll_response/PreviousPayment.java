@@ -74,7 +74,7 @@ public class PreviousPayment implements Serializable, Validatable {
                 id!=null &&
                         businessCenterId != null &&
                         mboId != null &&
-                        date!=null;
+                        date!=null&& businessWithholding!=null&& personalWithholding!=null;
 
 
         if (! result) {

@@ -173,11 +173,13 @@ public class DbFiller {
             }if(previousPayment!=null){
                 if(previousPayment.isValid()) {
                     long prevId=insertPreviousPaymentField(previousPayment, nextPaymentId, daoSession);
+                    long businessId=0l;
                     BusinessWithHolding businessWithHolding = previousPayment.getBusinessWithholding();
-                    long businessId=insertBusinessWithHoldingField(businessWithHolding, prevId, daoSession);
-                    PayrollAmount payrollAmount=businessWithHolding.getPayrollAmount();
-                    insertBusiness_payrollAmountField(payrollAmount, businessId, daoSession);
-
+                    if(businessWithHolding!=null) {
+                        businessId = insertBusinessWithHoldingField(businessWithHolding, prevId, daoSession);
+                        PayrollAmount payrollAmount = businessWithHolding.getPayrollAmount();
+                        insertBusiness_payrollAmountField(payrollAmount, businessId, daoSession);
+                    }
                     List<BusinessExpenses> businessExpenses=businessWithHolding.getBusinessExpenses();
                     for(int i=0;i<businessExpenses.size();i++)
                     {

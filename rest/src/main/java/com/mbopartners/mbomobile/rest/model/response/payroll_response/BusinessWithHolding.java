@@ -46,9 +46,8 @@ public class BusinessWithHolding implements Serializable,Validatable {
     public boolean isValid() {
         boolean result =
                 payrollAmount!=null &&
-                        businessExpenses != null /*&&
-                        mboId != null &&
-                        balance != null && next_payroll!=null*/;
+                        businessExpenses != null
+                         && payrollTaxes!=null;
 
         if (! result) {
 

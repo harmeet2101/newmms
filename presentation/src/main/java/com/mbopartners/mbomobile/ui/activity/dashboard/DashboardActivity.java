@@ -342,7 +342,7 @@ public class DashboardActivity extends AutoLockActivity
         else
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-        
+
         tabLayout.setupWithViewPager(viewPager);
 
         changeTabsFont();
