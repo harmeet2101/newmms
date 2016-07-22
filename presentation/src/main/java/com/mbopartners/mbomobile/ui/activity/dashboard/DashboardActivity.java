@@ -332,7 +332,19 @@ public class DashboardActivity extends AutoLockActivity
         DashboardFragmentPagerAdapter pagerAdapter = new DashboardFragmentPagerAdapter(getSupportFragmentManager(), DashboardActivity.this,count);
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+
+        /* if Tab count is greater than 3 then
+        * make it Scrollable or else
+        * make it Fixed.
+        */
+        if(tabCount>3)
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        else
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        
         tabLayout.setupWithViewPager(viewPager);
+
         changeTabsFont();
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
