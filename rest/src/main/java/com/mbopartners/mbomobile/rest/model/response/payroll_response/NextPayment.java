@@ -32,8 +32,6 @@ public class NextPayment implements Serializable, Validatable {
     private String frequency;
     @SerializedName("mboId")
     private String mboId;
-    @SerializedName("businessWithholding")
-    private BusinessWithHolding businessWithholding;
 
 
     public Double getAmount() {
@@ -59,27 +57,15 @@ public class NextPayment implements Serializable, Validatable {
         this.mboId=mboId;
 
     }
-    public NextPayment(Double amount,String businessCenterId,String calculationMethod
-            ,Date endDate,Date startDate,String frequency,String id,String mboId,BusinessWithHolding businessWithholding)
-    {
-        this.amount=amount;
-        this.businessCenterId=businessCenterId;
-        this.calculationMethod=calculationMethod;
-        this.endDate=endDate;
-        this.startDate=startDate;
-        this.frequency=frequency;
-        this.id=id;
-        this.mboId=mboId;
-        this.businessWithholding=businessWithholding;
-    }
+
     @Override
     public boolean isValid() {
         boolean result =
                 id!=null &&
-                        businessCenterId != null &&
+                        businessCenterId != null/* &&
                         mboId != null &&
                         amount != null && calculationMethod!=null&& endDate!=null
-                        && startDate!=null&& frequency!=null && businessWithholding!=null;
+                        && startDate!=null&& frequency!=null*/;
 
 
         if (! result) {
@@ -93,7 +79,6 @@ public class NextPayment implements Serializable, Validatable {
             screamer.sayIfIsNull("endDate", endDate);
             screamer.sayIfIsNull("startDate", startDate);
             screamer.sayIfIsNull("frequency", frequency);
-            screamer.sayIfIsNull("businessWithholding", businessWithholding);
         }
         return result;
     }
@@ -154,11 +139,4 @@ public class NextPayment implements Serializable, Validatable {
         this.mboId = mboId;
     }
 
-    public BusinessWithHolding getBusinessWithholding() {
-        return businessWithholding;
-    }
-
-    public void setBusinessWithholding(BusinessWithHolding businessWithholding) {
-        this.businessWithholding = businessWithholding;
-    }
 }
