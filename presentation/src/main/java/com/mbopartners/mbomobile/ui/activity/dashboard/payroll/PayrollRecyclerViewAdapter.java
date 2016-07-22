@@ -177,10 +177,10 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
         if(payrollSummaryList!=null && payrollSummaryList.get(0).getBalance()!=null)
-        card_1_amount=payrollSummaryList.get(0).getBalance().toString();
+        card_1_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getBalance().toString());
 
         if(card_1_amount!=null)
-        viewHolder.work_order_name_TextView.setText("$" + payrollSummaryList.get(0).getBalance().toString());
+        viewHolder.work_order_name_TextView.setText("$" + card_1_amount);
         else
             viewHolder.work_order_name_TextView.setText("N/A");
         viewHolder.includeView.setVisibility(View.GONE);
@@ -195,7 +195,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     payrollSummaryList.get(0).getNext_payroll().getAmount()!=null||
                     payrollSummaryList.get(0).getNext_payroll().getAmount()!=0)
             {
-                card_2_amount=payrollSummaryList.get(0).getNext_payroll().getAmount().toString();
+                card_2_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getNext_payroll().getAmount().toString());
             viewHolder.work_order_name_TextView.setText("$" + card_2_amount);
             viewHolder.includeView.setVisibility(View.GONE);
             }else {
@@ -217,8 +217,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.includeView.setVisibility(View.GONE);
         if(payrollSummaryList.get(0).getLast_payroll()!=null&&
                 payrollSummaryList.get(0).getLast_payroll().getBusinessWithholding() != null) {
-            card_3_amount=String.valueOf(payrollSummaryList.get(0).getLast_payroll().
-                    getBusinessWithholding().getPayrollAmount().getAmount());
+            card_3_amount=getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().
+                    getBusinessWithholding().getPayrollAmount().getAmount()));
 
                 viewHolder.work_order_name_TextView.setText("$" +card_3_amount);
         }else
@@ -300,5 +300,28 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public interface IPreviousCallbackListener{
         void callbackPrevious();
+    }
+    public String getAmount_uptoTwoDecimalPlaces(String amount)
+    {
+        int dotPos = -1;
+
+        for (int i = 0; i < amount.length(); i++) {
+            char c = amount.charAt(i);
+            if (c == '.') {
+                dotPos = i;
+            }
+        }
+        /*Making Money  get trailing values after the decimal*/
+
+        if (dotPos == -1&& !amount.equals("")){
+            amount=amount + ".00";
+        }else if(dotPos == -1&& amount.equals(""))
+            amount=amount + "0.00";
+        else if(dotPos==amount.length()-1 && !amount.equals(""))
+            amount="0"+amount + "00";
+        else if(dotPos==amount.length()-2 && !amount.equals(""))
+            amount=amount + "0";
+
+        return amount;
     }
 }

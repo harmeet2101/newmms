@@ -2,6 +2,7 @@ package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     public void bindViewHolder_payroll(PreviousPaymentViewHolder viewHolder, int position) {
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getName());
-        viewHolder.paymentAmountTextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount());
+        viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount())));
        /*Adiing date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(0).getLast_payroll().getdate()));
         if(position==payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size()-1)
@@ -121,7 +122,36 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     public void bindViewHolder_Reimbersement(ReimbersementPaymentViewHolder viewHolder, int position) {
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getName());
-        viewHolder.paymentAmountTextView.setText("$"+payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getAmount());
+        viewHolder.paymentAmountTextView.setText("$"+getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getAmount())));
+    }
+
+    public String getAmount_uptoTwoDecimalPlaces(String amount)
+    {
+
+
+        int dotPos = -1;
+
+        for (int i = 0; i < amount.length(); i++) {
+            char c = amount.charAt(i);
+            if (c == '.') {
+                dotPos = i;
+            }
+        }
+
+
+
+        /*Making Money  get trailing values after the decimal*/
+
+        if (dotPos == -1&& !amount.equals("")){
+            amount=amount + ".00";
+        }else if(dotPos == -1&& amount.equals(""))
+            amount=amount + "0.00";
+        else if(dotPos==amount.length()-1 && !amount.equals(""))
+            amount="0"+amount + "00";
+        else if(dotPos==amount.length()-2 && !amount.equals(""))
+            amount=amount + "0";
+
+        return amount;
     }
     @Override
     public int getItemCount() {

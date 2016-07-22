@@ -74,6 +74,8 @@ public class ExpenseFieldViewHolder_Money extends BaseFieldViewHolder implements
         }
 
     }
+
+
 }
 
 
