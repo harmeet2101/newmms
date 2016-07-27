@@ -105,7 +105,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (payrollSummaryList == null) {}
         else if (payrollSummaryList.isEmpty()) {}
-        else if(position==0)
+        else  if(position==0)
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
        else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
@@ -139,6 +139,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         }else if(position==0)
             return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
+
+
         else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
         else if(position==2)
@@ -230,7 +232,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public static class BusinessCenterViewHolder extends RecyclerView.ViewHolder {
+    public class BusinessCenterViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -246,9 +248,10 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
         }
+
     }
 
-    public class NextPayrollViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
+    public class NextPayrollViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -263,13 +266,8 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
-            /*this.itemView.setOnClickListener(this);*/
         }
-/*
-        @Override
-        public void onClick(View v) {
-            iPreviousCallbackListener.callbackPrevious();
-        }*/
+
     }
 
     public  class LastPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

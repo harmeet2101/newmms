@@ -15,8 +15,10 @@ import com.mbopartners.mbomobile.rest.model.response.oauth.OAuthApiException;
 import com.mbopartners.mbomobile.rest.model.response.oauth.OAuthToken;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.BusinessCenterRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollSummaryRequest;
+import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollTransactionRequest;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.DashboardsDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.DeleteExpenseReceiptDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.GetExpenseTypesDbHandler;
@@ -31,6 +33,7 @@ import com.mbopartners.mbomobile.rest.rest.storage.handler.SaveTimeEntriesDbHand
 import com.mbopartners.mbomobile.rest.rest.storage.handler.SubmitTimePeriodDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.BusinessCenterDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.SummaryDbHandler;
+import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.TransactionDbHandler;
 
 import java.io.File;
 
@@ -64,6 +67,8 @@ public class RestApiContract {
         private static final String BUSINESS_CENTER_LIST="business-centers/v1/business-centers/";
 
         private static final String PAYROLL_SUMMARY_LIST="business-centers/v1/summary";
+
+        private static final String PAYROLL_TRANSACTION_LIST="payroll/v1/transactions";
     }
 
     public static class Key {
@@ -90,6 +95,7 @@ public class RestApiContract {
         public static final String getReceiptsList = "Get_Receipts_List";
         public static final String getBusinessCenterList="Get_Business_Center_list";
         public static final String getPayrollSummary="Get_Payroll_Summary";
+        public static final String getPayrollTransactions="Get_Payroll_Transactions";
     }
 
     public static class Method {
@@ -136,6 +142,10 @@ public class RestApiContract {
 
         public static final RestMethod<PayrollSummaryRequest, EmptyRequestEntity, PayrollSummary, RestServerApiException, SummaryDbHandler> getPayrollSummary =
                 new RestMethod<>(Name.getPayrollSummary, HttpMethod.GET, Resource.PAYROLL_SUMMARY_LIST, EmptyRequestEntity.class, PayrollSummary.class, RestServerApiException.class, SummaryDbHandler.class);
+
+
+        public static final RestMethod<PayrollTransactionRequest, EmptyRequestEntity, PayrollTransactions[], RestServerApiException, TransactionDbHandler> getPayrollTransactions =
+                new RestMethod<>(Name.getPayrollTransactions, HttpMethod.GET, Resource.PAYROLL_TRANSACTION_LIST, EmptyRequestEntity.class, PayrollTransactions[].class, RestServerApiException.class, TransactionDbHandler.class);
 
     }
 

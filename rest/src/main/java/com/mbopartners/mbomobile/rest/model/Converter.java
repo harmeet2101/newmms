@@ -23,10 +23,14 @@ import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableExpenseRei
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTransactions;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonDeposits;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonGrossAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayrollTaxes;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableSummaryBusinessWithHolding;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableSummaryPayrollAmount;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.Company;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
@@ -50,6 +54,8 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.ExpenseRei
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.NextPayment;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonGrossAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
@@ -113,6 +119,12 @@ public class Converter {
         return tablePayrollSummary;
     }
 
+    public static TablePayrollTransactions toTable_payroll_transactions(PayrollTransactions payrollTransactions) {
+        TablePayrollTransactions tablePayrollTransactions = new TablePayrollTransactions(
+                null,payrollTransactions.getId(),payrollTransactions.getMboId(),payrollTransactions.getBusinessCenterId(),payrollTransactions.getDate());
+        return tablePayrollTransactions;
+    }
+
     public static TableNextPayment toTable_payroll_nexPayment(long nextPaymentRowId,NextPayment nextPayment) {
         TableNextPayment tableNextPayment = new TableNextPayment(
                 null,
@@ -142,6 +154,12 @@ public class Converter {
                 businessWithHoldingRowId);
         return tableBusinessWithHolding;
     }
+    public static TableSummaryBusinessWithHolding toTable_payroll_summary_businessWithHolding(long businessWithHoldingRowId,BusinessWithHolding businessWithHolding) {
+        TableSummaryBusinessWithHolding tableBusinessWithHolding = new TableSummaryBusinessWithHolding(
+                null,
+                businessWithHoldingRowId);
+        return tableBusinessWithHolding;
+    }
 
     public static TablePersonalWithHolding toTable_payroll_personWithHolding(long personWithHoldingRowId,PersonWithHolding personWithHolding) {
         TablePersonalWithHolding tablePersonalWithHolding = new TablePersonalWithHolding(
@@ -152,6 +170,14 @@ public class Converter {
 
     public static TablePayrollAmount toTable_payroll_business_payrollAmount(long payrollAmountRowId,PayrollAmount payrollAmount) {
         TablePayrollAmount tablePayrollAmount = new TablePayrollAmount(
+                null,
+                payrollAmount.getAmount(),payrollAmount.getAmountMtd(),payrollAmount.getAmountYtd(),payrollAmount.getName(),
+                payrollAmountRowId);
+        return tablePayrollAmount;
+    }
+
+    public static TableSummaryPayrollAmount toTable_payroll_summary_business_payrollAmount(long payrollAmountRowId,PayrollAmount payrollAmount) {
+        TableSummaryPayrollAmount tablePayrollAmount = new TableSummaryPayrollAmount(
                 null,
                 payrollAmount.getAmount(),payrollAmount.getAmountMtd(),payrollAmount.getAmountYtd(),payrollAmount.getName(),
                 payrollAmountRowId);
@@ -195,6 +221,14 @@ public class Converter {
                 expenseReimbursement.getAmount(),expenseReimbursement.getAmountMtd(),expenseReimbursement.getAmountYtd(),expenseReimbursement.getName(),
                 payrollAmountRowId);
         return tableExpenseReimbersements;
+    }
+
+    public static TablePersonDeposits toTable_payroll_person_deposits(long depositsRowId,PersonDeposits personDeposits) {
+        TablePersonDeposits tablePersonDeposits = new TablePersonDeposits(
+                null,
+                personDeposits.getAmount(),personDeposits.getName(),
+                depositsRowId);
+        return tablePersonDeposits;
     }
     public static TableDashboard toTable(Dashboard dashboard) {
         TableDashboard  tableDashboard = new TableDashboard(null, dashboard.getPurpose());
@@ -366,6 +400,11 @@ public class Converter {
         PayrollSummary payrollSummary = new PayrollSummary(table.getSummaryId(),table.getName(),/*table.getMboId(),*/table.getBalance(),toWeb_nextPayment(table.getNext_payroll()),toWeb_previousPayment(table.getLast_payroll()));
         return payrollSummary;
     }
+    public static PayrollTransactions toWeb_PayrollTransactions(TablePayrollTransactions table) {
+        PayrollTransactions payrollTransactions =
+                new PayrollTransactions(table.getTransactionId(),table.getMboId(),table.getBusinessCenterId(),table.getDate(),toWeb_businessWithHolding(table.getBusinessWithholding()),toWeb_personWithHolding(table.getPersonalWithholding()));
+        return payrollTransactions;
+    }
     public static NextPayment toWeb_nextPayment(TableNextPayment table) {
         NextPayment nextPayment=null;
         if(table!=null) {
@@ -378,8 +417,12 @@ public class Converter {
     public static PreviousPayment toWeb_previousPayment(TablePreviousPayment table) {
         PreviousPayment previousPayment = null;
         if (table != null) {
+/*            previousPayment=new PreviousPayment(table.getBusinessCenterId(), table.getDate(),
+                    table.getPreviousPaymentId(), table.getMboId(),toWeb_businessWithHolding(table.getBusinessWithholding()),toWeb_personWithHolding(table.getPersonalWithholding()));*/
+
             previousPayment=new PreviousPayment(table.getBusinessCenterId(), table.getDate(),
-                    table.getPreviousPaymentId(), table.getMboId(),toWeb_businessWithHolding(table.getBusinessWithholding()),toWeb_personWithHolding(table.getPersonalWithholding()));
+                    table.getPreviousPaymentId(), table.getMboId(),toWeb_summarybusinessWithHolding(table.getSummaryBusinessWithHolding()));
+
             return previousPayment;
         }else
             return previousPayment;
@@ -394,11 +437,20 @@ public class Converter {
             return businessWithHolding;
     }
 
+    public static BusinessWithHolding toWeb_summarybusinessWithHolding(TableSummaryBusinessWithHolding table) {
+        BusinessWithHolding businessWithHolding = null;
+        if (table != null) {
+            businessWithHolding = new BusinessWithHolding(toWeb_summarypayrollPayment(table.getPayrollAmount()));
+            return businessWithHolding;
+        }else
+            return businessWithHolding;
+    }
+
     public static PersonWithHolding toWeb_personWithHolding(TablePersonalWithHolding table) {
         PersonWithHolding personWithHolding = null;
         if (table != null) {
             personWithHolding = new PersonWithHolding(toWeb_payrollPersonGrossAmount(table.getGrossAmount()),
-                    toWeb_PersonPayrollTaxesField(table.getPayrollTaxes()),toWeb_PersonExpenseReimbersementField(table.getExpenseReimbursements()));
+                    toWeb_PersonPayrollTaxesField(table.getPayrollTaxes()),toWeb_PersonExpenseReimbersementField(table.getExpenseReimbursements()),toWeb_PersonDepositsField(table.getDeposits()));
             return personWithHolding;
         }else
             return personWithHolding;
@@ -413,6 +465,15 @@ public class Converter {
             return payrollAmount;
     }
 
+    public static PayrollAmount toWeb_summarypayrollPayment(TableSummaryPayrollAmount table) {
+        PayrollAmount payrollAmount = null;
+        if (table != null) {
+            payrollAmount = new PayrollAmount(table.getAmount(), table.getAmountMtd(),
+                    table.getAmountYtd(), table.getName());
+            return payrollAmount;
+        }else
+            return payrollAmount;
+    }
     public static PersonPayrollTaxes toWeb_person_payrollPayment(TablePersonPayrollTaxes table) {
         PersonPayrollTaxes personPayrollTaxes = null;
         if (table != null) {
@@ -431,6 +492,15 @@ public class Converter {
             return personGrossAmount;
         }else
             return personGrossAmount;
+    }
+
+    public static PersonDeposits toWeb_payrollPersonDeposits(TablePersonDeposits table) {
+        PersonDeposits personDeposits = null;
+        if (table != null) {
+            personDeposits = new PersonDeposits(table.getAmount(), table.getName());
+            return personDeposits;
+        }else
+            return personDeposits;
     }
 
     public static BusinessExpenses toWeb_businessExpenses(TableBusinessExpenses table) {
@@ -603,6 +673,16 @@ public class Converter {
         }
         return payrollSummaries;
     }
+    public static List<PayrollTransactions> toweb_PayrollTransactionsField(List<TablePayrollTransactions> table)
+    {
+        List<PayrollTransactions> payrollTransactionses = new ArrayList<>(table.size());
+        for (TablePayrollTransactions tableField : table) {
+            payrollTransactionses.add(toWeb_PayrollTransactions(tableField));
+
+        }
+        return payrollTransactionses;
+    }
+
 
     public static List<BusinessExpenses> toWeb_BusinessExpenseField(List<TableBusinessExpenses> table) {
         List<BusinessExpenses> businessExpenses = new ArrayList<>(table.size());
@@ -638,6 +718,15 @@ public class Converter {
 
         }
         return expenseReimbursements;
+    }
+
+    public static List<PersonDeposits> toWeb_PersonDepositsField(List<TablePersonDeposits> table) {
+        List<PersonDeposits> personDeposits = new ArrayList<>(table.size());
+        for (TablePersonDeposits tableField : table) {
+            personDeposits.add(toWeb_payrollPersonDeposits(tableField));
+
+        }
+        return personDeposits;
     }
 
 

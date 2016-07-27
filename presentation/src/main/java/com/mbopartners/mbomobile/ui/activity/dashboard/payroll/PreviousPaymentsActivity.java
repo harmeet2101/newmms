@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 import com.mbopartners.mbomobile.ui.R;
@@ -29,7 +30,7 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
     private PreviousPaymentFragment fragment;
     private static final String TAG = PreviousPaymentsActivity.class.getSimpleName();
     private LoaderManager.LoaderCallbacks<List<PayrollSummary>> loaderCallbacks;
-    private List<PayrollSummary> payrollSummaryList;
+    private List<PayrollTransactions> payrollTransactionsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,8 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
         {
-            previousPayment= (PreviousPayment) bundle.getSerializable("PARAMETERS AS SERIALIZABLE");
-            payrollSummaryList= (List<PayrollSummary>) bundle.getSerializable("summaryList");
+            //previousPayment= (PreviousPayment) bundle.getSerializable("PARAMETERS AS SERIALIZABLE");
+            payrollTransactionsList= (List<PayrollTransactions>) bundle.getSerializable("summaryList");
         }
 
         fragment = (PreviousPaymentFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
@@ -83,11 +84,11 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
     }
 
 
-    public List<PayrollSummary> getPayrollSummary() {
+    public List<PayrollTransactions> getPayrollSummary() {
 
-        if(payrollSummaryList!=null)
+        if(payrollTransactionsList!=null)
         {
-            return payrollSummaryList;
+            return payrollTransactionsList;
         }else
         return null;
     }
@@ -95,7 +96,7 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
     public void onItemClick(int position)
     {
         Bundle bundle=new Bundle();
-        bundle.putSerializable("summaryList", (Serializable) payrollSummaryList);
+        bundle.putSerializable("summaryList", (Serializable) payrollTransactionsList);
         Intent intent= ActivityIntentHelper.ChoosePreviousPaymentsActivityBuilder.getActivity(PreviousPaymentsActivity.this);
         intent.putExtras(bundle);
         startActivity(intent);

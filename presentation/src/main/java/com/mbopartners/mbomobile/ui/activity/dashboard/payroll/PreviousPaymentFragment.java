@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.helper.ActivityIntentHelper;
@@ -78,7 +79,7 @@ public class PreviousPaymentFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
 
-        List<PayrollSummary> getPayrollSummary();
+        List<PayrollTransactions> getPayrollSummary();
         void onItemClick(int position);
     }
 }

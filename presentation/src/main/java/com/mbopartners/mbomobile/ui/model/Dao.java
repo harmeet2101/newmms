@@ -14,6 +14,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.TableUserProfileDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.TableWorkOrderDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessCenterDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollTransactionsDao;
 import com.mbopartners.mbomobile.data.db.generated.model.TableBusinessManager;
 import com.mbopartners.mbomobile.data.db.generated.model.TableDashboardField;
 import com.mbopartners.mbomobile.data.db.generated.model.TableExpense;
@@ -24,6 +25,7 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableUserProfile;
 import com.mbopartners.mbomobile.data.db.generated.model.TableWorkOrder;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.Converter;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
@@ -31,6 +33,7 @@ import com.mbopartners.mbomobile.rest.model.response.ExpenseField;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
 import com.mbopartners.mbomobile.ui.util.MboFormatter;
 
@@ -83,6 +86,13 @@ public class Dao {
         TablePayrollSummaryDao dao = daoSession.getTablePayrollSummaryDao();
         List<TablePayrollSummary> tablePayrollSummaries = dao.loadAll();
         return Converter.toWeb_PayrollSummaryField(tablePayrollSummaries);
+    }
+    public static List<PayrollTransactions> loadPayrollTransactionsFields(Application application) {
+        DbAccessController dbAccessController = getDbAccessController(application);
+        DaoSession daoSession = dbAccessController.getDaoSession();
+        TablePayrollTransactionsDao dao = daoSession.getTablePayrollTransactionsDao();
+        List<TablePayrollTransactions> tablePayrollTransactionses = dao.loadAll();
+        return Converter.toweb_PayrollTransactionsField(tablePayrollTransactionses);
     }
 
     public static List<WorkOrder> loadWorkOrdersFullTree(Application application) {

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
@@ -26,16 +28,16 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     private Context context;
     private OnItemClickListener mItemClickListener;
     private PersonWithHolding personWithHolding;
-    private ArrayList<PayrollSummary> payrollSummaryList;
+    private ArrayList<PayrollTransactions> payrollSummaryList;
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
     private static final int ITEM_VIEW_TYPE__PAYROLL = 2;
     private static final int ITEM_VIEW_TYPE__REIMBERSEMENTS = 3;
-    public PreviousPaymentRecylerViewAdapter(Context context,PersonWithHolding personWithHolding,List<PayrollSummary> payrollSummaryList) {
+    public PreviousPaymentRecylerViewAdapter(Context context,PersonWithHolding personWithHolding,List<PayrollTransactions> payrollSummaryList) {
 
         this.personWithHolding=personWithHolding;
         this.context=context;
-        this.payrollSummaryList= (ArrayList<PayrollSummary>) payrollSummaryList;
+        this.payrollSummaryList= (ArrayList<PayrollTransactions>) payrollSummaryList;
     }
 
     private void fillParent(ViewGroup parent, View view) {
@@ -111,19 +113,22 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
     public void bindViewHolder_payroll(PreviousPaymentViewHolder viewHolder, int position) {
 
-        viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getName());
-        viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().get(position).getAmount())));
+        //viewHolder.paymentNameTextview.setText(payrollSummaryList.get(position).getPersonalWithholding().getDeposits().get(0).getName());
+        viewHolder.paymentNameTextview.setText(depositsList.get(position).getName());
+       // viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(position).getPersonalWithholding().getDeposits().get(0).getAmount())));
+
+        viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
        /*Adiing date*/
-        viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(0).getLast_payroll().getdate()));
-        if(position==payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size()-1)
+        viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(position).getDate()));
+        if(position==payrollSummaryList.size()-1)
             viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
 
     }
-    public void bindViewHolder_Reimbersement(ReimbersementPaymentViewHolder viewHolder, int position) {
+  /*  public void bindViewHolder_Reimbersement(ReimbersementPaymentViewHolder viewHolder, int position) {
 
         viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getName());
         viewHolder.paymentAmountTextView.setText("$"+getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getAmount())));
-    }
+    }*/
 
     public String getAmount_uptoTwoDecimalPlaces(String amount)
     {
@@ -162,15 +167,15 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         }
         else if (payrollSummaryList != null)  {
 
-                itemCount=payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getPayrollTaxes().size();
+                itemCount=getTotalSize(payrollSummaryList);
         } else {
             itemCount = 0;
         }
         return itemCount;
     }
 
-    public void updateDataSource(List<PayrollSummary> fields) {
-        this.payrollSummaryList = (ArrayList<PayrollSummary>) fields;
+    public void updateDataSource(List<PayrollTransactions> fields) {
+        this.payrollSummaryList = (ArrayList<PayrollTransactions>) fields;
         notifyDataSetChanged();
     }
     public class PreviousPaymentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -228,4 +233,32 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
+
+    public int getTotalSize(List<PayrollTransactions> transactionsList)
+    {
+        int size=0;
+        if(transactionsList!=null)
+        {
+            if(transactionsList.size()==1)
+            {
+                if(transactionsList.get(0).getPersonalWithholding().getDeposits()!=null)
+                {
+                    size=transactionsList.get(0).getPersonalWithholding().getDeposits().size();
+                    depositsList=transactionsList.get(0).getPersonalWithholding().getDeposits();
+                }
+                return size;
+            }else if(transactionsList.size()>0)
+            {
+                for (int i=0;i<transactionsList.size();i++)
+                {
+                    size=size+transactionsList.get(i).getPersonalWithholding().getDeposits().size();
+                    depositsList.addAll(transactionsList.get(i).getPersonalWithholding().getDeposits());
+                }
+                return size;
+            }
+        }
+        return size;
+    }
+
+    private List<PersonDeposits> depositsList=new ArrayList<PersonDeposits>();
 }

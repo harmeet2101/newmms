@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteStatement;
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableSummaryBusinessWithHolding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,12 @@ import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
- * Created by MboAdil on 13/7/16.
+ * Created by MboAdil on 27/7/16.
  */
-public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHolding, Long> {
+public class TableSummaryBusinessWithHoldingDao extends AbstractDao<TableSummaryBusinessWithHolding, Long> {
 
-    public static final String TABLENAME = "TABLE_BUSINESS_HOLDING";
-    private Query<TableBusinessWithHolding> tableBusinessWithHolding_FieldsQuery;
+    public static final String TABLENAME = "TABLE_SUMMARY_BUSINESS_HOLDING";
+    private Query<TableSummaryBusinessWithHolding> tableBusinessWithHolding_FieldsQuery;
     private DaoSession daoSession;
 
     public static class Properties {
@@ -32,11 +33,11 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         public final static Property businessWithHoldingRowId = new Property(1, long.class, "businessWithHoldingRowId", false, "businessWithHoldingRowId");
     }
 
-    public TableBusinessWithHoldingDao(DaoConfig config) {
+    public TableSummaryBusinessWithHoldingDao(DaoConfig config) {
         super(config);
     }
 
-    public TableBusinessWithHoldingDao(DaoConfig config, DaoSession daoSession) {
+    public TableSummaryBusinessWithHoldingDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
         this.daoSession=daoSession;
     }
@@ -44,19 +45,19 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_BUSINESS_HOLDING\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"TABLE_SUMMARY_BUSINESS_HOLDING\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"businessWithHoldingRowId\" INTEGER NOT NULL );");
     }
 
     /** Drops the underlying database table. */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_BUSINESS_HOLDING\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"TABLE_SUMMARY_BUSINESS_HOLDING\"";
         db.execSQL(sql);
     }
     /** @inheritdoc */
     @Override
-    protected void bindValues(SQLiteStatement stmt, TableBusinessWithHolding entity) {
+    protected void bindValues(SQLiteStatement stmt, TableSummaryBusinessWithHolding entity) {
         stmt.clearBindings();
 
         Long id = entity.getId();
@@ -74,8 +75,8 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    public TableBusinessWithHolding readEntity(Cursor cursor, int offset) {
-        TableBusinessWithHolding entity = new TableBusinessWithHolding( //
+    public TableSummaryBusinessWithHolding readEntity(Cursor cursor, int offset) {
+        TableSummaryBusinessWithHolding entity = new TableSummaryBusinessWithHolding( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
                 cursor.getLong(offset + 1)
         );
@@ -84,7 +85,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    public void readEntity(Cursor cursor, TableBusinessWithHolding entity, int offset) {
+    public void readEntity(Cursor cursor, TableSummaryBusinessWithHolding entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setBusinessWithHoldingRowId(cursor.getLong(offset + 1));
 
@@ -92,14 +93,14 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(TableBusinessWithHolding entity, long rowId) {
+    protected Long updateKeyAfterInsert(TableSummaryBusinessWithHolding entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
 
     /** @inheritdoc */
     @Override
-    public Long getKey(TableBusinessWithHolding entity) {
+    public Long getKey(TableSummaryBusinessWithHolding entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -107,7 +108,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         }
     }
     @Override
-    protected void attachEntity(TableBusinessWithHolding entity) {
+    protected void attachEntity(TableSummaryBusinessWithHolding entity) {
         super.attachEntity(entity);
         entity.__setDaoSession(daoSession);
     }
@@ -119,15 +120,15 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     }
 
     /** Internal query to resolve the "Fields" to-many relationship of TableDashboard. */
-    public List<TableBusinessWithHolding> _queryTableDashboard_Fields(long businessWithHoldingRowId) {
+    public List<TableSummaryBusinessWithHolding> _queryTableDashboard_Fields(long businessWithHoldingRowId) {
         synchronized (this) {
             if (tableBusinessWithHolding_FieldsQuery == null) {
-                QueryBuilder<TableBusinessWithHolding> queryBuilder = queryBuilder();
+                QueryBuilder<TableSummaryBusinessWithHolding> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.businessWithHoldingRowId.eq(null));
                 tableBusinessWithHolding_FieldsQuery = queryBuilder.build();
             }
         }
-        Query<TableBusinessWithHolding> query = tableBusinessWithHolding_FieldsQuery.forCurrentThread();
+        Query<TableSummaryBusinessWithHolding> query = tableBusinessWithHolding_FieldsQuery.forCurrentThread();
         query.setParameter(0, businessWithHoldingRowId);
         return query.list();
     }
@@ -140,16 +141,16 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getTablePreviousPaymentDao().getAllColumns());
-            builder.append(" FROM TABLE_BUSINESS_HOLDING T");
-            builder.append(" LEFT JOIN TABLE_BUSINESS_HOLDING T0 ON T.\"businessWithHoldingRowId\"=T0.\"_id\"");
+            builder.append(" FROM TABLE_SUMMARY_BUSINESS_HOLDING T");
+            builder.append(" LEFT JOIN TABLE_SUMMARY_BUSINESS_HOLDING T0 ON T.\"businessWithHoldingRowId\"=T0.\"_id\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
         return selectDeep;
     }
 
-    protected TableBusinessWithHolding loadCurrentDeep(Cursor cursor, boolean lock) {
-        TableBusinessWithHolding entity = loadCurrent(cursor, 0, lock);
+    protected TableSummaryBusinessWithHolding loadCurrentDeep(Cursor cursor, boolean lock) {
+        TableSummaryBusinessWithHolding entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
         TablePreviousPayment tablePreviousPayment = loadCurrentOther(daoSession.getTablePreviousPaymentDao(), cursor, offset);
@@ -160,7 +161,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return entity;
     }
 
-    public TableBusinessWithHolding loadDeep(Long key) {
+    public TableSummaryBusinessWithHolding loadDeep(Long key) {
         assertSinglePk();
         if (key == null) {
             return null;
@@ -188,9 +189,9 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
     }
 
     /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<TableBusinessWithHolding> loadAllDeepFromCursor(Cursor cursor) {
+    public List<TableSummaryBusinessWithHolding> loadAllDeepFromCursor(Cursor cursor) {
         int count = cursor.getCount();
-        List<TableBusinessWithHolding> list = new ArrayList<TableBusinessWithHolding>(count);
+        List<TableSummaryBusinessWithHolding> list = new ArrayList<TableSummaryBusinessWithHolding>(count);
 
         if (cursor.moveToFirst()) {
             if (identityScope != null) {
@@ -210,7 +211,7 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
         return list;
     }
 
-    protected List<TableBusinessWithHolding> loadDeepAllAndCloseCursor(Cursor cursor) {
+    protected List<TableSummaryBusinessWithHolding> loadDeepAllAndCloseCursor(Cursor cursor) {
         try {
             return loadAllDeepFromCursor(cursor);
         } finally {
@@ -220,8 +221,9 @@ public class TableBusinessWithHoldingDao extends AbstractDao<TableBusinessWithHo
 
 
     /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<TableBusinessWithHolding> queryDeep(String where, String... selectionArg) {
+    public List<TableSummaryBusinessWithHolding> queryDeep(String where, String... selectionArg) {
         Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
         return loadDeepAllAndCloseCursor(cursor);
     }
 }
+

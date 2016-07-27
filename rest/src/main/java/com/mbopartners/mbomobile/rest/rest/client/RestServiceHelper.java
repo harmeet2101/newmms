@@ -26,6 +26,7 @@ import com.mbopartners.mbomobile.rest.rest.client.request.SaveTimeEntriesRequest
 import com.mbopartners.mbomobile.rest.rest.client.request.SubmitTimePeriodRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.BusinessCenterRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollSummaryRequest;
+import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollTransactionRequest;
 
 import java.io.File;
 import java.util.HashMap;
@@ -128,6 +129,16 @@ public class RestServiceHelper extends AbstractApplicationController implements 
         sendRequest(request, context);
         return request.getRequestDescriptor();
     }
+
+    @Override
+    public RequestDescriptor getPayrollTransactionsList(Context context) {
+
+        PayrollTransactionRequest request = new PayrollTransactionRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
+        addStandardRequesrHeaders(request);
+        sendRequest(request, context);
+        return request.getRequestDescriptor();
+    }
+
     @Override
     public RequestDescriptor getWorkOrdersList(Context context) {
         GetWorkOrdersRequest request = new GetWorkOrdersRequest(configurationController.getCurrentEnvironmentVariables().hostname);

@@ -58,5 +58,6 @@ public interface IRestClient {
     RequestDescriptor deleteExpenseReceipt(Context context, String mboExpenseId, String receiptFilename);
     RequestDescriptor getBusinessCenterList(Context context);
     RequestDescriptor getPayrollSummaryList(Context context);
+    RequestDescriptor getPayrollTransactionsList(Context context);
 
 }

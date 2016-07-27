@@ -4,6 +4,7 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableExpenseReimbersementsDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
@@ -26,6 +27,7 @@ public class TablePersonalWithHolding {
     private TablePersonGrossAmount grossAmount;
     private List<TablePersonPayrollTaxes> payrollTaxes;
     private List<TableExpenseReimbersements> expenseReimbursements;
+    private List<TablePersonDeposits> deposits;
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
@@ -150,9 +152,33 @@ public class TablePersonalWithHolding {
         return expenseReimbursements;
     }
 
+
+
     public void setExpenseReimbursements(List<TableExpenseReimbersements> expenseReimbursements) {
         this.expenseReimbursements = expenseReimbursements;
     }
+
+    public List<TablePersonDeposits> getDeposits() {
+
+        if (deposits == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonDepositsDao targetDao = daoSession.getTablePersonDepositsDao();
+            List<TablePersonDeposits> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(deposits == null&& FieldsNew.size()!=0) {
+                    deposits = FieldsNew;
+                }
+            }
+        }
+        return deposits;
+    }
+
+    public void setDeposits(List<TablePersonDeposits> deposits) {
+        this.deposits = deposits;
+    }
+
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
     public void delete() {
         if (myDao == null) {

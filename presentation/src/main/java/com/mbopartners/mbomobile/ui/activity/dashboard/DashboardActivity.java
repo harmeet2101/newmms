@@ -38,6 +38,7 @@ import com.mbopartners.mbomobile.rest.model.response.UserProfile;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 import com.mbopartners.mbomobile.rest.rest.client.IRestClient;
@@ -99,6 +100,7 @@ public class DashboardActivity extends AutoLockActivity
 
     public static final int PAYROLL_FRAGMENT_DATA_LOADER = 3;
     public static final int PAYROLL_SUMMARY_DATA_LOADER = 4;
+    public static final int PAYROLL_TRANSACTION_DATA_LOADER = 5;
 
     public static final int FAB_BACKGROUND_COLOR__NORMAL = Color.TRANSPARENT;
 
@@ -122,6 +124,7 @@ public class DashboardActivity extends AutoLockActivity
     private ExpensesLoadCallbackDriver expensesLoadCallbackDriver = new ExpensesLoadCallbackDriver();
     private BusinessCenterLoadCallbackDriver businessCenterLoadCallbackDriver = new BusinessCenterLoadCallbackDriver();
     private payrollSummaryLoadCallbackDriver payrollSummaryLoadCallbackDriver = new payrollSummaryLoadCallbackDriver();
+    private payrollTransactionsLoadCallbackDriver payrollTransactionsLoadCallbackDriver=new payrollTransactionsLoadCallbackDriver();
     private static boolean notNowFlag = false;
     public static String SYSTEM_LOCALE;
     public ActionBar actionBar;
@@ -337,11 +340,14 @@ public class DashboardActivity extends AutoLockActivity
         * make it Scrollable or else
         * make it Fixed.
         */
-        if(tabCount>3)
+        if(tabCount>3) {
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        else
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        }
+        else {
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        }
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -441,6 +447,7 @@ public class DashboardActivity extends AutoLockActivity
         if(tabCount>3) {
             forceLoadPayrollData();
             forceLoadPayrollSummaryData();
+            forceLoadPayrollTransactionData();
         }
     }
 
@@ -469,6 +476,12 @@ public class DashboardActivity extends AutoLockActivity
         dataModel.initPayrollModel();
         LoaderManager loaderManager = getSupportLoaderManager();
         loaderManager.restartLoader(PAYROLL_SUMMARY_DATA_LOADER, null, payrollSummaryLoadCallbackDriver).forceLoad();
+    }
+
+    private void forceLoadPayrollTransactionData(){
+        dataModel.initTransactionModel();
+        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager.restartLoader(PAYROLL_TRANSACTION_DATA_LOADER, null, payrollTransactionsLoadCallbackDriver).forceLoad();
     }
     private void notifyAllFragmentsDataReceived() {
         notifyRevenueDataReceived();
@@ -556,6 +569,7 @@ public class DashboardActivity extends AutoLockActivity
         if(tabCount>3) {
             fetchBusinessCenterData();
             fetchPayrollSummaryData();
+            fetchPayrollTransactionsData();
         }
     }
 
@@ -570,6 +584,7 @@ public class DashboardActivity extends AutoLockActivity
         final IRestClient.Callback getExpensesCallback = new ExpensesCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getPayrollSummaryCallback = new PayrollSummaryCallback(defaultRestClientResponseHandler);
+        final IRestClient.Callback getPayrollTransactionsCallback=new PayrollTransactionsCallback(defaultRestClientResponseHandler);
         restServiceHelper.clearCallbacks();
         restServiceHelper.registerCallback(RestApiContract.Method.getDashboards, getDashboardsCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
@@ -578,6 +593,7 @@ public class DashboardActivity extends AutoLockActivity
         restServiceHelper.registerCallback(RestApiContract.Method.getExpensesList, getExpensesCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getPayrollSummary, getPayrollSummaryCallback);
+        restServiceHelper.registerCallback(RestApiContract.Method.getPayrollTransactions, getPayrollTransactionsCallback);
     }
 
     /**
@@ -651,6 +667,14 @@ public class DashboardActivity extends AutoLockActivity
         dataLoadingDispatcher.notifyNeedDataReload();
         dataLoadingDispatcher.notifyDadaLoadingStarted();
         restServiceHelper.getPayrollSummaryList(this);
+        mNetworkingCount++;
+    }
+
+    private void fetchPayrollTransactionsData(){
+        dataModel.initTransactionModel();
+        dataLoadingDispatcher.notifyNeedDataReload();
+        dataLoadingDispatcher.notifyDadaLoadingStarted();
+        restServiceHelper.getPayrollTransactionsList(this);
         mNetworkingCount++;
     }
 
@@ -784,6 +808,7 @@ public class DashboardActivity extends AutoLockActivity
             {
                 fetchBusinessCenterData();
                 fetchPayrollSummaryData();
+                fetchPayrollTransactionsData();
             }
         }
     }
@@ -853,8 +878,8 @@ public class DashboardActivity extends AutoLockActivity
         if(previousPayment!=null)
         {
             Bundle bundle=new Bundle();
-            bundle.putSerializable("PARAMETERS AS SERIALIZABLE",previousPayment);
-            bundle.putSerializable("summaryList", (Serializable) dataModel.getPayrollSummaryList());
+            //bundle.putSerializable("PARAMETERS AS SERIALIZABLE",previousPayment);
+            bundle.putSerializable("summaryList", (Serializable) dataModel.getPayrollTransactionsList());
             Intent intent=ActivityIntentHelper.PayrollActivityBuilder.getActivity(DashboardActivity.this);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -956,6 +981,30 @@ public class DashboardActivity extends AutoLockActivity
             switch (response.getClientResult()) {
                 case Ok: {
                     forceLoadPayrollSummaryData();
+                    doDataLoadingFromServer_Step_4();
+                    break;
+                }
+
+                default: {
+                    doOnDataLoadingFromServer_FailedRoutine();
+                    defaultHandler.onComplete(response);
+                }
+            }
+        }
+    }
+    class PayrollTransactionsCallback implements IRestClient.Callback {
+        private DefaultRestClientResponseHandler defaultHandler;
+
+        public PayrollTransactionsCallback(DefaultRestClientResponseHandler defaultHandler) {
+            this.defaultHandler = defaultHandler;
+        }
+
+        @Override
+        public void onComplete(UniversalRestResponse response) {
+            mNetworkingCount--;
+            switch (response.getClientResult()) {
+                case Ok: {
+                    forceLoadPayrollTransactionData();
                     doDataLoadingFromServer_Step_4();
                     break;
                 }
@@ -1130,6 +1179,13 @@ public class DashboardActivity extends AutoLockActivity
         }
     }
 
+    private class PayrollTransactionsListDataExtractor implements IDataSource<List<PayrollTransactions>> {
+        @Override
+        public List<PayrollTransactions> loadData(Application application, Bundle params) {
+            return Dao.loadPayrollTransactionsFields(DashboardActivity.this.getApplication());
+        }
+    }
+
     private class WorkOrdersListDataExtractor implements IDataSource<List<WorkOrder>> {
         @Override
         public List<WorkOrder> loadData(Application application, Bundle params) {
@@ -1203,6 +1259,28 @@ public class DashboardActivity extends AutoLockActivity
 
         @Override
         public void onLoaderReset(Loader<List<PayrollSummary>> loader) {
+        }
+
+    }
+
+    private class payrollTransactionsLoadCallbackDriver implements LoaderManager.LoaderCallbacks<List<PayrollTransactions>>
+    {
+        @Override
+        public Loader<List<PayrollTransactions>> onCreateLoader(int id, Bundle args) {
+            PayrollTransactionsListDataExtractor dataExtractor = new PayrollTransactionsListDataExtractor();
+            DbAsyncLoader<List<PayrollTransactions>> loader = new DbAsyncLoader<>(DashboardActivity.this.getApplication(), args);
+            loader.setDataSource(dataExtractor);
+            return loader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<PayrollTransactions>> loader, List<PayrollTransactions> data) {
+            dataModel.setPayrollTransactionsData(data);
+            notifyPayrollDataReceived();
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<PayrollTransactions>> loader) {
         }
     }
 

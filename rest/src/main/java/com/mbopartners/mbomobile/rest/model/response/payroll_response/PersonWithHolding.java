@@ -22,12 +22,14 @@ public class PersonWithHolding implements Serializable,Validatable {
     private List<PersonPayrollTaxes> payrollTaxes = new ArrayList<PersonPayrollTaxes>();
     @SerializedName("expenseReimbursements")
     private List<ExpenseReimbursement> expenseReimbursements = new ArrayList<ExpenseReimbursement>();
+    @SerializedName("deposits")
+    private List<PersonDeposits> deposits=new ArrayList<>();
 
 
     @Override
     public boolean isValid() {
         boolean result =
-                grossAmount!=null && payrollTaxes!=null&& expenseReimbursements!=null;
+                grossAmount!=null && payrollTaxes!=null&& expenseReimbursements!=null && deposits!=null;
 
         if (! result) {
 
@@ -35,7 +37,7 @@ public class PersonWithHolding implements Serializable,Validatable {
             screamer.sayIfIsNull("grossAmount", grossAmount);
             screamer.sayIfIsNull("payrollTaxes", payrollTaxes);
             screamer.sayIfIsNull("expenseReimbursements", expenseReimbursements);
-
+            screamer.sayIfIsNull("deposits",deposits);
 
         }
         return result;
@@ -57,6 +59,15 @@ public class PersonWithHolding implements Serializable,Validatable {
         this.grossAmount=grossAmount;
         this.payrollTaxes=payrollTaxes;
         this.expenseReimbursements=expenseReimbursements;
+    }
+
+    public PersonWithHolding(PersonGrossAmount grossAmount,List<PersonPayrollTaxes> payrollTaxes,List<ExpenseReimbursement> expenseReimbursements
+    ,List<PersonDeposits> deposits)
+    {
+        this.grossAmount=grossAmount;
+        this.payrollTaxes=payrollTaxes;
+        this.expenseReimbursements=expenseReimbursements;
+        this.deposits=deposits;
     }
 
 
@@ -83,5 +94,13 @@ public class PersonWithHolding implements Serializable,Validatable {
 
     public void setExpenseReimbursements(List<ExpenseReimbursement> expenseReimbursements) {
         this.expenseReimbursements = expenseReimbursements;
+    }
+
+    public List<PersonDeposits> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<PersonDeposits> deposits) {
+        this.deposits = deposits;
     }
 }

@@ -5,6 +5,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableBusinessWith
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableSummaryBusinessWithHoldingDao;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,8 @@ public class TablePreviousPayment {
     private String mboId;
     private TableBusinessWithHolding businessWithholding;
     private TablePersonalWithHolding personalWithholding;
+
+    private TableSummaryBusinessWithHolding summaryBusinessWithHolding;
     public long getPreviousPaymentRowId() {
         return previousPaymentRowId;
     }
@@ -152,6 +155,27 @@ public class TablePreviousPayment {
 
     public void setBusinessWithholding(TableBusinessWithHolding businessWithholding) {
         this.businessWithholding = businessWithholding;
+    }
+
+    public TableSummaryBusinessWithHolding getSummaryBusinessWithHolding() {
+        if (summaryBusinessWithHolding == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TableSummaryBusinessWithHoldingDao targetDao = daoSession.getTableSummaryBusinessWithHoldingDao();
+            List<TableSummaryBusinessWithHolding> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(summaryBusinessWithHolding == null&& FieldsNew.size()!=0) {
+                    summaryBusinessWithHolding = FieldsNew.get(0);
+                }
+            }
+        }
+
+        return summaryBusinessWithHolding;
+    }
+
+    public void setSummaryBusinessWithHolding(TableSummaryBusinessWithHolding summaryBusinessWithHolding) {
+        this.summaryBusinessWithHolding = summaryBusinessWithHolding;
     }
 
     public TablePersonalWithHolding getPersonalWithholding() {

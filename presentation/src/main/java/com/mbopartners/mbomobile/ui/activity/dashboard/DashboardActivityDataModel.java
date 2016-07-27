@@ -5,6 +5,7 @@ import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.model.ExpenseTimesheetItem;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ class DashboardActivityDataModel {
     private List<ExpenseTimesheetItem> expenses;
     private List<BusinessCenter> businessCenterList;
     private List<PayrollSummary> payrollSummaryList;
+    private List<PayrollTransactions> payrollTransactionsList;
 
     public DashboardActivityDataModel() {
         initModel();
@@ -28,6 +30,7 @@ class DashboardActivityDataModel {
         initExpensesModel();
         initBusinessModel();
         initPayrollModel();
+        initTransactionModel();
     }
 
     public void onAllDataLoadingFailed() {
@@ -36,6 +39,12 @@ class DashboardActivityDataModel {
         expensesDataLoadingFailed();
         businessCenterDataLoadingFailed();
         payrollSummaryDataLoadingFailed();
+        payrollTransactionDataLoadingFailed();
+    }
+
+    private void payrollTransactionDataLoadingFailed() {
+
+        payrollTransactionsList=new ArrayList<>();
     }
 
     public void onDataLoadingComplete() {
@@ -69,6 +78,10 @@ class DashboardActivityDataModel {
         payrollSummaryList = null;
     }
 
+    public void initTransactionModel()
+    {
+        payrollTransactionsList=null;
+    }
 
     public List<DashboardField> getDashboardData() {
         return dashboardData;
@@ -150,4 +163,19 @@ class DashboardActivityDataModel {
         } else {
             payrollSummaryList = payrollSummaryData;
         }    }
+
+
+    public List<PayrollTransactions> getPayrollTransactionsList(){
+        return payrollTransactionsList;
+    }
+
+    public void setPayrollTransactionsData(List<PayrollTransactions> payrollTransactionses)
+    {
+        if (this.payrollTransactionsList != null) {
+            this.payrollTransactionsList.clear();
+            this.payrollTransactionsList.addAll(payrollTransactionses);
+        } else {
+            payrollTransactionsList = payrollTransactionses;
+        }
+    }
 }

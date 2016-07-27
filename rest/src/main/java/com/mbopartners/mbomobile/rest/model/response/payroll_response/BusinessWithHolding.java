@@ -45,16 +45,16 @@ public class BusinessWithHolding implements Serializable,Validatable {
     @Override
     public boolean isValid() {
         boolean result =
-                payrollAmount!=null &&
+                payrollAmount!=null/* &&
                         businessExpenses != null
-                         && payrollTaxes!=null;
+                         && payrollTaxes!=null*/;
 
         if (! result) {
 
             ValidationHelper.Screamer screamer = new ValidationHelper.Screamer(TAG, "");
-            screamer.sayIfIsNull("payrollAmount", payrollAmount);
+            screamer.sayIfIsNull("payrollAmount", payrollAmount);/*
             screamer.sayIfIsNull("businessExpenses", businessExpenses);
-            screamer.sayIfIsNull("payrollTaxes", payrollTaxes);
+            screamer.sayIfIsNull("payrollTaxes", payrollTaxes);*/
 
         }
         return result;
