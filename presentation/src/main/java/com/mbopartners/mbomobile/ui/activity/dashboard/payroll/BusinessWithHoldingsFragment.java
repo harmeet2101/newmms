@@ -1,5 +1,6 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+
+import java.util.List;
 
 /**
  * Created by MboAdil on 19/7/16.
@@ -19,6 +23,7 @@ public class BusinessWithHoldingsFragment extends Fragment {
     private static final String LOG_TAG = BusinessWithHoldingsFragment.class.getSimpleName();
     private RecyclerView recyclerView;
     private BusinessWithholdingsRecyclerciewAdapter adapter;
+    private BusinessWithHoldingInteractionListener mListener;
     public static BusinessWithHoldingsFragment newInstance(String param1, String param2) {
 
 
@@ -40,6 +45,19 @@ public class BusinessWithHoldingsFragment extends Fragment {
         Log.v(LOG_TAG, "onCreate()");
     }
 
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        Log.v(LOG_TAG,"onAttach()");
+        try {
+            mListener=(BusinessWithHoldingInteractionListener)activity;
+        }catch (ClassCastException e)
+        {
+            throw new ClassCastException(activity.toString()
+                    + " must implement " + BusinessWithHoldingsFragment.class.getSimpleName());
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.v(LOG_TAG, "onCreateView()");
@@ -51,5 +69,11 @@ public class BusinessWithHoldingsFragment extends Fragment {
         adapter = new BusinessWithholdingsRecyclerciewAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         return fragmentRootView;
+    }
+
+
+    public interface BusinessWithHoldingInteractionListener{
+
+        List<BusinessWithHolding> getBusinessWithHoldingList();
     }
 }

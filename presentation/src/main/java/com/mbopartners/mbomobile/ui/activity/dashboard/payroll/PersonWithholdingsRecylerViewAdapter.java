@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+
+import java.util.List;
 
 /**
  * Created by MboAdil on 20/7/16.
@@ -28,10 +31,19 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final String EARNINGS = "Earnings";
     private static final String DEDUCTIONS = "Deductions";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
+    private List<PersonWithHolding> personWithHoldingList;
+    private int position;
     public PersonWithholdingsRecylerViewAdapter(Context context) {
 
         this.context=context;
     }
+    public PersonWithholdingsRecylerViewAdapter(Context context,List<PersonWithHolding> personWithHoldingList,int position) {
+
+        this.context=context;
+        this.personWithHoldingList=personWithHoldingList;
+        this.position=position;
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -145,8 +157,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(EARNINGS));
         viewHolder.company_name_TextView.setText(EARNINGS);
-        viewHolder.work_order_name_TextView.setText("$XXX.XX");
-        viewHolder.periodTextview.setText("This Period");
+        viewHolder.work_order_name_TextView.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
+        viewHolder.periodTextview.setText("$"+String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount()));
 
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {

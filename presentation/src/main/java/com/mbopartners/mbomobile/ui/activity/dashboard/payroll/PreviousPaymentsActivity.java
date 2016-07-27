@@ -31,6 +31,7 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
     private static final String TAG = PreviousPaymentsActivity.class.getSimpleName();
     private LoaderManager.LoaderCallbacks<List<PayrollSummary>> loaderCallbacks;
     private List<PayrollTransactions> payrollTransactionsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
         {
             //previousPayment= (PreviousPayment) bundle.getSerializable("PARAMETERS AS SERIALIZABLE");
             payrollTransactionsList= (List<PayrollTransactions>) bundle.getSerializable("summaryList");
+
         }
 
         fragment = (PreviousPaymentFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
@@ -97,6 +99,7 @@ public class PreviousPaymentsActivity extends AutoLockActivity implements Previo
     {
         Bundle bundle=new Bundle();
         bundle.putSerializable("summaryList", (Serializable) payrollTransactionsList);
+        bundle.putInt("position",position);
         Intent intent= ActivityIntentHelper.ChoosePreviousPaymentsActivityBuilder.getActivity(PreviousPaymentsActivity.this);
         intent.putExtras(bundle);
         startActivity(intent);

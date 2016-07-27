@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+
+import java.util.List;
 
 /**
  * Created by MboAdil on 20/7/16.
@@ -25,9 +28,15 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
     private static final String ENCUMBERED_FUNDS = "Encumbered Funds";
     private static final String INSURANCE_EXPENSES = "Insurance Funds";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
+    private List<BusinessWithHolding> businessWithHoldingList;
     public BusinessWithholdingsRecyclerciewAdapter(Context context) {
 
         this.context=context;
+    }
+    public BusinessWithholdingsRecyclerciewAdapter(Context context,List<BusinessWithHolding> businessWithHoldingList) {
+
+        this.context=context;
+        this.businessWithHoldingList=businessWithHoldingList;
     }
 
     @Override

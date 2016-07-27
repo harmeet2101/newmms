@@ -12,19 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.AutoLockActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.DashboardFragmentPagerAdapter;
 import com.mbopartners.mbomobile.ui.activity.helper.ActivityIntentHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by MboAdil on 19/7/16.
  */
-public class PayrollWithHoldings extends AutoLockActivity {
+public class PayrollWithHoldings extends AutoLockActivity implements PersonalWithHoldingsFragment.PersonalHoldingInteractionListener
+,BusinessWithHoldingsFragment.BusinessWithHoldingInteractionListener{
 
     private static final String TAG = PayrollWithHoldings.class.getSimpleName();
     private ViewPager viewPager;
@@ -33,9 +38,9 @@ public class PayrollWithHoldings extends AutoLockActivity {
     public static final int PERSONAL_FRAGMENT_INDEX = 1;
     private int pageIndex = PERSONAL_FRAGMENT_INDEX;
     private TabLayout tabLayout;
-    private List<PayrollSummary> payrollSummaryList;
+    private List<PayrollTransactions> payrollTransactionsList;
     private static final String KEY_SAVED_INSTANCE_STATE__PAGE_INDEX = "int pageIndex";
-
+    private int position;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -49,7 +54,8 @@ public class PayrollWithHoldings extends AutoLockActivity {
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
         {
-            payrollSummaryList= (List<PayrollSummary>) bundle.getSerializable("summaryList");
+            payrollTransactionsList= (List<PayrollTransactions>) bundle.getSerializable("summaryList");
+            position=bundle.getInt("position");
         }
         if (savedInstanceState != null) {
             pageIndex = ActivityIntentHelper.ChoosePreviousPaymentsActivityBuilder.getPageIndex(savedInstanceState);
@@ -154,5 +160,64 @@ public class PayrollWithHoldings extends AutoLockActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public List<PersonWithHolding> getPersonWithHoldingList() {
+        if(payrollTransactionsList!=null)
+        {
+            if(payrollTransactionsList.size()==1)
+            {
+                if(payrollTransactionsList.get(0).getPersonalWithholding()!=null)
+                {
+                    personWithHoldingList.add(payrollTransactionsList.get(0).getPersonalWithholding());
+                }
+
+            }else if(payrollTransactionsList.size()>0)
+            {
+                for(int i=0;i<payrollTransactionsList.size();i++)
+                {
+                    personWithHoldingList.add(payrollTransactionsList.get(i).getPersonalWithholding());
+                }
+            }
+            return personWithHoldingList;
+        }
+        else
+            return null;
+    }
+
+
+
+    private List<PersonWithHolding> personWithHoldingList=new ArrayList<>();
+    private List<BusinessWithHolding> businessWithHoldingList=new ArrayList<>();
+
+    @Override
+    public List<BusinessWithHolding> getBusinessWithHoldingList() {
+
+        if(payrollTransactionsList!=null)
+        {
+            if(payrollTransactionsList.size()==1)
+            {
+                if(payrollTransactionsList.get(0).getBusinessWithholding()!=null)
+                {
+                    businessWithHoldingList.add(payrollTransactionsList.get(0).getBusinessWithholding());
+                }
+
+            }else if(payrollTransactionsList.size()>0)
+            {
+                for(int i=0;i<payrollTransactionsList.size();i++)
+                {
+                    businessWithHoldingList.add(payrollTransactionsList.get(i).getBusinessWithholding());
+                }
+            }
+            return businessWithHoldingList;
+        }
+        else
+            return null;
+    }
+
+    @Override
+    public int getSelectedItemPosition() {
+        return position;
     }
 }
