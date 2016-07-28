@@ -1,13 +1,18 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +40,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
     private List<PersonWithHolding> personWithHoldingList;
     private int position;
+    int mheight;
     public PersonWithholdingsRecylerViewAdapter(Context context) {
 
         this.context=context;
@@ -44,6 +50,11 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         this.context=context;
         this.personWithHoldingList=personWithHoldingList;
         this.position=position;
+
+        WindowManager windowmanager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dimension = new DisplayMetrics();
+        windowmanager.getDefaultDisplay().getMetrics(dimension);
+        mheight = dimension.heightPixels;
     }
 
 
@@ -81,12 +92,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 viewHolder = new NextPayrollViewHolder(itemView);
                 break;
             }
-            case ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL : {
+            /*case ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_personwithholdings_include_view, parent, false);
                 viewHolder = new LastPayrollViewHolder(itemView);
                 break;
-            }
+            }*/
 
 
             default : {
@@ -113,13 +124,13 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
         else if(position==2)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
-        else if(position==3)
-            bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
+        /*else if(position==3)
+            bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);*/
     }
 
     @Override
     public int getItemCount() {
-        int count = 4;
+        int count = 3;
         return count;
     }
 
@@ -137,8 +148,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             return itemViewType=ITEM_VIEW_TYPE__EARNINGS;
         else if(position==2)
             return itemViewType=ITEM_VIEW_TYPE__DEDUCTIONS;
-        else if(position==3)
-            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL;
+        /*else if(position==3)
+            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL;*/
         else
             return itemViewType;
     }
@@ -214,35 +225,89 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.vaTextview=(TextView)view.findViewById(R.id.textView4);
         }
     }
-    public static class BusinessCenterViewHolder extends RecyclerView.ViewHolder {
+    public  class BusinessCenterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
         public TextView work_order_name_TextView;
         public TextView periodTextview;
+        public CardView cardView;
+        public View includeView;
+        public int minHeight;
         public BusinessCenterViewHolder(View itemView) {
             super(itemView);
 
+            this.cardView=(CardView)itemView.findViewById(R.id.card_view);
             this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);
             this.company_name_TextView = (TextView) itemView.findViewById(R.id.company_name_TextView);
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
+            this.includeView=itemView.findViewById(R.id.includeview);
+            this.itemView.setOnClickListener(this);
+            cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                @Override
+                public boolean onPreDraw() {
+                    cardView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    minHeight = cardView.getHeight();
+                    ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+                    layoutParams.height = minHeight;
+                    cardView.setLayoutParams(layoutParams);
+
+                    return true;
+                }
+            });
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(includeView.getVisibility()==View.GONE)
+                expandView(mheight,cardView,includeView);
+            else if(includeView.getVisibility()==View.VISIBLE)
+                collapseView(cardView,minHeight,includeView);
         }
     }
 
-    public class NextPayrollViewHolder extends RecyclerView.ViewHolder{
+
+
+    public class NextPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
         public TextView work_order_name_TextView;
         public TextView periodTextview;
+        public CardView cardView;
+        public View includeView;
+        public int minHeight;
         public NextPayrollViewHolder(View itemView) {
             super(itemView);
-
+            this.cardView=(CardView)itemView.findViewById(R.id.card_view);
             this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);
             this.company_name_TextView = (TextView) itemView.findViewById(R.id.company_name_TextView);
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
+            this.includeView=itemView.findViewById(R.id.includeview);
+            this.itemView.setOnClickListener(this);
+            cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                @Override
+                public boolean onPreDraw() {
+                    cardView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    minHeight = cardView.getHeight();
+                    ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+                    layoutParams.height = minHeight;
+                    cardView.setLayoutParams(layoutParams);
+
+                    return true;
+                }
+            });
+        }
+        @Override
+        public void onClick(View v) {
+            if(includeView.getVisibility()==View.GONE)
+                expandView(mheight,cardView,includeView);
+            else if(includeView.getVisibility()==View.VISIBLE)
+                collapseView(cardView,minHeight,includeView);
         }
 
     }
@@ -258,4 +323,38 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     }
 
 
+    public void collapseView(final CardView cardView,int minHeight,View includeView) {
+
+        ValueAnimator anim = ValueAnimator.ofInt(cardView.getMeasuredHeightAndState(),
+                minHeight);
+        includeView.setVisibility(View.GONE);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int val = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+                layoutParams.height = val;
+                cardView.setLayoutParams(layoutParams);
+
+            }
+        });
+        anim.start();
+    }
+    public void expandView(int height,final CardView cardView,View includeView) {
+
+        ValueAnimator anim = ValueAnimator.ofInt(cardView.getMeasuredHeightAndState(),
+                height);
+        includeView.setVisibility(View.VISIBLE);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int val = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+                layoutParams.height = val;
+                cardView.setLayoutParams(layoutParams);
+            }
+        });
+        anim.start();
+
+    }
 }
