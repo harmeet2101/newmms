@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
 import java.util.List;
 
@@ -25,9 +26,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
 
-    private static final int ITEM_VIEW_TYPE__EARNINGS = 2;
-    private static final int ITEM_VIEW_TYPE__DEDUCTIONS = 3;
-    private static final int ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL = 4;
+    private static final int ITEM_VIEW_TYPE_FEDERAL=2;
+    private static final int ITEM_VIEW_TYPE__EARNINGS = 3;
+    private static final int ITEM_VIEW_TYPE__DEDUCTIONS = 4;
+    private static final int ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL = 5;
     private static final String EARNINGS = "Earnings";
     private static final String DEDUCTIONS = "Deductions";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
@@ -60,6 +62,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 ((TextView) view.findViewById(R.id.empty_section_TextView)).setText(R.string.mbo_dashboard_revenue_empty_list);
                 fillParent(parent, view);
                 viewHolder = new BulkViewHolder(view);
+                break;
+            }
+            case ITEM_VIEW_TYPE_FEDERAL : {
+                View itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.layout_personwithholidings_federal_allowances, parent, false);
+                viewHolder = new FederalViewHolder(itemView);
                 break;
             }case ITEM_VIEW_TYPE__EARNINGS : {
                 View itemView = LayoutInflater.from(parent.getContext()).
@@ -100,16 +108,18 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         if(position==0)
-            bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
+            bindViewHolder_federalView((FederalViewHolder) viewHolder, position);
         else if(position==1)
-            bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
+            bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
         else if(position==2)
+            bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
+        else if(position==3)
             bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
     }
 
     @Override
     public int getItemCount() {
-        int count = 3;
+        int count = 4;
         return count;
     }
 
@@ -122,10 +132,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         }*/
         if(position==0)
-            return itemViewType=ITEM_VIEW_TYPE__EARNINGS;
+            return itemViewType=ITEM_VIEW_TYPE_FEDERAL;
         else if(position==1)
-            return itemViewType=ITEM_VIEW_TYPE__DEDUCTIONS;
+            return itemViewType=ITEM_VIEW_TYPE__EARNINGS;
         else if(position==2)
+            return itemViewType=ITEM_VIEW_TYPE__DEDUCTIONS;
+        else if(position==3)
             return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL;
         else
             return itemViewType;
@@ -157,8 +169,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(EARNINGS));
         viewHolder.company_name_TextView.setText(EARNINGS);
-        viewHolder.work_order_name_TextView.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
-        viewHolder.periodTextview.setText("$"+String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount()));
+        viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
+        viewHolder.periodTextview.setText("This Period");
 
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -166,10 +178,20 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(DEDUCTIONS));
         viewHolder.company_name_TextView.setText(DEDUCTIONS);
-        viewHolder.work_order_name_TextView.setText("$XXX.XX");
+        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(0).getAmount())));
         viewHolder.periodTextview.setText("This Period");
+    }
 
-
+    public void bindViewHolder_federalView(FederalViewHolder viewHolder,int position)
+    {
+        if(personWithHoldingList.get(this.position).getFederalAllowance()!=null) {
+            viewHolder.federalTextview.setText("Federal: " + personWithHoldingList.get(this.position).getFederalAllowance());
+            viewHolder.vaTextview.setText("VA: " + personWithHoldingList.get(this.position).getFederalAllowance());
+        }else
+        {
+            viewHolder.federalTextview.setText("Federal: N/A");
+            viewHolder.vaTextview.setText("VA: N/A");
+        }
     }
     public void bindViewHolder_Last_Payroll(LastPayrollViewHolder viewHolder, int position) {
 
@@ -181,6 +203,17 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         }
     }
 
+
+    public  class FederalViewHolder extends RecyclerView.ViewHolder{
+        public TextView federalTextview;
+        public TextView vaTextview;
+
+        public FederalViewHolder(View view){
+            super(view);
+            this.federalTextview=(TextView)view.findViewById(R.id.textView3);
+            this.vaTextview=(TextView)view.findViewById(R.id.textView4);
+        }
+    }
     public static class BusinessCenterViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView payrollImageView;

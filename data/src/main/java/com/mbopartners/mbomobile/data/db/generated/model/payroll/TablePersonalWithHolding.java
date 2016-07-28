@@ -4,6 +4,7 @@ package com.mbopartners.mbomobile.data.db.generated.model.payroll;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableExpenseReimbersementsDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
@@ -28,7 +29,9 @@ public class TablePersonalWithHolding {
     private List<TablePersonPayrollTaxes> payrollTaxes;
     private List<TableExpenseReimbersements> expenseReimbursements;
     private List<TablePersonDeposits> deposits;
+    private List<TablePersonAfterDeductions> afterTaxDeductions;
     private transient DaoSession daoSession;
+    private String federalAllowance;
 
     /** Used for active entity operations. */
     private transient TablePersonWithHoldingDao myDao;
@@ -47,6 +50,12 @@ public class TablePersonalWithHolding {
         this.id=id;
         this.personWithHoldingRowId=personWithHoldingRowId;
     }
+    public TablePersonalWithHolding(Long id, long personWithHoldingRowId,String federalAllowance)
+    {
+        this.id=id;
+        this.personWithHoldingRowId=personWithHoldingRowId;
+        this.federalAllowance=federalAllowance;
+    }
 
     public Long getId() {
         return id;
@@ -64,6 +73,13 @@ public class TablePersonalWithHolding {
         this.personWithHoldingRowId = personWithHoldingRowId;
     }
 
+    public String getFederalAllowance() {
+        return federalAllowance;
+    }
+
+    public void setFederalAllowance(String federalAllowance) {
+        this.federalAllowance = federalAllowance;
+    }
 
     public TablePreviousPayment getTablePreviousPayment() {
 
@@ -173,6 +189,28 @@ public class TablePersonalWithHolding {
             }
         }
         return deposits;
+    }
+
+    public List<TablePersonAfterDeductions> getAfterTaxDeductions() {
+
+
+        if (afterTaxDeductions == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonAfterDeductionsDao targetDao = daoSession.getTablePersonAfterDeductionsDao();
+            List<TablePersonAfterDeductions> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(afterTaxDeductions == null&& FieldsNew.size()!=0) {
+                    afterTaxDeductions = FieldsNew;
+                }
+            }
+        }
+        return afterTaxDeductions;
+    }
+
+    public void setAfterTaxDeductions(List<TablePersonAfterDeductions> afterTaxDeductions) {
+        this.afterTaxDeductions = afterTaxDeductions;
     }
 
     public void setDeposits(List<TablePersonDeposits> deposits) {

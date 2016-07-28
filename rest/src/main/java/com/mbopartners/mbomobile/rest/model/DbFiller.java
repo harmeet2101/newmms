@@ -25,6 +25,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentD
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollTransactionsDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
@@ -70,6 +71,7 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDepo
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonGrossAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
 import java.util.ArrayList;
@@ -231,6 +233,9 @@ public class DbFiller {
                 {
                     insertperson_payrollDepositsField(depositsList.get(i),personId,daoSession);
                 }
+                List<PersonalDeductions> deductionsList=personWithHolding.getAfterTaxDeductions();
+                for(int i=0;i<deductionsList.size();i++)
+                    insertperson_payrollDeductionsField(deductionsList.get(i),personId,daoSession);
             }
         }
 
@@ -407,6 +412,12 @@ public class DbFiller {
         TablePersonDepositsDao dao = daoSession.getTablePersonDepositsDao();
         return dao.insert(Converter.toTable_payroll_person_deposits(Id, personDeposits));
     }
+
+    public static long insertperson_payrollDeductionsField(PersonalDeductions personalDeductions, long Id,DaoSession daoSession) {
+        TablePersonAfterDeductionsDao dao = daoSession.getTablePersonAfterDeductionsDao();
+        return dao.insert(Converter.toTable_payroll_person_deductions(Id, personalDeductions));
+    }
+
     public static long insertDashboardField(DashboardField dashboardField, long dashboardId, DaoSession daoSession) {
         TableDashboardFieldDao dao = daoSession.getTableDashboardFieldDao();
         return dao.insert(Converter.toTable(dashboardId, dashboardField));

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
 import java.util.List;
 
@@ -29,14 +30,16 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
     private static final String INSURANCE_EXPENSES = "Insurance Funds";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
     private List<BusinessWithHolding> businessWithHoldingList;
+    private int position;
     public BusinessWithholdingsRecyclerciewAdapter(Context context) {
 
         this.context=context;
     }
-    public BusinessWithholdingsRecyclerciewAdapter(Context context,List<BusinessWithHolding> businessWithHoldingList) {
+    public BusinessWithholdingsRecyclerciewAdapter(Context context,List<BusinessWithHolding> businessWithHoldingList,int position) {
 
         this.context=context;
         this.businessWithHoldingList=businessWithHoldingList;
+        this.position=position;
     }
 
     @Override
@@ -155,27 +158,32 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(ENCUMBERED_FUNDS));
         viewHolder.company_name_TextView.setText(ENCUMBERED_FUNDS);
-        viewHolder.work_order_name_TextView.setText("$XXX.XX");
+        viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(businessWithHoldingList.get(this.position).getPayrollAmount().getAmount())));
         viewHolder.periodTextview.setText("This Period");
 
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
 
 
+        double total_expense=getSumOfInsuranceExpenses(businessWithHoldingList);
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(INSURANCE_EXPENSES));
         viewHolder.company_name_TextView.setText(INSURANCE_EXPENSES);
-        viewHolder.work_order_name_TextView.setText("$XXX.XX");
+        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(total_expense)));
         viewHolder.periodTextview.setText("This Period");
 
 
     }
     public void bindViewHolder_Last_Payroll(LastPayrollViewHolder viewHolder, int position) {
 
+        double total_expense=getSumOfPayrollTaxes(businessWithHoldingList);
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(BUSINESS_CENTER_PAYROLL));
         viewHolder.company_name_TextView.setText(BUSINESS_CENTER_PAYROLL);
-        viewHolder.work_order_name_TextView.setText("$XXX.XX");
+        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(total_expense)));
         viewHolder.periodTextview.setText("This Period");
     }
+
+
+
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
             super(itemView);
@@ -229,5 +237,45 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
         }
+    }
+
+    public double getSumOfInsuranceExpenses(List<BusinessWithHolding> businessWithHoldings)
+    {
+        double total_expense=0.0;
+
+        try {
+            if (businessWithHoldings != null) {
+                for (int i = 0; i < businessWithHoldings.get(this.position).getBusinessExpenses().size(); i++) {
+                    total_expense = total_expense + businessWithHoldings.get(this.position).getBusinessExpenses().get(i).getAmount();
+                }
+
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            total_expense=0.0;
+        }
+        return total_expense;
+    }
+
+    private double getSumOfPayrollTaxes(List<BusinessWithHolding> businessWithHoldings) {
+
+        double total_expense=0.0;
+
+        try {
+            if (businessWithHoldings != null) {
+                for (int i = 0; i < businessWithHoldings.get(this.position).getPayrollTaxes().size(); i++) {
+                    total_expense = total_expense + businessWithHoldings.get(this.position).getPayrollTaxes().get(i).getAmount();
+                }
+
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            total_expense=0.0;
+        }
+        return Math.round(total_expense * 100.0) / 100.0;
     }
 }

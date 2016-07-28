@@ -14,6 +14,7 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDepo
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
+import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         if (payrollSummaryList == null) {
 
         }else
-            bindViewHolder_payroll((PreviousPaymentViewHolder)holder,position);
+            bindViewHolder_payroll((PreviousPaymentViewHolder) holder, position);
 
 
     }
@@ -117,7 +118,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         viewHolder.paymentNameTextview.setText(depositsList.get(position).getName());
        // viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(position).getPersonalWithholding().getDeposits().get(0).getAmount())));
 
-        viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
+        viewHolder.paymentAmountTextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
        /*Adiing date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(position).getDate()));
         if(position==payrollSummaryList.size()-1)
@@ -130,34 +131,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         viewHolder.paymentAmountTextView.setText("$"+getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getAmount())));
     }*/
 
-    public String getAmount_uptoTwoDecimalPlaces(String amount)
-    {
 
-
-        int dotPos = -1;
-
-        for (int i = 0; i < amount.length(); i++) {
-            char c = amount.charAt(i);
-            if (c == '.') {
-                dotPos = i;
-            }
-        }
-
-
-
-        /*Making Money  get trailing values after the decimal*/
-
-        if (dotPos == -1&& !amount.equals("")){
-            amount=amount + ".00";
-        }else if(dotPos == -1&& amount.equals(""))
-            amount=amount + "0.00";
-        else if(dotPos==amount.length()-1 && !amount.equals(""))
-            amount="0"+amount + "00";
-        else if(dotPos==amount.length()-2 && !amount.equals(""))
-            amount=amount + "0";
-
-        return amount;
-    }
     @Override
     public int getItemCount() {
         int itemCount;

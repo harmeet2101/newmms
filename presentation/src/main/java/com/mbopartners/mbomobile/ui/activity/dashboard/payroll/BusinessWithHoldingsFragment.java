@@ -66,7 +66,7 @@ public class BusinessWithHoldingsFragment extends Fragment {
         recyclerView=(RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new BusinessWithholdingsRecyclerciewAdapter(getActivity());
+        adapter = new BusinessWithholdingsRecyclerciewAdapter(getActivity(),mListener.getBusinessWithHoldingList(),mListener.getSelectedItemPosition());
         recyclerView.setAdapter(adapter);
         return fragmentRootView;
     }
@@ -75,5 +75,6 @@ public class BusinessWithHoldingsFragment extends Fragment {
     public interface BusinessWithHoldingInteractionListener{
 
         List<BusinessWithHolding> getBusinessWithHoldingList();
+        int getSelectedItemPosition();
     }
 }

@@ -24,7 +24,10 @@ public class PersonWithHolding implements Serializable,Validatable {
     private List<ExpenseReimbursement> expenseReimbursements = new ArrayList<ExpenseReimbursement>();
     @SerializedName("deposits")
     private List<PersonDeposits> deposits=new ArrayList<>();
-
+    @SerializedName("afterTaxDeductions")
+    private List<PersonalDeductions> afterTaxDeductions=new ArrayList<>();
+    @SerializedName("federalAllowance")
+    private String federalAllowance;
 
     @Override
     public boolean isValid() {
@@ -70,6 +73,26 @@ public class PersonWithHolding implements Serializable,Validatable {
         this.deposits=deposits;
     }
 
+    public PersonWithHolding(PersonGrossAmount grossAmount,List<PersonPayrollTaxes> payrollTaxes,List<ExpenseReimbursement> expenseReimbursements
+            ,List<PersonDeposits> deposits,List<PersonalDeductions> afterTaxDeductions,String federalAllowance)
+    {
+        this.grossAmount=grossAmount;
+        this.payrollTaxes=payrollTaxes;
+        this.expenseReimbursements=expenseReimbursements;
+        this.deposits=deposits;
+        this.afterTaxDeductions=afterTaxDeductions;
+        this.federalAllowance=federalAllowance;
+    }
+
+
+
+    public String getFederalAllowance() {
+        return federalAllowance;
+    }
+
+    public void setFederalAllowance(String federalAllowance) {
+        this.federalAllowance = federalAllowance;
+    }
 
     public PersonGrossAmount getGrossAmount() {
         return grossAmount;
@@ -102,5 +125,13 @@ public class PersonWithHolding implements Serializable,Validatable {
 
     public void setDeposits(List<PersonDeposits> deposits) {
         this.deposits = deposits;
+    }
+
+    public List<PersonalDeductions> getAfterTaxDeductions() {
+        return afterTaxDeductions;
+    }
+
+    public void setAfterTaxDeductions(List<PersonalDeductions> afterTaxDeductions) {
+        this.afterTaxDeductions = afterTaxDeductions;
     }
 }

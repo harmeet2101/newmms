@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class PersonalWithHoldingsFragment extends Fragment {
 
-    private static final String LOG_TAG = BusinessWithHoldingsFragment.class.getSimpleName();
+    private static final String LOG_TAG = PersonalWithHoldingsFragment.class.getSimpleName();
     private RecyclerView recyclerView;
     private PersonWithholdingsRecylerViewAdapter adapter;
     private PersonalHoldingInteractionListener mListener;

@@ -34,6 +34,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableNextPaymentD
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollSummaryDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollTransactionsDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
@@ -44,6 +45,7 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableSummaryPayro
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableExpenseReimbersements;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonAfterDeductions;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonDeposits;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableSummaryBusinessWithHolding;
 
@@ -90,6 +92,7 @@ public class DaoMaster extends AbstractDaoMaster {
 
         TableSummaryBusinessWithHoldingDao.createTable(db,ifNotExists);
         TableSummaryPayrollAmountDao.createTable(db,ifNotExists);
+        TablePersonAfterDeductionsDao.createTable(db,ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
@@ -127,6 +130,7 @@ public class DaoMaster extends AbstractDaoMaster {
         TablePersonDepositsDao.dropTable(db,ifExists);
         TableSummaryBusinessWithHoldingDao.dropTable(db,ifExists);
         TableSummaryPayrollAmountDao.dropTable(db,ifExists);
+        TablePersonAfterDeductionsDao.dropTable(db,ifExists);
     }
     
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -191,6 +195,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(TablePersonDepositsDao.class);
         registerDaoClass(TableSummaryBusinessWithHoldingDao.class);
         registerDaoClass(TableSummaryPayrollAmountDao.class);
+        registerDaoClass(TablePersonAfterDeductionsDao.class);
     }
     
     public DaoSession newSession() {

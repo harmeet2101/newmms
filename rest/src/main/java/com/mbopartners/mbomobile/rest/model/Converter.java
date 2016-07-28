@@ -24,6 +24,7 @@ import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPaymen
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTransactions;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonAfterDeductions;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonDeposits;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonGrossAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayrollTaxes;
@@ -59,6 +60,7 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDepo
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonGrossAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 
 import java.util.ArrayList;
@@ -164,7 +166,7 @@ public class Converter {
     public static TablePersonalWithHolding toTable_payroll_personWithHolding(long personWithHoldingRowId,PersonWithHolding personWithHolding) {
         TablePersonalWithHolding tablePersonalWithHolding = new TablePersonalWithHolding(
                 null,
-                personWithHoldingRowId);
+                personWithHoldingRowId,personWithHolding.getFederalAllowance());
         return tablePersonalWithHolding;
     }
 
@@ -229,6 +231,14 @@ public class Converter {
                 personDeposits.getAmount(),personDeposits.getName(),
                 depositsRowId);
         return tablePersonDeposits;
+    }
+
+    public static TablePersonAfterDeductions toTable_payroll_person_deductions(long depositsRowId,PersonalDeductions personalDeductions) {
+        TablePersonAfterDeductions tablePersonAfterDeductions = new TablePersonAfterDeductions(
+                null,
+                personalDeductions.getAmount(),personalDeductions.getAmountMtd(),personalDeductions.getAmountYtd(),personalDeductions.getName(),
+                depositsRowId);
+        return tablePersonAfterDeductions;
     }
     public static TableDashboard toTable(Dashboard dashboard) {
         TableDashboard  tableDashboard = new TableDashboard(null, dashboard.getPurpose());
@@ -450,7 +460,9 @@ public class Converter {
         PersonWithHolding personWithHolding = null;
         if (table != null) {
             personWithHolding = new PersonWithHolding(toWeb_payrollPersonGrossAmount(table.getGrossAmount()),
-                    toWeb_PersonPayrollTaxesField(table.getPayrollTaxes()),toWeb_PersonExpenseReimbersementField(table.getExpenseReimbursements()),toWeb_PersonDepositsField(table.getDeposits()));
+                    toWeb_PersonPayrollTaxesField(table.getPayrollTaxes()),
+                    toWeb_PersonExpenseReimbersementField(table.getExpenseReimbursements()),
+                    toWeb_PersonDepositsField(table.getDeposits()),toWeb_PersonDeductionsField(table.getAfterTaxDeductions()),table.getFederalAllowance());
             return personWithHolding;
         }else
             return personWithHolding;
@@ -501,6 +513,15 @@ public class Converter {
             return personDeposits;
         }else
             return personDeposits;
+    }
+
+    public static PersonalDeductions toWeb_payrollPersonDeductions(TablePersonAfterDeductions table) {
+        PersonalDeductions personalDeductions = null;
+        if (table != null) {
+            personalDeductions = new PersonalDeductions(table.getAmount(),table.getAmountMtd(),table.getAmountYtd(),table.getName());
+            return personalDeductions;
+        }else
+            return personalDeductions;
     }
 
     public static BusinessExpenses toWeb_businessExpenses(TableBusinessExpenses table) {
@@ -727,6 +748,15 @@ public class Converter {
 
         }
         return personDeposits;
+    }
+
+    public static List<PersonalDeductions> toWeb_PersonDeductionsField(List<TablePersonAfterDeductions> table) {
+        List<PersonalDeductions> personalDeductionses = new ArrayList<>(table.size());
+        for (TablePersonAfterDeductions tableField : table) {
+            personalDeductionses.add(toWeb_payrollPersonDeductions(tableField));
+
+        }
+        return personalDeductionses;
     }
 
 
