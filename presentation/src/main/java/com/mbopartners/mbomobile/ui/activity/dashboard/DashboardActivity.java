@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.mbopartners.mbomobile.rest.configuration.ConfigurationController;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.TimePeriod;
@@ -172,9 +173,18 @@ public class DashboardActivity extends AutoLockActivity
         downloadingProgressBar=(ProgressBar)findViewById(R.id.progressBar);
         downloadingProgressBar.setVisibility(View.INVISIBLE);
         setupToolbarLogo();
-        if (isNonBillableAllowed)
+        ConfigurationController configurationController=(ConfigurationController)getApplicationControllersManager().
+                getController(Controllers.CONTROLLER__APPLICATION_CONFIGURATION);
+        String currentConfiguration = configurationController.getCurrentConfiguration().toString();
+        if(currentConfiguration.equalsIgnoreCase(ConfigurationController.EnvironmentConfiguration.PRE_PROD.toString()))
+        {
             tabCount=4;
-        else tabCount=3;
+        }else
+        tabCount=3;
+
+        /*if (isNonBillableAllowed)
+            tabCount=4;
+        else tabCount=3;*/
 
         setupTabs(tabCount);
 

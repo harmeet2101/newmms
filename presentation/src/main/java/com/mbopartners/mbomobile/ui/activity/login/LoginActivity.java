@@ -34,6 +34,7 @@ import ua.com.mobidev.android.framework.application.controller.Controllers;
 import ua.com.mobidev.android.framework.communication.Communicator;
 import ua.com.mobidev.android.framework.ui.keyboard.KeyboardUtil;
 import ua.com.mobidev.android.framework.util.UiUtils;
+import ua.com.mobidev.android.mdrest.web.rest.processor.IHttpRequestProcessor;
 import ua.com.mobidev.android.mdrest.web.rest.response.UniversalRestResponse;
 
 public class LoginActivity extends ArtisanedBaseActivity implements FontController{
@@ -193,11 +194,11 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
                 case Ok: {
                     turnToNormalColors();
 
-                    restServiceHelper.getUserProfile(LoginActivity.this);
+                   //restServiceHelper.getUserProfile(LoginActivity.this);
                     AppLockManager.getInstance().getCurrentAppLock().forceUnlockPermission();
                     b = AppLockManager.getInstance().getCurrentAppLock().getNotNowFlag();
 
-
+                    setDataForPayrollTab(b, isNonBillableAlowed);
 
                     break;
                 }
@@ -256,7 +257,7 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
                 }
                 default: {
                     setDataForPayrollTab(b, true);
-                   //defaultHandler.onComplete(response);
+                   defaultHandler.onComplete(response);
                 }
             }
         }
@@ -356,5 +357,17 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
         TextView textView1=(TextView)args[0];
         Typeface typeface=Typeface.createFromAsset(getAssets(),"font/Roboto-Regular.ttf");
         textView1.setTypeface(typeface);
+    }
+    private void clearHttpClientQueue() {
+        IHttpRequestProcessor httpRequestProcessor = (IHttpRequestProcessor) getApplicationControllersManager().getController(Controllers.CONTROLLER__REST_PROCESSOR);
+        httpRequestProcessor.cancelAllRequests();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(TAG, "onPause()");
+        clearHttpClientQueue();
+        restServiceHelper.clearCallbacks();
     }
 }
