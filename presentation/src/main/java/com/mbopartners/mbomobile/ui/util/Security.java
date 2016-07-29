@@ -3,6 +3,9 @@ package com.mbopartners.mbomobile.ui.util;
 import android.app.Application;
 import android.content.Context;
 
+import com.mbopartners.mbomobile.data.db.database.controller.DbAccessController;
+import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
+import com.mbopartners.mbomobile.rest.model.DbFiller;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 import com.mbopartners.mbomobile.rest.rest.client.IRestClient;
 
@@ -15,6 +18,25 @@ public class Security {
         clearHttpClientQueue(application);
         clearHttpClientCallbacks(application);
         clearUserToken(application);
+        DbAccessController dbAccessController = getDbAccessController(application);
+        DaoSession daoSession = dbAccessController.getDaoSession();
+        clearAllDbTables(daoSession);
+    }
+
+    private static void clearAllDbTables(DaoSession daoSession) {
+
+        DbFiller.clearTablesForDashboard(daoSession);
+        DbFiller.clearTablesForPayrollSummary(daoSession);
+        DbFiller.clearTablesForBusinessCenter(daoSession);
+        DbFiller.clearTablesForExpenses(daoSession);
+        DbFiller.clearTablesForPayrollTransaction(daoSession);
+        DbFiller.clearTablesForWorkOrders(daoSession);
+    }
+
+    public static DbAccessController getDbAccessController(Application application) {
+        IApplicationControllersManager applicationControllersManager = (IApplicationControllersManager) application;
+        DbAccessController dbAccessController = (DbAccessController) applicationControllersManager.getController(Controllers.CONTROLLER__DATABASE);
+        return dbAccessController;
     }
 
     public static void doHardLogoutRoutine(Application application) {
