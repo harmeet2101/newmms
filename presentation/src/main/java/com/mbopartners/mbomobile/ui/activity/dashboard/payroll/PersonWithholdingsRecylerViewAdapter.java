@@ -20,6 +20,8 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWith
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -182,6 +184,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.company_name_TextView.setText(EARNINGS);
         viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
         viewHolder.periodTextview.setText("This Period");
+        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
+        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
+        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
+        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
 
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -189,8 +197,14 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(DEDUCTIONS));
         viewHolder.company_name_TextView.setText(DEDUCTIONS);
-        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(0).getAmount())));
+        viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(0).getAmount())));
         viewHolder.periodTextview.setText("This Period");
+        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
+        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
+        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
+        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
     }
 
     public void bindViewHolder_federalView(FederalViewHolder viewHolder,int position)
@@ -234,6 +248,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
+        public TextView satatutory_payroll_taxes_textview;
+        public TextView satatutory_payroll_taxes_textview_value;
+        public TextView textview_satutory_value;
+        public TextView textview_other_value;
+        public TextView textview_aftertaxdeductions;
+        public TextView textview_expenseReimbersements;
         public BusinessCenterViewHolder(View itemView) {
             super(itemView);
 
@@ -243,6 +263,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
+            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
+            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
+            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
+            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
+            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
+            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
             this.itemView.setOnClickListener(this);
             cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
@@ -279,6 +305,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
+        public TextView satatutory_payroll_taxes_textview;
+        public TextView satatutory_payroll_taxes_textview_value;
+        public TextView textview_satutory_value;
+        public TextView textview_other_value;
+        public TextView textview_aftertaxdeductions;
+        public TextView textview_expenseReimbersements;
         public NextPayrollViewHolder(View itemView) {
             super(itemView);
             this.cardView=(CardView)itemView.findViewById(R.id.card_view);
@@ -287,6 +319,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
+            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
+            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
+            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
+            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
+            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
+            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
             this.itemView.setOnClickListener(this);
             cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
@@ -356,5 +394,65 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         });
         anim.start();
 
+    }
+
+    private double getSumOfPayrollTaxes(List<PersonWithHolding> personWithHoldingList) {
+
+        double total_expense=0.0;
+
+        try {
+            if (personWithHoldingList != null) {
+                for (int i = 0; i < personWithHoldingList.get(this.position).getPayrollTaxes().size(); i++) {
+                    total_expense = total_expense + personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getAmount();
+                }
+
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            total_expense=0.0;
+        }
+        return Math.round(total_expense * 100.0) / 100.0;
+    }
+
+    private double getSumOfAfterTaxDeductions(List<PersonWithHolding> personWithHoldingList) {
+
+        double total_expense=0.0;
+
+        try {
+            if (personWithHoldingList != null) {
+                for (int i = 0; i < personWithHoldingList.get(this.position).getAfterTaxDeductions().size(); i++) {
+                    total_expense = total_expense + personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getAmount();
+                }
+
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            total_expense=0.0;
+        }
+        return Math.round(total_expense * 100.0) / 100.0;
+    }
+
+    private double getSumOfExpenseReimbersements(List<PersonWithHolding> personWithHoldingList) {
+
+        double total_expense=0.0;
+
+        try {
+            if (personWithHoldingList != null) {
+                for (int i = 0; i < personWithHoldingList.get(this.position).getExpenseReimbursements().size(); i++) {
+                    total_expense = total_expense + personWithHoldingList.get(this.position).getExpenseReimbursements().get(i).getAmount();
+                }
+
+            }
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            total_expense=0.0;
+        }
+        return Math.round(total_expense * 100.0) / 100.0;
     }
 }

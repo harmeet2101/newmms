@@ -4,7 +4,7 @@
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
     android:background="@color/mbo_color_white"
-    android:layout_height="330dp">
+    android:layout_height="wrap_content">
 
 
     <TextView
@@ -75,6 +75,7 @@
         android:layout_marginLeft="46dp"
         android:text="Federal Income Tax"
         android:textSize="14sp"
+        android:layout_marginRight="155dp"
         android:maxLines="1"
         android:singleLine="true"
         android:id="@+id/textview_federal"
@@ -94,7 +95,7 @@
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_federal"
@@ -169,12 +170,12 @@
         android:textColor="@color/primary_dark_material_dark"
         android:layout_alignTop="@+id/textview_va"
         android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"/>-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_va"
+        android:layout_below="@+id/textview_federal"
         android:layout_marginLeft="16dp"
         android:text="Other"
         android:textStyle="bold"
@@ -204,9 +205,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_other"
         android:layout_marginLeft="46dp"
-        android:text="jhfbwibf ohf o v"
+        android:text="AfterTaxDeductions"
         android:textSize="14sp"
         android:maxLines="1"
+        android:layout_marginRight="155dp"
         android:singleLine="true"
         android:id="@+id/textview_first"
         android:textColor="@color/primary_dark_material_dark"
@@ -229,7 +231,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_first"
         android:layout_marginLeft="46dp"
-        android:text="dweigwegf"
+        android:text="ExpenseReimbersements"
+        android:layout_marginRight="155dp"
         android:textSize="14sp"
         android:maxLines="1"
         android:singleLine="true"
