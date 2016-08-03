@@ -58,24 +58,19 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
                 fillParent(parent, view);
                 viewHolder = new BulkViewHolder(view);
                 break;
-            }/*
+            }
             case ITEM_VIEW_TYPE__EMPTY_LIST:{
                 final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_timeshseet_list, parent, false);
                 ((TextView) view.findViewById(R.id.empty_section_TextView)).setText(R.string.mbo_dashboard_revenue_empty_list);
                 fillParent(parent, view);
                 viewHolder = new BulkViewHolder(view);
                 break;
-            }*/
+            }
             case ITEM_VIEW_TYPE__PAYROLL:{
                 final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_payroll_previous_payments_list_items, parent, false);
                 viewHolder=new PreviousPaymentViewHolder(view);
                 break;
             }
-            /*case ITEM_VIEW_TYPE__REIMBERSEMENTS:{
-                final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_payroll_previous_payments_list_items, parent, false);
-                viewHolder=new ReimbersementPaymentViewHolder(view);
-                break;
-            }*/
             default:{
                 viewHolder=null;
             }
@@ -90,10 +85,12 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         int itemViewType = -1;
         if(payrollSummaryList==null)
             itemViewType=ITEM_VIEW_TYPE__LOADING;
+        else if (payrollSummaryList.isEmpty()) {
+            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
+        }
         else
         itemViewType=ITEM_VIEW_TYPE__PAYROLL;
-    /*    else if(position==1)
-            itemViewType=ITEM_VIEW_TYPE__REIMBERSEMENTS;*/
+
         return itemViewType;
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -101,14 +98,24 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
             super(itemView);
         }
     }
+
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (payrollSummaryList == null) {
 
+        } else if (payrollSummaryList.isEmpty()) {
+
         }else
             bindViewHolder_payroll((PreviousPaymentViewHolder) holder, position);
+    }
 
+    public void bindViewHolder_Loading(RecyclerView.ViewHolder viewHolder) {
+
+    }
+
+    public void bindViewHolder_EmptyList(RecyclerView.ViewHolder viewHolder) {
 
     }
 
@@ -120,7 +127,7 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
                 /*Adding date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(position).getDate()));
 
-        if(position==depositsList.size()-1)
+        if(position==payrollSummaryList.size()-1)
             viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
 
     }
@@ -131,13 +138,13 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         int itemCount;
         if(payrollSummaryList==null)
         {
-            itemCount=0;
+            itemCount=1;
         }
-        else if (payrollSummaryList != null)  {
+        else if (payrollSummaryList.isEmpty())  {
 
-                itemCount=getTotalSize(payrollSummaryList);
+                itemCount=1;
         } else {
-            itemCount = 0;
+            itemCount = getTotalSize(payrollSummaryList);
         }
         return itemCount;
     }
@@ -171,28 +178,6 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
         }
     }
 
-    public class ReimbersementPaymentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public View itemView;
-        public TextView paymentNameTextview;
-        public TextView paymentAmountTextView;
-        public TextView paymentDateTextView;
-        public ReimbersementPaymentViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-            paymentNameTextview=(TextView)itemView.findViewById(R.id.paymentTextview);
-            paymentAmountTextView=(TextView)itemView.findViewById(R.id.amount);
-            paymentDateTextView=(TextView)itemView.findViewById(R.id.dateTextview);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(position);
-            }
-        }
-    }
 
     public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mItemClickListener = mItemClickListener;

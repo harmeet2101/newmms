@@ -33,13 +33,14 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
 
-    private static final int ITEM_VIEW_TYPE_FEDERAL=2;
-    private static final int ITEM_VIEW_TYPE__EARNINGS = 3;
-    private static final int ITEM_VIEW_TYPE__DEDUCTIONS = 4;
-    private static final int ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL = 5;
+
+    private static final int ITEM_VIEW_TYPE__EARNINGS = 2;
+    private static final int ITEM_VIEW_TYPE__DEDUCTIONS = 3;
+    private static final int ITEM_VIEW_TYPE__REIMBERSEMENTS = 4;
     private static final String EARNINGS = "Earnings";
     private static final String DEDUCTIONS = "Deductions";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
+    private static final String EXPENSE_REIMBERSEMENTS="Expense Reimbersements";
     private List<PersonWithHolding> personWithHoldingList;
     private int position;
     int mheight;
@@ -76,13 +77,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 fillParent(parent, view);
                 viewHolder = new BulkViewHolder(view);
                 break;
-            }
-            /*case ITEM_VIEW_TYPE_FEDERAL : {
-                View itemView = LayoutInflater.from(parent.getContext()).
-                        inflate(R.layout.layout_personwithholidings_federal_allowances, parent, false);
-                viewHolder = new FederalViewHolder(itemView);
-                break;
-            }*/case ITEM_VIEW_TYPE__EARNINGS : {
+            }case ITEM_VIEW_TYPE__EARNINGS : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_businessholdings_list_items, parent, false);
                 viewHolder = new BusinessCenterViewHolder(itemView);
@@ -92,6 +87,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_businessholdings_list_items, parent, false);
                 viewHolder = new NextPayrollViewHolder(itemView);
+                break;
+            }
+            case ITEM_VIEW_TYPE__REIMBERSEMENTS:{
+                View itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.layout_businessholdings_list_items, parent, false);
+                viewHolder = new ReimbersementsViewHolder(itemView);
                 break;
             }
 
@@ -114,17 +115,17 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        /*if(position==0)
-            bindViewHolder_federalView((FederalViewHolder) viewHolder, position);
-        else*/ if(position==0)
+        if(position==0)
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
         else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
+        else if(position==2)
+            bindViewHolder_ReimbersementsView((ReimbersementsViewHolder)viewHolder,position);
     }
 
     @Override
     public int getItemCount() {
-        int count = 2;
+        int count = 3;
         return count;
     }
 
@@ -132,12 +133,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     public int getItemViewType(int position) {
         int itemViewType = -1;
 
-        /*if(position==0)
-            return itemViewType=ITEM_VIEW_TYPE_FEDERAL;
-        else */if(position==0)
+        if(position==0)
             return itemViewType=ITEM_VIEW_TYPE__EARNINGS;
         else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__DEDUCTIONS;
+        else if (position==2)
+            return itemViewType=ITEM_VIEW_TYPE__REIMBERSEMENTS;
         else
             return itemViewType;
     }
@@ -154,7 +155,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 imageId = R.drawable.ic_payroll_deductions;
                 break;
             }
-
+            case EXPENSE_REIMBERSEMENTS:{
+                imageId=R.drawable.ic_payroll_business_center_payroll_taxes;
+                break;
+            }
 
             default : {
                 imageId = R.drawable.dashboard_logo;
@@ -193,17 +197,26 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
     }
 
-    /*public void bindViewHolder_federalView(FederalViewHolder viewHolder,int position)
+    public void bindViewHolder_ReimbersementsView(ReimbersementsViewHolder viewHolder,int position)
     {
-        if(personWithHoldingList.get(this.position).getFederalAllowance()!=null) {
-            viewHolder.federalTextview.setText("Federal: " + personWithHoldingList.get(this.position).getFederalAllowance());
-            viewHolder.vaTextview.setText("VA: " + personWithHoldingList.get(this.position).getFederalAllowance());
-        }else
-        {
-            viewHolder.federalTextview.setText("Federal: N/A");
-            viewHolder.vaTextview.setText("VA: N/A");
-        }
-    }*/
+        viewHolder.payrollImageView.setImageResource(getPayrollImageId(EXPENSE_REIMBERSEMENTS));
+        viewHolder.company_name_TextView.setText(EXPENSE_REIMBERSEMENTS);
+        viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
+        viewHolder.periodTextview.setText("This Period");
+        /*PersonalReimbersementRecyclerAdapter adapter=new PersonalReimbersementRecyclerAdapter(context,personWithHoldingList.get(this.position).getExpenseReimbursements());
+
+        viewHolder.recyclerView.setAdapter(adapter);
+        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        viewHolder.recyclerView.setScrollContainer(true);*/
+
+
+        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
+        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
+        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
+        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
+        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
+    }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
             super(itemView);
@@ -211,16 +224,6 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     }
 
 
-    public  class FederalViewHolder extends RecyclerView.ViewHolder{
-        public TextView federalTextview;
-        public TextView vaTextview;
-
-        public FederalViewHolder(View view){
-            super(view);
-            this.federalTextview=(TextView)view.findViewById(R.id.textView3);
-            this.vaTextview=(TextView)view.findViewById(R.id.textView4);
-        }
-    }
     public  class BusinessCenterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
@@ -332,15 +335,63 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
     }
 
-    /*public static class LastPayrollViewHolder extends RecyclerView.ViewHolder {
+    public  class ReimbersementsViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
 
 
 
-        public LastPayrollViewHolder(View itemView) {
+        public ImageView payrollImageView;
+        public TextView company_name_TextView;
+        public TextView work_order_name_TextView;
+        public TextView periodTextview;
+        public CardView cardView;
+        public View includeView;
+        public int minHeight;
+        public TextView satatutory_payroll_taxes_textview;
+        public TextView satatutory_payroll_taxes_textview_value;
+        public TextView textview_satutory_value;
+        public TextView textview_other_value;
+        public TextView textview_aftertaxdeductions;
+        public TextView textview_expenseReimbersements;
+        public ReimbersementsViewHolder(View itemView) {
             super(itemView);
+            this.cardView=(CardView)itemView.findViewById(R.id.card_view);
+            this.payrollImageView = (ImageView) itemView.findViewById(R.id.imageview);
+            this.company_name_TextView = (TextView) itemView.findViewById(R.id.company_name_TextView);
+            this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
+            this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
+            this.includeView=itemView.findViewById(R.id.includeview);
+            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
+            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
+            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
+            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
+            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
+            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
+            /*this.itemView.setOnClickListener(this);*/
+            cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
+                @Override
+                public boolean onPreDraw() {
+                    cardView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    minHeight = cardView.getHeight();
+                    ViewGroup.LayoutParams layoutParams = cardView.getLayoutParams();
+                    layoutParams.height = minHeight;
+                    cardView.setLayoutParams(layoutParams);
+
+                    return true;
+                }
+            });
         }
-    }*/
+        /*@Override
+        public void onClick(View v) {
+            if(includeView.getVisibility()==View.GONE)
+                expandView(mheight,cardView,includeView);
+            else if(includeView.getVisibility()==View.VISIBLE)
+                collapseView(cardView,minHeight,includeView);
+        }*/
+    }
+
+
+
 
 
     public void collapseView(final CardView cardView,int minHeight,View includeView) {
