@@ -77,12 +77,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 viewHolder = new BulkViewHolder(view);
                 break;
             }
-            case ITEM_VIEW_TYPE_FEDERAL : {
+            /*case ITEM_VIEW_TYPE_FEDERAL : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_personwithholidings_federal_allowances, parent, false);
                 viewHolder = new FederalViewHolder(itemView);
                 break;
-            }case ITEM_VIEW_TYPE__EARNINGS : {
+            }*/case ITEM_VIEW_TYPE__EARNINGS : {
                 View itemView = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_businessholdings_list_items, parent, false);
                 viewHolder = new BusinessCenterViewHolder(itemView);
@@ -94,12 +94,6 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 viewHolder = new NextPayrollViewHolder(itemView);
                 break;
             }
-            /*case ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL : {
-                View itemView = LayoutInflater.from(parent.getContext()).
-                        inflate(R.layout.layout_personwithholdings_include_view, parent, false);
-                viewHolder = new LastPayrollViewHolder(itemView);
-                break;
-            }*/
 
 
             default : {
@@ -120,38 +114,30 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        if(position==0)
+        /*if(position==0)
             bindViewHolder_federalView((FederalViewHolder) viewHolder, position);
-        else if(position==1)
+        else*/ if(position==0)
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder) viewHolder, position);
-        else if(position==2)
+        else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
-        /*else if(position==3)
-            bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);*/
     }
 
     @Override
     public int getItemCount() {
-        int count = 3;
+        int count = 2;
         return count;
     }
 
     @Override
     public int getItemViewType(int position) {
         int itemViewType = -1;
-        /*if (payrollSummaryList == null) {
-            return itemViewType = ITEM_VIEW_TYPE__LOADING;
-        } else if (payrollSummaryList.isEmpty()) {
-            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
-        }*/
-        if(position==0)
+
+        /*if(position==0)
             return itemViewType=ITEM_VIEW_TYPE_FEDERAL;
-        else if(position==1)
+        else */if(position==0)
             return itemViewType=ITEM_VIEW_TYPE__EARNINGS;
-        else if(position==2)
+        else if(position==1)
             return itemViewType=ITEM_VIEW_TYPE__DEDUCTIONS;
-        /*else if(position==3)
-            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER_PAYROLL;*/
         else
             return itemViewType;
     }
@@ -207,7 +193,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
     }
 
-    public void bindViewHolder_federalView(FederalViewHolder viewHolder,int position)
+    /*public void bindViewHolder_federalView(FederalViewHolder viewHolder,int position)
     {
         if(personWithHoldingList.get(this.position).getFederalAllowance()!=null) {
             viewHolder.federalTextview.setText("Federal: " + personWithHoldingList.get(this.position).getFederalAllowance());
@@ -217,11 +203,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.federalTextview.setText("Federal: N/A");
             viewHolder.vaTextview.setText("VA: N/A");
         }
-    }
-    public void bindViewHolder_Last_Payroll(LastPayrollViewHolder viewHolder, int position) {
-
-
-    }
+    }*/
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
             super(itemView);
@@ -350,7 +332,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
     }
 
-    public static class LastPayrollViewHolder extends RecyclerView.ViewHolder {
+    /*public static class LastPayrollViewHolder extends RecyclerView.ViewHolder {
 
 
 
@@ -358,7 +340,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             super(itemView);
 
         }
-    }
+    }*/
 
 
     public void collapseView(final CardView cardView,int minHeight,View includeView) {
