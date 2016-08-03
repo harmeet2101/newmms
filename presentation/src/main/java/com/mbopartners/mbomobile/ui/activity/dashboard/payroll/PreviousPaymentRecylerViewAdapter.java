@@ -114,22 +114,16 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
     public void bindViewHolder_payroll(PreviousPaymentViewHolder viewHolder, int position) {
 
-        //viewHolder.paymentNameTextview.setText(payrollSummaryList.get(position).getPersonalWithholding().getDeposits().get(0).getName());
-        viewHolder.paymentNameTextview.setText(depositsList.get(position).getName());
-       // viewHolder.paymentAmountTextView.setText("$" + getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(position).getPersonalWithholding().getDeposits().get(0).getAmount())));
 
+        viewHolder.paymentNameTextview.setText(depositsList.get(position).getName());
         viewHolder.paymentAmountTextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
-       /*Adiing date*/
+                /*Adding date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(position).getDate()));
-        if(position==payrollSummaryList.size()-1)
+
+        if(position==depositsList.size()-1)
             viewHolder.dividerLineView.setVisibility(View.INVISIBLE);
 
     }
-  /*  public void bindViewHolder_Reimbersement(ReimbersementPaymentViewHolder viewHolder, int position) {
-
-        viewHolder.paymentNameTextview.setText(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getName());
-        viewHolder.paymentAmountTextView.setText("$"+getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().getPersonalWithholding().getExpenseReimbursements().get(position).getAmount())));
-    }*/
 
 
     @Override
