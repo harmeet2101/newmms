@@ -175,11 +175,11 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
         viewHolder.periodTextview.setText("This Period");
         viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
-        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
-        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
-        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
+        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
+        viewHolder.textview_satutory_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
+        viewHolder.textview_aftertaxdeductions.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList))));
+        viewHolder.textview_expenseReimbersements.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
+        viewHolder.textview_other_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList))));
 
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -190,11 +190,11 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(0).getAmount())));
         viewHolder.periodTextview.setText("This Period");
         viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
-        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
-        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
-        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
+        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
+        viewHolder.textview_satutory_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
+        viewHolder.textview_aftertaxdeductions.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList))));
+        viewHolder.textview_expenseReimbersements.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
+        viewHolder.textview_other_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList))));
     }
 
     public void bindViewHolder_ReimbersementsView(ReimbersementsViewHolder viewHolder,int position)
