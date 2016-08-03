@@ -149,8 +149,8 @@
     <string name="tab_dashboard_title_time">Time</string>
     <string name="tab_dashboard_title_expense">Expenses</string>
     <string name="tab_dashboard_title_payroll">Payroll</string>
-    <string name="tab_withholding_title_business">Personal Withholdings</string>
-    <string name="tab_withholding_title_personal">Business Withholdings</string>
+    <string name="tab_withholding_title_business">Personal</string>
+    <string name="tab_withholding_title_personal">Business</string>
 
     <string name="title_activity_simple_activity_with_fragment">SimpleActivityWithFragment</string>
     <string name="action_settings">Settings</string>
