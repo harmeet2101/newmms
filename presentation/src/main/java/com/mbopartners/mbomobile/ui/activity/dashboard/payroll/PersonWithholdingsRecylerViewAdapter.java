@@ -2,6 +2,7 @@ package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
@@ -33,7 +36,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
 
-
+    public boolean isEarnings_ytd_checked,isExpense_ytd_checked,isDeductions_ytd_checked;
     private static final int ITEM_VIEW_TYPE__EARNINGS = 2;
     private static final int ITEM_VIEW_TYPE__DEDUCTIONS = 3;
     private static final int ITEM_VIEW_TYPE__REIMBERSEMENTS = 4;
@@ -91,7 +94,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             }
             case ITEM_VIEW_TYPE__REIMBERSEMENTS:{
                 View itemView = LayoutInflater.from(parent.getContext()).
-                        inflate(R.layout.layout_businessholdings_list_items, parent, false);
+                        inflate(R.layout.layout_businessholdings_list_items_test, parent, false);
                 viewHolder = new ReimbersementsViewHolder(itemView);
                 break;
             }
@@ -156,7 +159,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 break;
             }
             case EXPENSE_REIMBERSEMENTS:{
-                imageId=R.drawable.ic_payroll_business_center_payroll_taxes;
+                imageId=R.drawable.ic_payroll_expense_reimbursement;
                 break;
             }
 
@@ -172,15 +175,28 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(EARNINGS));
         viewHolder.company_name_TextView.setText(EARNINGS);
-        viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
-        viewHolder.periodTextview.setText("This Period");
-        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
-        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
-        viewHolder.textview_satutory_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
-        viewHolder.textview_aftertaxdeductions.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList))));
-        viewHolder.textview_expenseReimbersements.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
-        viewHolder.textview_other_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList))));
 
+
+        if(isEarnings_ytd_checked){
+            viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmountYtd())));
+            viewHolder.periodTextview.setText("Year to Date");
+            viewHolder.textview1.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
+            viewHolder.textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmountYtd())));
+            viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
+            viewHolder.textview2_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getNetAmount().getAmountYtd())));
+            viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
+            viewHolder.textview3_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getPaycheckAmount().getAmountYtd())));
+        }else {
+            viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
+            viewHolder.periodTextview.setText("This Period");
+            viewHolder.textview1.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
+            viewHolder.textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
+            viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
+            viewHolder.textview2_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getNetAmount().getAmount())));
+            viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
+            viewHolder.textview3_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getPaycheckAmount().getAmount())));
+
+        }
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
 
@@ -189,40 +205,27 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.company_name_TextView.setText(DEDUCTIONS);
         viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(0).getAmount())));
         viewHolder.periodTextview.setText("This Period");
-        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
-        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
-        viewHolder.textview_satutory_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList))));
-        viewHolder.textview_aftertaxdeductions.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList))));
-        viewHolder.textview_expenseReimbersements.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
-        viewHolder.textview_other_value.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList))));
     }
 
     public void bindViewHolder_ReimbersementsView(ReimbersementsViewHolder viewHolder,int position)
     {
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(EXPENSE_REIMBERSEMENTS));
         viewHolder.company_name_TextView.setText(EXPENSE_REIMBERSEMENTS);
-        viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList))));
-        viewHolder.periodTextview.setText("This Period");
-        /*PersonalReimbersementRecyclerAdapter adapter=new PersonalReimbersementRecyclerAdapter(context,personWithHoldingList.get(this.position).getExpenseReimbursements());
-
-        viewHolder.recyclerView.setAdapter(adapter);
-        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        viewHolder.recyclerView.setScrollContainer(true);*/
-
-
-        viewHolder.satatutory_payroll_taxes_textview.setText("Payroll taxes");
-        viewHolder.satatutory_payroll_taxes_textview_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_satutory_value.setText("$"+getSumOfPayrollTaxes(personWithHoldingList));
-        viewHolder.textview_aftertaxdeductions.setText("$"+getSumOfAfterTaxDeductions(personWithHoldingList));
-        viewHolder.textview_expenseReimbersements.setText("$"+getSumOfExpenseReimbersements(personWithHoldingList));
-        viewHolder.textview_other_value.setText("$"+(getSumOfAfterTaxDeductions(personWithHoldingList)+getSumOfExpenseReimbersements(personWithHoldingList)));
+        if(isExpense_ytd_checked) {
+            viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
+            viewHolder.periodTextview.setText("Year to Date");
+            viewHolder.textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
+        }else {
+            viewHolder.work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
+            viewHolder.periodTextview.setText("This Period");
+            viewHolder.textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
+        }
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
             super(itemView);
         }
     }
-
 
     public  class BusinessCenterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -233,12 +236,15 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
-        public TextView satatutory_payroll_taxes_textview;
-        public TextView satatutory_payroll_taxes_textview_value;
-        public TextView textview_satutory_value;
-        public TextView textview_other_value;
-        public TextView textview_aftertaxdeductions;
-        public TextView textview_expenseReimbersements;
+        public TextView textview1;
+        public TextView textview1_value;
+        public TextView textview2;
+        public TextView textview2_value;
+        public TextView textview3;
+        public TextView textview3_value;
+        public TextView thisPeriodTextview;
+        public TextView ytdTextview;
+        public Switch aSwitch;
         public BusinessCenterViewHolder(View itemView) {
             super(itemView);
 
@@ -248,12 +254,59 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
-            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
-            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
-            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
-            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
-            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
-            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
+            this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
+            this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
+            this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
+            this.aSwitch.setChecked(false);
+            this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    if(aSwitch.isChecked()){
+
+                        ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
+                        thisPeriodTextview.setTextColor(Color.BLACK);
+                        work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getGrossAmount().getAmountYtd())));
+                        periodTextview.setText("Year to Date");
+                        textview1.setText(personWithHoldingList.get(position).getGrossAmount().getName());
+                        textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getGrossAmount().getAmountYtd())));
+                        textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
+                        textview2_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getNetAmount().getAmountYtd())));
+                        textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
+                        textview3_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getPaycheckAmount().getAmountYtd())));
+                    }else {
+
+                        ytdTextview.setTextColor(Color.BLACK);
+                        thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
+                        work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getGrossAmount().getAmount())));
+                        periodTextview.setText("This Period");
+                        textview1.setText(personWithHoldingList.get(position).getGrossAmount().getName());
+                        textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getGrossAmount().getAmount())));
+                        textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
+                        textview2_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getNetAmount().getAmount())));
+                        textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
+                        textview3_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(personWithHoldingList.get(position).getPaycheckAmount().getAmount())));
+                    }
+                }
+            });
+            /*this.includeView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    mheight=includeView.getHeight();
+                    includeView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    includeView.setVisibility(View.GONE);
+                    Log.d("includeViewHeight", String.valueOf(mheight));
+                    Log.d("cardViewHeight",String.valueOf(cardView.getHeight()));
+                }
+            });*/
+
+            this.textview1=(TextView)itemView.findViewById(R.id.textview1);
+            this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            this.textview2=(TextView)itemView.findViewById(R.id.textview2);
+            this.textview2_value=(TextView)itemView.findViewById(R.id.textview2_value);
+            this.textview3=(TextView)itemView.findViewById(R.id.textview3);
+            this.textview3_value=(TextView)itemView.findViewById(R.id.textview3_value);
+
             this.itemView.setOnClickListener(this);
             cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
@@ -278,8 +331,6 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 collapseView(cardView,minHeight,includeView);
         }
     }
-
-
 
     public class NextPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -290,12 +341,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
-        public TextView satatutory_payroll_taxes_textview;
-        public TextView satatutory_payroll_taxes_textview_value;
-        public TextView textview_satutory_value;
-        public TextView textview_other_value;
-        public TextView textview_aftertaxdeductions;
-        public TextView textview_expenseReimbersements;
+        public TextView textview1;
+        public TextView textview1_value;
+        public TextView textview2;
+        public TextView textview2_value;
+        public TextView textview3;
+        public TextView textview3_value;
         public NextPayrollViewHolder(View itemView) {
             super(itemView);
             this.cardView=(CardView)itemView.findViewById(R.id.card_view);
@@ -304,12 +355,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
-            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
-            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
-            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
-            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
-            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
-            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
+            this.textview1=(TextView)itemView.findViewById(R.id.textview1);
+            this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            this.textview2=(TextView)itemView.findViewById(R.id.textview2);
+            this.textview2_value=(TextView)itemView.findViewById(R.id.textview2_value);
+            this.textview3=(TextView)itemView.findViewById(R.id.textview3);
+            this.textview3_value=(TextView)itemView.findViewById(R.id.textview3_value);
             this.itemView.setOnClickListener(this);
             cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
@@ -335,7 +386,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
     }
 
-    public  class ReimbersementsViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
+    public  class ReimbersementsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
 
@@ -346,12 +397,12 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
-        public TextView satatutory_payroll_taxes_textview;
-        public TextView satatutory_payroll_taxes_textview_value;
-        public TextView textview_satutory_value;
-        public TextView textview_other_value;
-        public TextView textview_aftertaxdeductions;
-        public TextView textview_expenseReimbersements;
+        public TextView textview1;
+        public TextView textview1_value;
+        public RecyclerView recyclerView;
+        public TextView thisPeriodTextview;
+        public TextView ytdTextview;
+        public Switch aSwitch;
         public ReimbersementsViewHolder(View itemView) {
             super(itemView);
             this.cardView=(CardView)itemView.findViewById(R.id.card_view);
@@ -360,13 +411,44 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
-            this.satatutory_payroll_taxes_textview=(TextView)itemView.findViewById(R.id.textview_federal);
-            this.satatutory_payroll_taxes_textview_value=(TextView)itemView.findViewById(R.id.textview_federal_value);
-            this.textview_satutory_value=(TextView)itemView.findViewById(R.id.textview_satutory_value);
-            this.textview_other_value=(TextView)itemView.findViewById(R.id.textview_other_value);
-            this.textview_aftertaxdeductions=(TextView)itemView.findViewById(R.id.textview_first_value);
-            this.textview_expenseReimbersements=(TextView)itemView.findViewById(R.id.textview_second_value);
-            /*this.itemView.setOnClickListener(this);*/
+            this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
+            this.textview1=(TextView)itemView.findViewById(R.id.textview1);
+            this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            final PersonalReimbersementRecyclerAdapter madapter=new PersonalReimbersementRecyclerAdapter(context,personWithHoldingList.get(position).getExpenseReimbursements());
+            this.recyclerView.setAdapter(madapter);
+            this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            this.recyclerView.setScrollContainer(true);
+            this.itemView.setOnClickListener(this);
+            this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
+            this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
+            this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
+            this.aSwitch.setChecked(false);
+            this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    if (aSwitch.isChecked()) {
+
+                        ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
+                        thisPeriodTextview.setTextColor(Color.BLACK);
+                        isExpense_ytd_checked=true;
+                        work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList,isExpense_ytd_checked))));
+                        textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList,isExpense_ytd_checked))));
+                        periodTextview.setText("Year to Date");
+                        madapter.updateDataSource(isExpense_ytd_checked);
+
+                    } else {
+
+                        ytdTextview.setTextColor(Color.BLACK);
+                        isExpense_ytd_checked=false;
+                        thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
+                        work_order_name_TextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList,isExpense_ytd_checked))));
+                        textview1_value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
+                        periodTextview.setText("This Period");
+                        madapter.updateDataSource(isExpense_ytd_checked);
+                    }
+                }
+            });
             cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
                 @Override
@@ -381,18 +463,14 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                 }
             });
         }
-        /*@Override
+        @Override
         public void onClick(View v) {
             if(includeView.getVisibility()==View.GONE)
                 expandView(mheight,cardView,includeView);
             else if(includeView.getVisibility()==View.VISIBLE)
                 collapseView(cardView,minHeight,includeView);
-        }*/
+        }
     }
-
-
-
-
 
     public void collapseView(final CardView cardView,int minHeight,View includeView) {
 
@@ -469,14 +547,17 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         return Math.round(total_expense * 100.0) / 100.0;
     }
 
-    private double getSumOfExpenseReimbersements(List<PersonWithHolding> personWithHoldingList) {
+    private double getSumOfExpenseReimbersements(List<PersonWithHolding> personWithHoldingList,boolean isChecked) {
 
         double total_expense=0.0;
 
         try {
             if (personWithHoldingList != null) {
                 for (int i = 0; i < personWithHoldingList.get(this.position).getExpenseReimbursements().size(); i++) {
-                    total_expense = total_expense + personWithHoldingList.get(this.position).getExpenseReimbursements().get(i).getAmount();
+                    if(isChecked)
+                    total_expense = total_expense + personWithHoldingList.get(this.position).getExpenseReimbursements().get(i).getAmountYtd();
+                    else
+                        total_expense = total_expense + personWithHoldingList.get(this.position).getExpenseReimbursements().get(i).getAmount();
                 }
 
             }

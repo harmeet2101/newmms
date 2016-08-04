@@ -7,6 +7,8 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TableExpenseReimb
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonNetAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayCheckAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
@@ -30,6 +32,8 @@ public class TablePersonalWithHolding {
     private List<TableExpenseReimbersements> expenseReimbursements;
     private List<TablePersonDeposits> deposits;
     private List<TablePersonAfterDeductions> afterTaxDeductions;
+    private TablePersonNetAmount netAmount;
+    private TablePersonPayCheckAmount paycheckAmount;
     private transient DaoSession daoSession;
     private String federalAllowance;
 
@@ -209,6 +213,49 @@ public class TablePersonalWithHolding {
         return afterTaxDeductions;
     }
 
+    public TablePersonNetAmount getNetAmount() {
+
+        if (netAmount == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonNetAmountDao targetDao = daoSession.getTablePersonNetAmountDao();
+            List<TablePersonNetAmount> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(netAmount == null&& FieldsNew.size()!=0) {
+                    netAmount = FieldsNew.get(0);
+                }
+            }
+        }
+        return netAmount;
+    }
+
+    public void setNetAmount(TablePersonNetAmount netAmount) {
+
+        this.netAmount = netAmount;
+    }
+
+    public TablePersonPayCheckAmount getPaycheckAmount() {
+
+        if (paycheckAmount == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            TablePersonPayCheckAmountDao targetDao = daoSession.getTablePersonPayCheckAmountDao();
+            List<TablePersonPayCheckAmount> FieldsNew = targetDao._queryTableDashboard_Fields(id);
+            synchronized (this) {
+                if(paycheckAmount == null&& FieldsNew.size()!=0) {
+                    paycheckAmount = FieldsNew.get(0);
+                }
+            }
+        }
+        return paycheckAmount;
+    }
+
+    public void setPaycheckAmount(TablePersonPayCheckAmount paycheckAmount) {
+        this.paycheckAmount = paycheckAmount;
+    }
+
     public void setAfterTaxDeductions(List<TablePersonAfterDeductions> afterTaxDeductions) {
         this.afterTaxDeductions = afterTaxDeductions;
     }
@@ -216,6 +263,10 @@ public class TablePersonalWithHolding {
     public void setDeposits(List<TablePersonDeposits> deposits) {
         this.deposits = deposits;
     }
+
+
+
+
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
     public void delete() {

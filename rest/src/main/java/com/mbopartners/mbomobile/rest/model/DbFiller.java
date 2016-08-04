@@ -28,6 +28,8 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollTrans
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonNetAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayCheckAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
@@ -69,6 +71,8 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSum
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonGrossAmount;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonNetAmount;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayCheckAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
@@ -236,6 +240,11 @@ public class DbFiller {
                 List<PersonalDeductions> deductionsList=personWithHolding.getAfterTaxDeductions();
                 for(int i=0;i<deductionsList.size();i++)
                     insertperson_payrollDeductionsField(deductionsList.get(i),personId,daoSession);
+
+                PersonNetAmount netAmount=personWithHolding.getNetAmount();
+                insertPerson_netAmountField(netAmount,personId,daoSession);
+                PersonPayCheckAmount payCheckAmount=personWithHolding.getPaycheckAmount();
+                insertPerson_payCheckAmountField(payCheckAmount,personId,daoSession);
             }
         }
 
@@ -261,31 +270,6 @@ public class DbFiller {
                         PayrollAmount payrollAmount = businessWithHolding.getPayrollAmount();
                         insertSummaryBusiness_payrollAmountField(payrollAmount, businessId, daoSession);
                     }
-                    /*List<BusinessExpenses> businessExpenses=businessWithHolding.getBusinessExpenses();
-                    for(int i=0;i<businessExpenses.size();i++)
-                    {
-                        insertBusiness_businessExpenseField(businessExpenses.get(i),businessId,daoSession);
-                    }
-                    List<BusinessPayrollTaxes> businessPayrollTaxes=businessWithHolding.getPayrollTaxes();
-                    for(int i=0;i<businessPayrollTaxes.size();i++)
-                    {
-                        insertBusiness_businessPayrollTaxesField(businessPayrollTaxes.get(i),businessId,daoSession);
-                    }*/
-
-                    /*PersonWithHolding personWithHolding=previousPayment.getPersonalWithholding();
-                    long personId=insertPersonWithHoldingField(personWithHolding, prevId, daoSession);
-                    PersonGrossAmount grossAmount=personWithHolding.getGrossAmount();
-                    insertPerson_grossAmountField(grossAmount,personId,daoSession);
-                    List<PersonPayrollTaxes> personPayrollTaxes=personWithHolding.getPayrollTaxes();
-                    for(int i=0;i<personPayrollTaxes.size();i++)
-                    {
-                        insertperson_payrollTaxesField(personPayrollTaxes.get(i),personId,daoSession);
-                    }
-                    List<ExpenseReimbursement> expenseReimbursements=personWithHolding.getExpenseReimbursements();
-                    for(int i=0;i<expenseReimbursements.size();i++)
-                    {
-                        insertperson_payrollExpenseReimbersementsField(expenseReimbursements.get(i), personId, daoSession);
-                    }*/
                 }
         }
 
@@ -390,6 +374,18 @@ public class DbFiller {
         TablePersonGrossAmountDao dao = daoSession.getTablePersonGrossAmountDao();
         return dao.insert(Converter.toTable_payroll_person_grossAmount(nextPaymentId, grossAmount));
     }
+
+    public static long insertPerson_netAmountField(PersonNetAmount netAmount, long nextPaymentId,DaoSession daoSession) {
+        TablePersonNetAmountDao dao = daoSession.getTablePersonNetAmountDao();
+        return dao.insert(Converter.toTable_payroll_person_netAmount(nextPaymentId, netAmount));
+    }
+
+    public static long insertPerson_payCheckAmountField(PersonPayCheckAmount payCheckAmount, long nextPaymentId,DaoSession daoSession) {
+        TablePersonPayCheckAmountDao dao = daoSession.getTablePersonPayCheckAmountDao();
+        return dao.insert(Converter.toTable_payroll_person_payCheckAmount(nextPaymentId, payCheckAmount));
+    }
+
+
     public static long insertBusiness_businessExpenseField(BusinessExpenses businessExpenses, long Id,DaoSession daoSession) {
         TableBusinessExpensesDao dao = daoSession.getTableBusinessExpensesDao();
         return dao.insert(Converter.toTable_payroll_business_expense(Id, businessExpenses));

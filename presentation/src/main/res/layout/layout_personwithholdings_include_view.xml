@@ -59,7 +59,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:textSize="16sp"
-        android:id="@+id/textview_satutory"
+        android:id="@+id/textview1"
         android:textColor="@color/primary_dark_material_dark"
         android:layout_marginTop="34dp"/>
 
@@ -71,128 +71,54 @@
         android:textSize="16sp"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/textview_satutory_value"
+        android:id="@+id/textview1_value"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_satutory"
+        android:layout_alignTop="@+id/textview1"
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_satutory"
-        android:layout_marginLeft="46dp"
+        android:layout_below="@+id/textview1"
+        android:layout_marginLeft="16dp"
+        android:textStyle="bold"
         android:text="Federal Income Tax"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:layout_marginRight="155dp"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/textview_federal"
+        android:id="@+id/textview2"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="14dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="XXX.XX"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:maxLines="1"
+        android:textStyle="bold"
         android:singleLine="true"
-        android:id="@+id/textview_federal_value"
+        android:id="@+id/textview2_value"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_federal"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"/>
-
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_federal"
-        android:layout_marginLeft="46dp"
-        android:text="Social Security Tax"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textSize="14sp"
-        android:id="@+id/textview_social"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XXX.XX"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_social_value"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_social"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_social"
-        android:layout_marginLeft="46dp"
-        android:text="Medicare Tax"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_medicare"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XXX.XX"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_medicare_value"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_medicare"
+        android:layout_alignTop="@+id/textview2"
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_medicare"
-        android:layout_marginLeft="46dp"
-        android:text="VA State Income Tax"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_va"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XXX.XX"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_va_value"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_va"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"/>-->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_federal"
+        android:layout_below="@+id/textview2"
         android:layout_marginLeft="16dp"
         android:text="Other"
         android:textStyle="bold"
         android:textSize="16sp"
         android:maxLines="1"
+        android:layout_marginBottom="20dp"
         android:singleLine="true"
-        android:id="@+id/textview_other"
+        android:id="@+id/textview3"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="14dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -202,13 +128,13 @@
         android:textSize="16sp"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/textview_other_value"
+        android:id="@+id/textview3_value"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_other"
+        android:layout_alignTop="@+id/textview3"
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true" />
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_other"
@@ -261,5 +187,5 @@
         android:layout_alignTop="@+id/textview_second"
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="27dp"/>
+        android:layout_marginBottom="27dp"/>-->
 </RelativeLayout>

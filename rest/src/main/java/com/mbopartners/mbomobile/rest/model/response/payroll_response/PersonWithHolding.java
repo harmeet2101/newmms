@@ -28,6 +28,10 @@ public class PersonWithHolding implements Serializable,Validatable {
     private List<PersonalDeductions> afterTaxDeductions=new ArrayList<>();
     @SerializedName("federalAllowance")
     private String federalAllowance;
+    @SerializedName("netAmount")
+    private PersonNetAmount netAmount;
+    @SerializedName("paycheckAmount")
+    private PersonPayCheckAmount    paycheckAmount;
 
     @Override
     public boolean isValid() {
@@ -83,6 +87,18 @@ public class PersonWithHolding implements Serializable,Validatable {
         this.afterTaxDeductions=afterTaxDeductions;
         this.federalAllowance=federalAllowance;
     }
+    public PersonWithHolding(PersonGrossAmount grossAmount,List<PersonPayrollTaxes> payrollTaxes,List<ExpenseReimbursement> expenseReimbursements
+            ,List<PersonDeposits> deposits,List<PersonalDeductions> afterTaxDeductions,String federalAllowance,PersonNetAmount netAmount,PersonPayCheckAmount payCheckAmount)
+    {
+        this.grossAmount=grossAmount;
+        this.payrollTaxes=payrollTaxes;
+        this.expenseReimbursements=expenseReimbursements;
+        this.deposits=deposits;
+        this.afterTaxDeductions=afterTaxDeductions;
+        this.federalAllowance=federalAllowance;
+        this.netAmount=netAmount;
+        this.paycheckAmount=payCheckAmount;
+    }
 
 
 
@@ -133,5 +149,21 @@ public class PersonWithHolding implements Serializable,Validatable {
 
     public void setAfterTaxDeductions(List<PersonalDeductions> afterTaxDeductions) {
         this.afterTaxDeductions = afterTaxDeductions;
+    }
+
+    public PersonNetAmount getNetAmount() {
+        return netAmount;
+    }
+
+    public void setNetAmount(PersonNetAmount netAmount) {
+        this.netAmount = netAmount;
+    }
+
+    public PersonPayCheckAmount getPaycheckAmount() {
+        return paycheckAmount;
+    }
+
+    public void setPaycheckAmount(PersonPayCheckAmount paycheckAmount) {
+        this.paycheckAmount = paycheckAmount;
     }
 }

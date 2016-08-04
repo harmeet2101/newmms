@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.ExpenseReimbursement;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +72,13 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-            if(position==0)
-                bindViewHolder_ExpenseReimbersementsView((ExpenseReimbersementsViewHolder)holder,position);
+        if(expenseReimbursementList==null){
+
+        }else if(expenseReimbursementList.isEmpty()){
+
+        }
+        else
+            bindViewHolder_ExpenseReimbersementsView((ExpenseReimbersementsViewHolder)holder,position);
     }
 
     private void fillParent(ViewGroup parent, View view) {
@@ -107,8 +114,12 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
         return itemViewType;
     }
 
+    private boolean isChecked;
 
-
+    public void updateDataSource(boolean isChecked) {
+        this.isChecked = isChecked;
+        notifyDataSetChanged();
+    }
 
     public class ExpenseReimbersementsViewHolder extends RecyclerView.ViewHolder{
 
@@ -117,8 +128,8 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
         public ExpenseReimbersementsViewHolder(View view){
             super(view);
 
-            this.name=(TextView)view.findViewById(R.id.textview_federal);
-            this.value=(TextView)view.findViewById(R.id.textview_federal_value);
+            this.name=(TextView)view.findViewById(R.id.textview_name);
+            this.value=(TextView)view.findViewById(R.id.textview_value);
         }
     }
 
@@ -126,8 +137,12 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     public void bindViewHolder_ExpenseReimbersementsView(ExpenseReimbersementsViewHolder viewHolder,int position)
     {
 
+
         viewHolder.name.setText(expenseReimbursementList.get(position).getName());
-        viewHolder.value.setText("$"+expenseReimbursementList.get(position).getAmount());
+        if(isChecked)
+        viewHolder.value.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmountYtd())*100.0/100.0)));
+        else
+            viewHolder.value.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmount())*100.0/100.0)));
     }
 
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -135,5 +150,10 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
             super(itemView);
         }
     }
+
+
+
+
+
 
 }

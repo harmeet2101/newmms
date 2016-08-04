@@ -22,6 +22,8 @@ import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePayrollTrans
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonAfterDeductionsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonDepositsDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonGrossAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonNetAmountDao;
+import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayCheckAmountDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonPayrollTaxesDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePersonWithHoldingDao;
 import com.mbopartners.mbomobile.data.db.generated.dao.payroll.TablePreviousPaymentDao;
@@ -73,6 +75,8 @@ import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTra
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonAfterDeductions;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonDeposits;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonGrossAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonNetAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayCheckAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayrollTaxes;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
@@ -123,6 +127,9 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig tableSummaryBusinessWithHoldingDaoconfig;
     private final DaoConfig tableSummaryBusinessPayrollAmountDaoconfig;
     private final DaoConfig tablePersonAfterDeductionsDaoconfig;
+    private final DaoConfig tablePersonNetAmountDaoconfig;
+    private final DaoConfig tablePersonPayCheckAmountDaoconfig;
+
 
     private final TableBusinessManagerDao tableBusinessManagerDao;
     private final TableUserProfileDao tableUserProfileDao;
@@ -159,6 +166,8 @@ public class DaoSession extends AbstractDaoSession {
     private final TableSummaryBusinessWithHoldingDao tableSummaryBusinessWithHoldingDao;
     private final TableSummaryPayrollAmountDao tableSummaryPayrollAmountDao;
     private final TablePersonAfterDeductionsDao tablePersonAfterDeductionsDao;
+    private final TablePersonNetAmountDao tablePersonNetAmountDao;
+    private final TablePersonPayCheckAmountDao tablePersonPayCheckAmountDao;
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
@@ -257,6 +266,12 @@ public class DaoSession extends AbstractDaoSession {
         tablePersonAfterDeductionsDaoconfig=daoConfigMap.get(TablePersonAfterDeductionsDao.class).clone();
         tablePersonAfterDeductionsDaoconfig.initIdentityScope(type);
 
+        tablePersonNetAmountDaoconfig=daoConfigMap.get(TablePersonNetAmountDao.class).clone();
+        tablePersonNetAmountDaoconfig.initIdentityScope(type);
+
+        tablePersonPayCheckAmountDaoconfig=daoConfigMap.get(TablePersonPayCheckAmountDao.class).clone();
+        tablePersonPayCheckAmountDaoconfig.initIdentityScope(type);
+
         tableBusinessManagerDao = new TableBusinessManagerDao(tableBusinessManagerDaoConfig, this);
         tableUserProfileDao = new TableUserProfileDao(tableUserProfileDaoConfig, this);
         tableDashboardDao = new TableDashboardDao(tableDashboardDaoConfig, this);
@@ -296,6 +311,8 @@ public class DaoSession extends AbstractDaoSession {
         tableSummaryPayrollAmountDao=new TableSummaryPayrollAmountDao(tableSummaryBusinessPayrollAmountDaoconfig,this);
         tablePersonAfterDeductionsDao=new TablePersonAfterDeductionsDao(tablePersonAfterDeductionsDaoconfig,this);
 
+        tablePersonNetAmountDao=new TablePersonNetAmountDao(tablePersonNetAmountDaoconfig,this);
+        tablePersonPayCheckAmountDao=new TablePersonPayCheckAmountDao(tablePersonPayCheckAmountDaoconfig,this);
         registerDao(TableBusinessManager.class, tableBusinessManagerDao);
         registerDao(TableUserProfile.class, tableUserProfileDao);
         registerDao(TableDashboard.class, tableDashboardDao);
@@ -330,6 +347,8 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(TableSummaryBusinessWithHolding.class,tableSummaryBusinessWithHoldingDao);
         registerDao(TableSummaryPayrollAmount.class,tableSummaryPayrollAmountDao);
         registerDao(TablePersonAfterDeductions.class,tablePersonAfterDeductionsDao);
+        registerDao(TablePersonNetAmount.class,tablePersonNetAmountDao);
+        registerDao(TablePersonPayCheckAmount.class,tablePersonPayCheckAmountDao);
     }
 
 
@@ -370,6 +389,8 @@ public class DaoSession extends AbstractDaoSession {
         tableSummaryBusinessWithHoldingDaoconfig.getIdentityScope().clear();
         tableSummaryBusinessPayrollAmountDaoconfig.getIdentityScope().clear();
         tablePersonAfterDeductionsDaoconfig.getIdentityScope().clear();
+        tablePersonNetAmountDaoconfig.getIdentityScope().clear();
+        tablePersonPayCheckAmountDaoconfig.getIdentityScope().clear();
     }
 
     public TableBusinessManagerDao getTableBusinessManagerDao() {
@@ -505,5 +526,13 @@ public class DaoSession extends AbstractDaoSession {
 
     public TablePersonAfterDeductionsDao getTablePersonAfterDeductionsDao() {
         return tablePersonAfterDeductionsDao;
+    }
+
+    public TablePersonNetAmountDao getTablePersonNetAmountDao() {
+        return tablePersonNetAmountDao;
+    }
+
+    public TablePersonPayCheckAmountDao getTablePersonPayCheckAmountDao() {
+        return tablePersonPayCheckAmountDao;
     }
 }

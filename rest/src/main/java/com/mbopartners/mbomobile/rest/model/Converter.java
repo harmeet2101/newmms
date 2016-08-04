@@ -27,6 +27,8 @@ import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTra
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonAfterDeductions;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonDeposits;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonGrossAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonNetAmount;
+import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayCheckAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonPayrollTaxes;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePersonalWithHolding;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
@@ -58,6 +60,8 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSum
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonGrossAmount;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonNetAmount;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayCheckAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
@@ -193,6 +197,23 @@ public class Converter {
                 payrollAmountRowId);
         return tablePersonGrossAmount;
     }
+
+    public static TablePersonNetAmount toTable_payroll_person_netAmount(long payrollAmountRowId,PersonNetAmount netAmount) {
+        TablePersonNetAmount tablePersonNetAmount = new TablePersonNetAmount(
+                null,
+                netAmount.getAmount(),netAmount.getAmountMtd(),netAmount.getAmountYtd(),netAmount.getName(),
+                payrollAmountRowId);
+        return tablePersonNetAmount;
+    }
+
+    public static TablePersonPayCheckAmount toTable_payroll_person_payCheckAmount(long payrollAmountRowId,PersonPayCheckAmount payCheckAmount) {
+        TablePersonPayCheckAmount tablePersonPayCheckAmount = new TablePersonPayCheckAmount(
+                null,
+                payCheckAmount.getAmount(),payCheckAmount.getAmountMtd(),payCheckAmount.getAmountYtd(),payCheckAmount.getName(),
+                payrollAmountRowId);
+        return tablePersonPayCheckAmount;
+    }
+
 
     public static TableBusinessExpenses toTable_payroll_business_expense(long payrollAmountRowId,BusinessExpenses businessExpenses) {
         TableBusinessExpenses tablePayrollAmount = new TableBusinessExpenses(
@@ -462,7 +483,8 @@ public class Converter {
             personWithHolding = new PersonWithHolding(toWeb_payrollPersonGrossAmount(table.getGrossAmount()),
                     toWeb_PersonPayrollTaxesField(table.getPayrollTaxes()),
                     toWeb_PersonExpenseReimbersementField(table.getExpenseReimbursements()),
-                    toWeb_PersonDepositsField(table.getDeposits()),toWeb_PersonDeductionsField(table.getAfterTaxDeductions()),table.getFederalAllowance());
+                    toWeb_PersonDepositsField(table.getDeposits()),toWeb_PersonDeductionsField(table.getAfterTaxDeductions()),table.getFederalAllowance()
+            ,toWeb_payrollPersonNetAmount(table.getNetAmount()),toWeb_payrollPersonPayCheckAmount(table.getPaycheckAmount()));
             return personWithHolding;
         }else
             return personWithHolding;
@@ -504,6 +526,26 @@ public class Converter {
             return personGrossAmount;
         }else
             return personGrossAmount;
+    }
+
+    public static PersonNetAmount toWeb_payrollPersonNetAmount(TablePersonNetAmount table) {
+        PersonNetAmount personNetAmount = null;
+        if (table != null) {
+            personNetAmount = new PersonNetAmount(table.getAmount(), table.getAmountMtd(),
+                    table.getAmountYtd(), table.getName());
+            return personNetAmount;
+        }else
+            return personNetAmount;
+    }
+
+    public static PersonPayCheckAmount toWeb_payrollPersonPayCheckAmount(TablePersonPayCheckAmount table) {
+        PersonPayCheckAmount personPayCheckAmount = null;
+        if (table != null) {
+            personPayCheckAmount = new PersonPayCheckAmount(table.getAmount(), table.getAmountMtd(),
+                    table.getAmountYtd(), table.getName());
+            return personPayCheckAmount;
+        }else
+            return personPayCheckAmount;
     }
 
     public static PersonDeposits toWeb_payrollPersonDeposits(TablePersonDeposits table) {

@@ -58,6 +58,8 @@ public class MboDaoGenerator {
         Entity expenseType_2_expenseField_joiner = expenseType_2_expenseField();
 
         Entity payroll_personWithHolding_gross_amount_table=create_businessHolding_gross_amount_table();
+        Entity payroll_personWithHolding_net_amount_table=create_personWithHolding_net_amount_table();
+        Entity payroll_personWithHolding_paycheck_amount_table=create_personWithHolding_paycheck_amount_table();
         Entity payroll_personWithHolding_after_tax_deductions_table=create_payroll_personWithHolding_after_tax_deducations_table();
 
 
@@ -87,6 +89,8 @@ public class MboDaoGenerator {
         addOneToManyRelation(payroll_businessHolding_businessExpenses_table,payroll_businessWithHolding_table,"businessExpensesRowId","businessExpenses");
         addOneToManyRelation(payroll_businessHolding_payrollTaxes_table,payroll_businessWithHolding_table,"businessPayrollTaxesRowId","payrollTaxes");
         addOneToManyRelation(payroll_personWithHolding_gross_amount_table,payroll_personWithHolding_table,"grossAmountRowId","grossAmount");
+        addOneToManyRelation(payroll_personWithHolding_net_amount_table,payroll_personWithHolding_table,"netAmountRowId","netAmount");
+        addOneToManyRelation(payroll_personWithHolding_paycheck_amount_table,payroll_personWithHolding_table,"payCheckAmountRowId","paycheckAmount");
 
         addOneToManyRelation(payroll_transaction_table,payroll_businessWithHolding_table,"businessWithHoldingRowId","businessWithholding");
         addOneToManyRelation(payroll_transaction_table,payroll_personWithHolding_table,"personWithHoldingRowId","personWithHoldingRowId");
@@ -488,6 +492,26 @@ public class MboDaoGenerator {
         return table;
     }
 
+    private static Entity create_personWithHolding_net_amount_table() {
+
+        Entity table = schema.addEntity("TablePersonWithHoldingNetAmount");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
+    private static Entity create_personWithHolding_paycheck_amount_table() {
+
+        Entity table = schema.addEntity("TablePersonWithHoldingPayCheckAmount");
+        table.addIdProperty().autoincrement();
+        table.addDoubleProperty("amount");
+        table.addDoubleProperty("amountMtd");
+        table.addDoubleProperty("amountYtd");
+        table.addStringProperty("name");
+        return table;
+    }
 
     // ================================================================================
     // End of Tables declaration
