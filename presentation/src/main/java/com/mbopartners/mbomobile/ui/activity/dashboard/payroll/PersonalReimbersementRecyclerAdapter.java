@@ -141,8 +141,9 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
         viewHolder.name.setText(expenseReimbursementList.get(position).getName());
         if(isChecked)
         viewHolder.value.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmountYtd())*100.0/100.0)));
-        else
-            viewHolder.value.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmount())*100.0/100.0)));
+        else {
+            viewHolder.value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmount()) * 100.0 / 100.0)));
+        }
     }
 
     public class BulkViewHolder extends RecyclerView.ViewHolder {
