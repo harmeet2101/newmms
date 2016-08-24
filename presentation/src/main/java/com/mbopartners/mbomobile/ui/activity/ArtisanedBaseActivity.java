@@ -20,21 +20,21 @@ public class ArtisanedBaseActivity extends MdBaseActivity implements ArtisanBoun
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Call Artisan method AFTER super.onCreate
-        ArtisanActivity.artisanOnCreate(this);
+       // ArtisanActivity.artisanOnCreate(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // Call Artisan method AFTER super.onStart
-        ArtisanActivity.artisanOnStart(this);
+        //ArtisanActivity.artisanOnStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         // Call Artisan method AFTER super.onStop
-        ArtisanActivity.artisanOnStop(this);
+        //ArtisanActivity.artisanOnStop(this);
 
     }
 
@@ -42,7 +42,7 @@ public class ArtisanedBaseActivity extends MdBaseActivity implements ArtisanBoun
     @Override
     protected void onDestroy() {
         // Call Artisan method BEFORE super.onDestroy
-        ArtisanActivity.artisanOnDestroy();
+        //ArtisanActivity.artisanOnDestroy();
         super.onDestroy();
     }
 

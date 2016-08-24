@@ -128,8 +128,10 @@ public class Dao {
             }
 
             TableExpenseType tableExpenseType = resolveExpenseType(expenseTypeDao, expenseTableRecord.getMboExpenseTypeId());
-            String expenseTypeName = tableExpenseType.getName();
-
+            String expenseTypeName="";
+            if(tableExpenseType!=null) {
+                expenseTypeName = tableExpenseType.getName();
+            }
             Map<String, String> expenseDataMap = Converter.to_ExpenseData_Map(expenseTableRecord.getExpenseData());
             String dateStr = expenseDataMap.get(ExpenseField.ID__EXPENSE_DATE__DATA_FIELD);
             String endDateStr = expenseDataMap.get(ExpenseField.ID_EXPENSE_DATE_DATA_FIELD_END);

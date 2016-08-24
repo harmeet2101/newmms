@@ -1,21 +1,16 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.ui.R;
-import com.mbopartners.mbomobile.ui.toast.ActivityToaster;
-import com.mbopartners.mbomobile.ui.util.DateUtil;
 
 import java.util.List;
 
@@ -30,6 +25,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private static final int ITEM_VIEW_TYPE__BUSINESS_CENTER = 2;
     private static final int ITEM_VIEW_TYPE__NEXT_PAYROLL = 3;
     private static final int ITEM_VIEW_TYPE__LAST_PAYROLL = 4;
+    private static final int ITEM_VIEW_TYPE__NEED_FUNDS = 5;
 
     private static final String PAYROLL_BUSINESS_ACCOUNT = "Business Account Balance";
     private static final String PAYROLL_NEXT_PAYMENT = "Next Payment";
@@ -85,6 +81,12 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 viewHolder = new LastPayrollViewHolder(itemView);
                 break;
             }
+            case ITEM_VIEW_TYPE__NEED_FUNDS : {
+                View itemView = LayoutInflater.from(parent.getContext()).
+                        inflate(R.layout.layout_payroll_need_funds_text_layout, parent, false);
+                viewHolder = new BulkViewHolder(itemView);
+                break;
+            }
 
             default : {
                 viewHolder = null;
@@ -111,6 +113,10 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
         else if(position==2)
             bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
+        else if(position==3)
+        {
+
+        }
     }
 
     @Override
@@ -121,7 +127,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (payrollSummaryList.isEmpty()) {
             count = 1;
         } else
-            count = 3;
+            count = 4;
 
         return count;
     }
@@ -145,6 +151,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
         else if(position==2)
             return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;
+        else if(position==3){
+            return itemViewType=ITEM_VIEW_TYPE__NEED_FUNDS;
+        }
 
         return itemViewType;
     }

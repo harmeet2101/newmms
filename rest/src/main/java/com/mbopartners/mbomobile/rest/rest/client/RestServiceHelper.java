@@ -2,12 +2,11 @@ package com.mbopartners.mbomobile.rest.rest.client;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
-import android.util.Pair;
 
 import com.mbopartners.mbomobile.rest.configuration.ConfigurationController;
+import com.mbopartners.mbomobile.rest.configuration.NetworkingConstants;
 import com.mbopartners.mbomobile.rest.model.param.OAuthBodyEntity;
 import com.mbopartners.mbomobile.rest.model.response.Expense;
 import com.mbopartners.mbomobile.rest.model.response.TimeEntry;
@@ -117,14 +116,14 @@ public class RestServiceHelper extends AbstractApplicationController implements 
 
     @Override
     public RequestDescriptor getBusinessCenterList(Context context) {
-        BusinessCenterRequest request = new BusinessCenterRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
+        BusinessCenterRequest request = new BusinessCenterRequest(NetworkingConstants.PAYROLL_DEV_HOSTNAME);
         addStandardRequesrHeaders(request);
         sendRequest(request, context);
         return request.getRequestDescriptor();
     }
     @Override
     public RequestDescriptor getPayrollSummaryList(Context context) {
-        PayrollSummaryRequest request = new PayrollSummaryRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
+        PayrollSummaryRequest request = new PayrollSummaryRequest(NetworkingConstants.PAYROLL_DEV_HOSTNAME);
         addStandardRequesrHeaders(request);
         sendRequest(request, context);
         return request.getRequestDescriptor();
@@ -133,7 +132,7 @@ public class RestServiceHelper extends AbstractApplicationController implements 
     @Override
     public RequestDescriptor getPayrollTransactionsList(Context context) {
 
-        PayrollTransactionRequest request = new PayrollTransactionRequest(ConfigurationController.PAYROLL_DEV_HOSTNAME);
+        PayrollTransactionRequest request = new PayrollTransactionRequest(NetworkingConstants.PAYROLL_DEV_HOSTNAME);
         addStandardRequesrHeaders(request);
         sendRequest(request, context);
         return request.getRequestDescriptor();

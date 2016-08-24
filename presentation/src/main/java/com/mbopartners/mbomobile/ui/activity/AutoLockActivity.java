@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.artisan.powerhooks.PowerHookManager;
 import com.mbopartners.mbomobile.rest.configuration.ConfigurationController;
+import com.mbopartners.mbomobile.rest.configuration.NetworkingConstants;
 import com.mbopartners.mbomobile.ui.activity.helper.ActivityIntentHelper;
 import com.mbopartners.mbomobile.ui.activity.passcodelock.AppLockManager;
 import com.mbopartners.mbomobile.ui.util.Security;
@@ -47,7 +47,7 @@ public class AutoLockActivity extends MboBaseActivity {
     protected void onResume() {
         super.onResume();
         activityVisible = true;
-        long timeValueSeconds = Long.parseLong(PowerHookManager.getVariableValue(POWER_HOOK__LOCK_TIMEOUT));
+        long timeValueSeconds = Long.parseLong(NetworkingConstants.LOCK_TIMEOUT);
         USER_INACTIVITY_TIME = ONE_SECOND * timeValueSeconds;
         setLockingTimer();
     }
