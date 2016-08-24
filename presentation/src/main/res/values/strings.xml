@@ -200,6 +200,9 @@
     <string name="mbo_Terms_and_Conditions">Terms and Conditions</string>
     <string name="Item_Nonbillable_Expense_label">Nonbillable Expense</string>
 
+
+    <string name="payroll_need_funds_text">Need funds immediately?</string>
+
     <string name="mbo_submit_dialog_text">You will not be able to edit this timesheet once it has been invoiced.</string>
     <string name="mbo_weekly_timesheet_summary">Total hours this week:</string>
     <string name="mbo_saving_time_dialogbox_msg">Saving Time...</string>

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
 import com.mbopartners.mbomobile.ui.R;
-import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,6 +26,9 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
     private static final int ITEM_VIEW_TYPE__DATA = 2;
     private List<PersonalDeductions> personalDeductionsList;
     private List<PersonPayrollTaxes> payrollTaxesList;
+    private HashMap<Integer,Double> values=new HashMap();
+    private HashMap<Integer,Double> values_ytd=new HashMap();
+    private HashMap<Integer,String> names=new HashMap();
 
     public PersonalDeductionsRecyclerViewAdapter(Context context){
 
@@ -37,6 +40,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
         this.context=context;
         this.personalDeductionsList=personalDeductionsList;
         payrollTaxesList=personPayrollTaxesList;
+        setValues(personalDeductionsList,payrollTaxesList);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
         } else if (personalDeductionsList.isEmpty()) {
             count = 1;
         } else {
-            count = 2;
+            count = getTotalCount(personalDeductionsList,payrollTaxesList);
         }
         return count;
     }
@@ -140,26 +144,13 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
 
 
         if(isChecked) {
-            if(position==0) {
-                viewHolder.name.setText("Payroll Taxes");
-                viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfPayrollTaxes(payrollTaxesList, isChecked)) * 100.0 / 100.0)));
-            }if(position==1){
-                viewHolder.name.setText("After Tax Deducations");
-                viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
-            }
+            viewHolder.name.setText(names.get(position));
+            viewHolder.value.setText("$" + String.format("%.2f", values_ytd.get(position)));
+
         }else if(!isChecked){
-            if(position==0) {
-                viewHolder.name.setText("Payroll Taxes");
-                viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfPayrollTaxes(payrollTaxesList,isChecked)) * 100.0 / 100.0)));
-            }
-            if(position==1){
-                viewHolder.name.setText("After Tax Deducations");
-                viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
-            }
+
+            viewHolder.name.setText(names.get(position));
+            viewHolder.value.setText("$" + String.format("%.2f", values.get(position)));
         }
     }
 
@@ -171,53 +162,43 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
         }
     }
 
+    private void setValues(List<PersonalDeductions>personalDeductionsList,List<PersonPayrollTaxes> payrollTaxesList){
 
+        int payrollTaxesCount=0;
 
+        if(payrollTaxesList!=null){
+            for (payrollTaxesCount=0;payrollTaxesCount < payrollTaxesList.size(); payrollTaxesCount++) {
 
-    private double getSumOfPayrollTaxes(List<PersonPayrollTaxes> payrollTaxesList,boolean isChecked) {
+                    names.put(payrollTaxesCount,payrollTaxesList.get(payrollTaxesCount).getName());
+                    values.put(payrollTaxesCount, payrollTaxesList.get(payrollTaxesCount).getAmount());
+                    values_ytd.put(payrollTaxesCount, payrollTaxesList.get(payrollTaxesCount).getAmountYtd());
 
-        double total_expense=0.0;
+            }
+        }
 
-        try {
-            if (payrollTaxesList != null) {
-                for (int i = 0; i < payrollTaxesList.size(); i++) {
-                    if(isChecked)
-                        total_expense = total_expense + payrollTaxesList.get(i).getAmountYtd();
-                    else
-                        total_expense = total_expense + payrollTaxesList.get(i).getAmount();
-                }
+        int personDeducationCount=0;
+        if (personalDeductionsList != null) {
+            for (personDeducationCount=0; personDeducationCount< personalDeductionsList.size(); personDeducationCount++) {
+
+                    names.put(personDeducationCount+payrollTaxesCount,personalDeductionsList.get(personDeducationCount).getName());
+                    values.put(personDeducationCount+payrollTaxesCount, personalDeductionsList.get(personDeducationCount).getAmount());
+                    values_ytd.put(personDeducationCount+payrollTaxesCount, personalDeductionsList.get(personDeducationCount).getAmountYtd());
 
             }
 
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-            total_expense=0.0;
         }
-        return total_expense;
     }
 
-    private double getSumOfAfterTaxDeductions(List<PersonalDeductions> personalDeductionsList,boolean isChecked) {
+    private int getTotalCount(List<PersonalDeductions>personalDeductionsList,List<PersonPayrollTaxes> payrollTaxesList){
 
-        double total_expense=0.0;
-
-        try {
-            if (personalDeductionsList != null) {
-                for (int i = 0; i < personalDeductionsList.size(); i++) {
-                    if(isChecked)
-                        total_expense = total_expense + personalDeductionsList.get(i).getAmountYtd();
-                    else
-                        total_expense = total_expense + personalDeductionsList.get(i).getAmount();
-                }
-
-            }
-
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-            total_expense=0.0;
+        int count=0;
+        if(personalDeductionsList!=null){
+            count=personalDeductionsList.size();
         }
-        return total_expense;
+        if(payrollTaxesList!=null){
+            count=count+payrollTaxesList.size();
+        }
+        return count;
     }
 
 }
