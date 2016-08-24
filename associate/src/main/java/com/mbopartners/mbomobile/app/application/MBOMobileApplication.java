@@ -4,13 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.artisan.application.ArtisanRegisteredApplication;
-import com.artisan.incodeapi.ArtisanExperimentManager;
-import com.artisan.incodeapi.ArtisanProfileManager;
-import com.artisan.manager.ArtisanManager;
-import com.artisan.powerhooks.PowerHookManager;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.mbopartners.mbomobile.app.application.controller.prestore.OauthAuthenticateListener;
 import com.mbopartners.mbomobile.app.application.controller.prestore.PreStoreController;
 import com.mbopartners.mbomobile.data.db.database.controller.DbAccessController;
@@ -32,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.fabric.sdk.android.Fabric;
 import ua.com.mobidev.android.framework.application.IApplicationControllersManager;
 import ua.com.mobidev.android.framework.application.controller.AbstractApplicationController;
 import ua.com.mobidev.android.framework.application.controller.ConnectionController;
@@ -42,8 +34,8 @@ import ua.com.mobidev.android.mdrest.web.rest.processor.Processor;
 import ua.com.mobidev.android.mdrest.web.rest.storage.IRestStore;
 
 public class MBOMobileApplication extends Application
-        implements IApplicationControllersManager,
-        ArtisanRegisteredApplication {
+        implements IApplicationControllersManager/*,
+        ArtisanRegisteredApplication*/ {
 
     public static final String ARTISAN_APP_ID_PROD = "5589a82c4ef4a7fd51000002";                          //5589a82c4ef4a7fd51000002
     public static final String ARTISAN_APP_ID_PRE_PROD = "556dca7b4ef4a7b261000001";
@@ -61,13 +53,13 @@ public class MBOMobileApplication extends Application
         preferences = getSharedPreferences("environment_pref", Context.MODE_PRIVATE);
         String env = preferences.getString("env", "prod");
         if (env.equalsIgnoreCase("prod")) {
-            ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PROD);
+            /*ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PROD);*/
             /*Crashlytics crashlyticsKit = new Crashlytics.Builder()
                     .core(new CrashlyticsCore.Builder().disabled(false).build()).build();
             Fabric.with(this, crashlyticsKit);*/
         } else {
 
-            ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PRE_PROD);
+            /*ArtisanManager.startArtisan(this, ARTISAN_APP_ID_PRE_PROD);*/
 
             /*Crashlytics crashlyticsKit = new Crashlytics.Builder()
                     .core(new CrashlyticsCore.Builder().disabled(true).build()).build();
@@ -219,7 +211,7 @@ public class MBOMobileApplication extends Application
     // Artisan ArtisanRegisteredApplication implementations
     // ================================================================================
 
-    @Override
+    /*@Override
     public void registerPowerhooks() {
         // Register your Artisan Power Hook variables and Power Hook blocks here
         // See examples at http://docs.useartisan.com/dev/android/power-hooks
@@ -254,7 +246,7 @@ public class MBOMobileApplication extends Application
         ArtisanProfileManager.setUserFirstName("Adil");
         ArtisanProfileManager.setUserLastName("Moen");
         ArtisanProfileManager.setSharedUserId("testing12345");
-    }
+    }*/
 
 
     // ================================================================================

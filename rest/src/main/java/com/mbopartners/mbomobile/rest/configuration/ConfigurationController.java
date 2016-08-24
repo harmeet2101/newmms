@@ -1,42 +1,21 @@
 package com.mbopartners.mbomobile.rest.configuration;
 
-import com.artisan.powerhooks.PowerHookManager;
-import com.artisan.powerhooks.PowerHookVariable;
 import com.mbopartners.mbomobile.rest.persistance.SharedPreferencesController;
 
 import ua.com.mobidev.android.framework.application.controller.AbstractApplicationController;
 import ua.com.mobidev.android.framework.application.controller.Controllers;
 
 public class ConfigurationController extends AbstractApplicationController {
-    private static final String POWER_HOOK__LOCK_TIMEOUT = "lockTimeout";
-    private static final String POWER_HOOK__SUPPORT_EMAIL = "supportEmail";
-    private static final String POWER_HOOK__JOIN_US_LINK = "joinUsLink";
-    private static final String POWER_HOOK__FORGOT_PASSWORD_LINK = "forgotPasswordLink";
-    private static final String POWER_HOOK__PRIVACY_POLICY_LINK = "privacyPolicyLink";
-    private static final String POWER_HOOK__TERMS_AND_CONDITIONS_LINK = "termsAndConditionsLink";
-
-    private static final String POWER_HOOK__DEV_HOSTNAME = "devHostname";
-    private static final String POWER_HOOK__PROD_HOSTNAME = "prodHostname";
-
-    private static final String POWER_HOOK__DEV_OAUTH_HOSTNAME = "devOAuthHostname";
-    private static final String POWER_HOOK__PROD_OAUTH_HOSTNAME = "prodOAuthHostname";
-
     private static final String OAUTH_DEV_CLIENT_ID = "time-expenses-app";
     private static final String OAUTH_DEV_CLIENT_SECRET = "43568d19-3620-4ec4-8123-f63502ec261f";
+
     private static final String OAUTH_PROD_CLIENT_ID = "mbo-mobile";
     private static final String OAUTH_PROD_CLIENT_SECRET = "4eb69d74-b9ac-4052-acef-f5884bc8fd2e";
-
-    private static final String DEV_HOSTNAME="http://test.tanders.mbopartners.com/api/";
-
-    //private static final String DEV_HOSTNAME="http://66.208.23.234/";
-
-    public static final String PAYROLL_DEV_HOSTNAME="http://66.208.23.234/";
 
     private SharedPreferencesController sharedPreferencesController;
     private EnvironmentConfiguration currentConfiguration;
 
     private String currentLockTimeout;
-
     private String currentSupportEmail;
     private String currentJoinUsLink;
     private String currentForgotPasswordLink;
@@ -93,7 +72,7 @@ public class ConfigurationController extends AbstractApplicationController {
                         this.currentTermsAndConditionsLink,
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
-                        );
+                );
                 break;
             }
 
@@ -125,36 +104,23 @@ public class ConfigurationController extends AbstractApplicationController {
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
                 );
-
-                /*result = new EnvironmentVariables(
-                        this.currentLockTimeout,
-                        this.currentDevHostname,
-                        this.currentDevOAuthHostname,
-                        this.currentSupportEmail,
-                        this.currentJoinUsLink,
-                        this.currentForgotPasswordLink,
-                        this.currentPrivacyPolicyLink,
-                        this.currentTermsAndConditionsLink,
-                        OAUTH_DEV_CLIENT_ID,
-                        OAUTH_DEV_CLIENT_SECRET);*/
             }
         }
         return result;
     }
 
     public void forceToUpdateVariables() {
-        currentLockTimeout = PowerHookManager.getVariableValue(POWER_HOOK__LOCK_TIMEOUT);
-        currentSupportEmail = PowerHookManager.getVariableValue(POWER_HOOK__SUPPORT_EMAIL);
-        currentJoinUsLink = PowerHookManager.getVariableValue(POWER_HOOK__JOIN_US_LINK);
-        currentForgotPasswordLink = PowerHookManager.getVariableValue(POWER_HOOK__FORGOT_PASSWORD_LINK);
-        currentPrivacyPolicyLink = PowerHookManager.getVariableValue(POWER_HOOK__PRIVACY_POLICY_LINK);
-        currentTermsAndConditionsLink = PowerHookManager.getVariableValue(POWER_HOOK__TERMS_AND_CONDITIONS_LINK);
+        currentLockTimeout = NetworkingConstants.LOCK_TIMEOUT;
+        currentSupportEmail = NetworkingConstants.SUPPORT_EMAIL;
+        currentJoinUsLink = NetworkingConstants.JOIN_US_URL;
+        currentForgotPasswordLink = NetworkingConstants.FORGOT_PASSWORD_URL;
+        currentPrivacyPolicyLink = NetworkingConstants.PRIVACY_POLICY_URL;
+        currentTermsAndConditionsLink = NetworkingConstants.TERMS_AND_CONDITIONS_URL;
 
-        currentDevHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_HOSTNAME);
-        //currentDevHostname=PAYROLL_DEV_HOSTNAME;
-        currentProdHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_HOSTNAME);
-        currentDevOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__DEV_OAUTH_HOSTNAME);
-        currentProdOAuthHostname = PowerHookManager.getVariableValue(POWER_HOOK__PROD_OAUTH_HOSTNAME);
+        currentDevHostname = NetworkingConstants.PRE_PROD_BASE_URL;
+        currentProdHostname = NetworkingConstants.PROD_BASE_URL;
+        currentDevOAuthHostname = NetworkingConstants.PRE_PROD_LOGIN_URL;
+        currentProdOAuthHostname = NetworkingConstants.PROD_LOGIN_URL;
     }
 
     public class EnvironmentVariables {
