@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.ui.R;
-import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
 import java.util.List;
 
@@ -158,7 +157,7 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(ENCUMBERED_FUNDS));
         viewHolder.company_name_TextView.setText(ENCUMBERED_FUNDS);
-        viewHolder.work_order_name_TextView.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(businessWithHoldingList.get(this.position).getPayrollAmount().getAmount())));
+        viewHolder.work_order_name_TextView.setText("$"+ String.format("%.2f",businessWithHoldingList.get(this.position).getPayrollAmount().getAmount()));
         viewHolder.periodTextview.setText("This Period");
 
     }
@@ -168,7 +167,7 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
         double total_expense=getSumOfInsuranceExpenses(businessWithHoldingList);
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(INSURANCE_EXPENSES));
         viewHolder.company_name_TextView.setText(INSURANCE_EXPENSES);
-        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(total_expense)));
+        viewHolder.work_order_name_TextView.setText("$"+String.format("%.2f",total_expense));
         viewHolder.periodTextview.setText("This Period");
 
 
@@ -178,7 +177,7 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
         double total_expense=getSumOfPayrollTaxes(businessWithHoldingList);
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(BUSINESS_CENTER_PAYROLL));
         viewHolder.company_name_TextView.setText(BUSINESS_CENTER_PAYROLL);
-        viewHolder.work_order_name_TextView.setText("$"+TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(total_expense)));
+        viewHolder.work_order_name_TextView.setText("$"+String.format("%.2f",total_expense));
         viewHolder.periodTextview.setText("This Period");
     }
 
@@ -276,6 +275,6 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
             e.printStackTrace();
             total_expense=0.0;
         }
-        return Math.round(total_expense * 100.0) / 100.0;
+        return total_expense;
     }
 }

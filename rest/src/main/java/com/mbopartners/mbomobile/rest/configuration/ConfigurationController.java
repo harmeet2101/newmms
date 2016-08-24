@@ -104,6 +104,7 @@ public class ConfigurationController extends AbstractApplicationController {
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
                 );
+
             }
         }
         return result;

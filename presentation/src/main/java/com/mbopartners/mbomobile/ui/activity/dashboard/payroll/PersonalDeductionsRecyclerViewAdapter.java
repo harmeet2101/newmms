@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollAmount;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonPayrollTaxes;
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonalDeductions;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
@@ -145,22 +143,22 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
             if(position==0) {
                 viewHolder.name.setText("Payroll Taxes");
                 viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(getSumOfPayrollTaxes(payrollTaxesList, isChecked)) * 100.0 / 100.0)));
+                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfPayrollTaxes(payrollTaxesList, isChecked)) * 100.0 / 100.0)));
             }if(position==1){
                 viewHolder.name.setText("After Tax Deducations");
                 viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
+                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
             }
         }else if(!isChecked){
             if(position==0) {
                 viewHolder.name.setText("Payroll Taxes");
                 viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(getSumOfPayrollTaxes(payrollTaxesList,isChecked)) * 100.0 / 100.0)));
+                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfPayrollTaxes(payrollTaxesList,isChecked)) * 100.0 / 100.0)));
             }
             if(position==1){
                 viewHolder.name.setText("After Tax Deducations");
                 viewHolder.value.setText("$" + TwoDecimalPlacesUtil.
-                        getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
+                        getAmount_uptoTwoDecimalPlaces(String.valueOf((getSumOfAfterTaxDeductions(personalDeductionsList,isChecked)) * 100.0 / 100.0)));
             }
         }
     }
@@ -196,7 +194,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
             e.printStackTrace();
             total_expense=0.0;
         }
-        return Math.round(total_expense * 100.0) / 100.0;
+        return total_expense;
     }
 
     private double getSumOfAfterTaxDeductions(List<PersonalDeductions> personalDeductionsList,boolean isChecked) {
@@ -219,7 +217,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
             e.printStackTrace();
             total_expense=0.0;
         }
-        return Math.round(total_expense * 100.0) / 100.0;
+        return total_expense;
     }
 
 }

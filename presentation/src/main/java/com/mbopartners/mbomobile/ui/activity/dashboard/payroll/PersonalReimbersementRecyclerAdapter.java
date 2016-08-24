@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.ExpenseReimbursement;
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
-import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -140,9 +137,10 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
 
         viewHolder.name.setText(expenseReimbursementList.get(position).getName());
         if(isChecked)
-        viewHolder.value.setText("$"+ TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmountYtd())*100.0/100.0)));
+        viewHolder.value.setText("$"+ String.format("%.2f", expenseReimbursementList.get(position).getAmountYtd()));
         else {
-            viewHolder.value.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(Math.round(expenseReimbursementList.get(position).getAmount()) * 100.0 / 100.0)));
+           ;
+            viewHolder.value.setText("$"+ String.format("%.2f",expenseReimbursementList.get(position).getAmount()));
         }
     }
 
