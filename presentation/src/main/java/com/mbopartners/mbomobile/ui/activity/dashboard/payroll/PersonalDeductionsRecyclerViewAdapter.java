@@ -57,6 +57,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
             }
             case ITEM_VIEW_TYPE__EMPTY_LIST:{
                 final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_timeshseet_list,parent,false);
+                ((TextView) view.findViewById(R.id.empty_section_TextView)).setText("");
                 fillParent(parent,view);
                 viewHolder=new BulkViewHolder(view);
                 break;

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:id="@+id/relativelayout"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
     android:background="@color/mbo_color_white"
     android:layout_height="wrap_content">
@@ -48,11 +49,24 @@
             android:layout_marginLeft="16dp"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative"
+        android:layout_marginLeft="16dp"
+        android:text="@string/mbo_personalwithholding_payroll_deductions_card_text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:textSize="14sp"
+        android:id="@+id/headingNote"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_marginTop="14dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative"
+        android:layout_below="@+id/headingNote"
         android:layout_marginLeft="16dp"
         android:text="Total"
         android:textStyle="bold"

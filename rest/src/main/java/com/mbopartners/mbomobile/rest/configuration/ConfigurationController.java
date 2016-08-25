@@ -104,6 +104,17 @@ public class ConfigurationController extends AbstractApplicationController {
                         OAUTH_PROD_CLIENT_ID,
                         OAUTH_PROD_CLIENT_SECRET
                 );
+                /*result = new EnvironmentVariables(
+                        this.currentLockTimeout,
+                        this.currentDevHostname,
+                        this.currentDevOAuthHostname,
+                        this.currentSupportEmail,
+                        this.currentJoinUsLink,
+                        this.currentForgotPasswordLink,
+                        this.currentPrivacyPolicyLink,
+                        this.currentTermsAndConditionsLink,
+                        OAUTH_DEV_CLIENT_ID,
+                        OAUTH_DEV_CLIENT_SECRET);*/
             }
         }
         return result;

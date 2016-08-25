@@ -38,7 +38,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
     private static final String EARNINGS = "Earnings";
     private static final String DEDUCTIONS = "Deductions";
     private static final String BUSINESS_CENTER_PAYROLL = "Business Center Payroll Taxes";
-    private static final String EXPENSE_REIMBERSEMENTS="Expense Reimbersements";
+    private static final String EXPENSE_REIMBERSEMENTS="Expenses";
     private List<PersonWithHolding> personWithHoldingList;
     private int position;
     int mheight;
@@ -180,7 +180,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
             viewHolder.textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getNetAmount().getAmountYtd()));
             viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getPaycheckAmount().getAmountYtd()));
+            viewHolder.textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(this.position).getPaycheckAmount().getAmountYtd()+
+                    personWithHoldingList.get(this.position).getNetAmount().getAmountYtd())));
         }else {
             viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getGrossAmount().getAmount()));
             viewHolder.periodTextview.setText("This Period");
@@ -189,8 +190,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
             viewHolder.textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getNetAmount().getAmount()));
             viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getPaycheckAmount().getAmount()));
-
+            viewHolder.textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(this.position).getPaycheckAmount().getAmount()+
+                    personWithHoldingList.get(this.position).getNetAmount().getAmount())));
         }
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -245,6 +246,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
+        public RecyclerView recyclerView;
         public TextView textview1;
         public TextView textview1_value;
         public TextView textview2;
@@ -254,6 +256,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public TextView thisPeriodTextview;
         public TextView ytdTextview;
         public Switch aSwitch;
+
         public BusinessCenterViewHolder(View itemView) {
             super(itemView);
 
@@ -265,6 +268,13 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.includeView=itemView.findViewById(R.id.includeview);
             this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
             this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
+            this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
+
+            final PersonEarningsRecylerViewAdapter madapter=new PersonEarningsRecylerViewAdapter
+                    (context,personWithHoldingList.get(position).getDeposits());
+            this.recyclerView.setAdapter(madapter);
+            this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            this.recyclerView.setScrollContainer(true);
             this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
             this.aSwitch.setChecked(false);
             this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -282,19 +292,21 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                         textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
                         textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmountYtd()));
                         textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
-                        textview3_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getPaycheckAmount().getAmountYtd()));
+                        textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(position).getPaycheckAmount().getAmountYtd()+
+                                personWithHoldingList.get(position).getNetAmount().getAmountYtd())));
                     }else {
 
                         ytdTextview.setTextColor(Color.BLACK);
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmount()));
+                        work_order_name_TextView.setText("$" + String.format("%.2f", personWithHoldingList.get(position).getGrossAmount().getAmount()));
                         periodTextview.setText("This Period");
                         textview1.setText(personWithHoldingList.get(position).getGrossAmount().getName());
                         textview1_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmount()));
                         textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
                         textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmount()));
                         textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
-                        textview3_value.setText("$" + String.format("%.2f", personWithHoldingList.get(position).getPaycheckAmount().getAmount()));
+                        textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(position).getPaycheckAmount().getAmount()+
+                                personWithHoldingList.get(position).getNetAmount().getAmount())));
                     }
                 }
             });
@@ -335,7 +347,15 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         @Override
         public void onClick(View v) {
             if(includeView.getVisibility()==View.GONE)
+            {
                 expandView(mheight,cardView,includeView);
+/*                relativeLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        expandView(relativeLayout.getHeight()*3,cardView,includeView);
+                    }
+                });*/
+            }
             else if(includeView.getVisibility()==View.VISIBLE)
                 collapseView(cardView,minHeight,includeView);
         }
@@ -350,12 +370,14 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
+        public TextView headingTextview;
         public TextView textview1;
         public TextView textview1_value;
         public RecyclerView recyclerView;
         public TextView thisPeriodTextview;
         public TextView ytdTextview;
         public Switch aSwitch;
+
         public NextPayrollViewHolder(View itemView) {
             super(itemView);
             this.cardView=(CardView)itemView.findViewById(R.id.card_view);
@@ -366,6 +388,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.includeView=itemView.findViewById(R.id.includeview);
             this.textview1=(TextView)itemView.findViewById(R.id.textview1);
             this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            this.headingTextview=(TextView)itemView.findViewById(R.id.headingNote);
+            this.headingTextview.setVisibility(View.VISIBLE);
             this.itemView.setOnClickListener(this);
             this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
             final PersonalDeductionsRecyclerViewAdapter madapter=new PersonalDeductionsRecyclerViewAdapter
@@ -376,6 +400,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
             this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
             this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
+
             this.aSwitch.setChecked(false);
             this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -429,10 +454,27 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         }
         @Override
         public void onClick(View v) {
-            if(includeView.getVisibility()==View.GONE)
-                expandView(mheight,cardView,includeView);
+
+                if(includeView.getVisibility()==View.GONE)
+                {
+/*                    relativeLayout.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            expandView(relativeLayout.getHeight()*3,cardView,includeView);
+                        }
+                    });*/
+
+
+                    try {
+                        expandView(mheight, cardView, includeView);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
             else if(includeView.getVisibility()==View.VISIBLE)
-                collapseView(cardView,minHeight,includeView);
+                collapseView(cardView, minHeight, includeView);
         }
 
     }
@@ -454,6 +496,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public TextView thisPeriodTextview;
         public TextView ytdTextview;
         public Switch aSwitch;
+
         public ReimbersementsViewHolder(View itemView) {
             super(itemView);
             this.cardView=(CardView)itemView.findViewById(R.id.card_view);
@@ -465,6 +508,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
             this.textview1=(TextView)itemView.findViewById(R.id.textview1);
             this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            this.textview1.setVisibility(View.GONE);
+            this.textview1_value.setVisibility(View.GONE);
             final PersonalReimbersementRecyclerAdapter madapter=new PersonalReimbersementRecyclerAdapter(context,personWithHoldingList.get(position).getExpenseReimbursements());
             this.recyclerView.setAdapter(madapter);
             this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -472,8 +517,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.itemView.setOnClickListener(this);
             this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
             this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
+
             this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
             this.aSwitch.setChecked(false);
+
             this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -484,7 +531,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                         thisPeriodTextview.setTextColor(Color.BLACK);
                         isExpense_ytd_checked=true;
                         work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList,isExpense_ytd_checked)));
-                        textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+                        //textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
                         periodTextview.setText("Year to Date");
                         madapter.updateDataSource(isExpense_ytd_checked);
 
@@ -494,7 +541,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                         isExpense_ytd_checked=false;
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         work_order_name_TextView.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
-                        textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+                        //textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
                         periodTextview.setText("This Period");
                         madapter.updateDataSource(isExpense_ytd_checked);
                     }
@@ -516,8 +563,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         }
         @Override
         public void onClick(View v) {
-            if(includeView.getVisibility()==View.GONE)
+            if(includeView.getVisibility() == View.GONE) {
                 expandView(mheight,cardView,includeView);
+
+            }
             else if(includeView.getVisibility()==View.VISIBLE)
                 collapseView(cardView,minHeight,includeView);
         }

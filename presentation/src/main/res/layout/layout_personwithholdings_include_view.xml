@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:id="@+id/relative01"
     android:background="@color/mbo_color_white"
     android:layout_height="wrap_content">
 
@@ -133,59 +134,14 @@
         android:layout_alignTop="@+id/textview3"
         android:layout_marginRight="16dp"
         android:layout_alignParentEnd="true" />
-
-    <!--<TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_other"
-        android:layout_marginLeft="46dp"
-        android:text="AfterTaxDeductions"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:layout_marginRight="155dp"
-        android:singleLine="true"
-        android:id="@+id/textview_first"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XXX.XX"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_first_value"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_first"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/textview3"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview_first"
-        android:layout_marginLeft="46dp"
-        android:text="ExpenseReimbersements"
-        android:layout_marginRight="155dp"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_second"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="27dp"/>
+        android:layout_marginLeft="26dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XXX.XX"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:id="@+id/textview_second_value"
-        android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/textview_second"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="27dp"/>-->
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

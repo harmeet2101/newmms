@@ -7,33 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.ExpenseReimbursement;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.List;
 
-/**
- * Created by MboAdil on 3/8/16.
- */
-public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PersonEarningsRecylerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
     private Context context;
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
     private static final int ITEM_VIEW_TYPE__DATA = 2;
-    private List<ExpenseReimbursement> expenseReimbursementList;
+    private List<PersonDeposits> personDepositsList;
 
-
-    public PersonalReimbersementRecyclerAdapter(Context context){
+    public PersonEarningsRecylerViewAdapter(Context context){
 
         this.context=context;
     }
 
-    public PersonalReimbersementRecyclerAdapter(Context context,List<ExpenseReimbursement> expenseReimbursementList){
+    public PersonEarningsRecylerViewAdapter(Context context,List<PersonDeposits> personDepositsList){
 
         this.context=context;
-        this.expenseReimbursementList=expenseReimbursementList;
+        this.personDepositsList=personDepositsList;
     }
 
     @Override
@@ -57,7 +53,7 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
             }
             case ITEM_VIEW_TYPE__DATA:{
                 final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holding_recyclerview,parent,false);
-                viewHolder=new ExpenseReimbersementsViewHolder(view);
+                viewHolder=new EarningViewHolder(view);
                 break;
             }
             default:{
@@ -70,13 +66,13 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if(expenseReimbursementList==null){
+        if(personDepositsList==null){
 
-        }else if(expenseReimbursementList.isEmpty()){
+        }else if(personDepositsList.isEmpty()){
 
         }
         else
-            bindViewHolder_ExpenseReimbersementsView((ExpenseReimbersementsViewHolder)holder,position);
+            bindViewHolder_Earningsview((EarningViewHolder) holder, position);
     }
 
     private void fillParent(ViewGroup parent, View view) {
@@ -89,12 +85,12 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     public int getItemCount() {
 
         int count = 0;
-        if (expenseReimbursementList == null) {
+        if (personDepositsList == null) {
             count = 1;
-        } else if (expenseReimbursementList.isEmpty()) {
+        } else if (personDepositsList.isEmpty()) {
             count = 1;
         } else {
-            count = expenseReimbursementList.size();
+            count = personDepositsList.size();
         }
         return count;
     }
@@ -102,9 +98,9 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     public int getItemViewType(int position){
 
         int itemViewType = -1;
-        if (expenseReimbursementList == null) {
+        if (personDepositsList == null) {
             itemViewType = ITEM_VIEW_TYPE__LOADING;
-        } else if (expenseReimbursementList.isEmpty()) {
+        } else if (personDepositsList.isEmpty()) {
             itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         } else {
             itemViewType = ITEM_VIEW_TYPE__DATA;
@@ -119,11 +115,11 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
         notifyDataSetChanged();
     }
 
-    public class ExpenseReimbersementsViewHolder extends RecyclerView.ViewHolder{
+    public class EarningViewHolder extends RecyclerView.ViewHolder{
 
         public TextView name;
         public TextView value;
-        public ExpenseReimbersementsViewHolder(View view){
+        public EarningViewHolder(View view){
             super(view);
 
             this.name=(TextView)view.findViewById(R.id.textview_name);
@@ -132,28 +128,27 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
     }
 
 
-    public void bindViewHolder_ExpenseReimbersementsView(ExpenseReimbersementsViewHolder viewHolder,int position)
+    public void bindViewHolder_Earningsview(EarningViewHolder viewHolder,int position)
     {
 
 
-        viewHolder.name.setText(expenseReimbursementList.get(position).getName());
-        if(isChecked)
-        viewHolder.value.setText("$"+ String.format("%.2f", expenseReimbursementList.get(position).getAmountYtd()));
-        else {
-           ;
-            viewHolder.value.setText("$"+ String.format("%.2f",expenseReimbursementList.get(position).getAmount()));
-        }
+        viewHolder.name.setText(personDepositsList.get(position).getName());
+        viewHolder.value.setText("$"+String.format("%.2f",personDepositsList.get(position).getAmount()));
+        /*if(isChecked) {
+
+
+        }else if(!isChecked){
+
+
+        }*/
     }
+
+
 
     public class BulkViewHolder extends RecyclerView.ViewHolder {
         public BulkViewHolder(View itemView) {
             super(itemView);
         }
     }
-
-
-
-
-
 
 }

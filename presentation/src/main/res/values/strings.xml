@@ -62,6 +62,7 @@
     <string name="mbo_dashboard_payroll_text">Payroll</string>
     <string name="mbo_businesswithholding_payroll_text">Estimates Business Withholdings</string>
     <string name="mbo_personalwithholding_payroll_text">Estimates Earnings Statement</string>
+    <string name="mbo_personalwithholding_payroll_deductions_card_text">*Exclude from federal taxable wages</string>
     <!-- EditText hints -->
     <string name="mbo_Login_hint_Login">Username</string>
     <string name="mbo_Login_hint_Password">Password</string>
