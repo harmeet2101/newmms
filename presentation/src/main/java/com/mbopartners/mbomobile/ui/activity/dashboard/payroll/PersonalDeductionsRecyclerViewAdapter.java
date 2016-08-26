@@ -1,6 +1,7 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,12 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
         this.context=context;
         this.personalDeductionsList=personalDeductionsList;
         payrollTaxesList=personPayrollTaxesList;
-        setValues(personalDeductionsList,payrollTaxesList);
+        /*setValues(personalDeductionsList,payrollTaxesList);*/
+    }
+    public PersonalDeductionsRecyclerViewAdapter(Context context,List<PersonPayrollTaxes> personPayrollTaxesList){
+
+        this.context=context;
+        payrollTaxesList=personPayrollTaxesList;
     }
 
     @Override
@@ -63,7 +69,7 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
                 break;
             }
             case ITEM_VIEW_TYPE__DATA:{
-                final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holding_recyclerview,parent,false);
+                final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_holding_recyclerview_test,parent,false);
                 viewHolder=new ExpenseReimbersementsViewHolder(view);
                 break;
             }
@@ -77,9 +83,9 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if(personalDeductionsList==null){
+        if(payrollTaxesList==null){
 
-        }else if(personalDeductionsList.isEmpty()){
+        }else if(payrollTaxesList.isEmpty()){
 
         }
         else
@@ -96,12 +102,14 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
     public int getItemCount() {
 
         int count = 0;
-        if (personalDeductionsList == null) {
+        if (payrollTaxesList == null) {
             count = 1;
-        } else if (personalDeductionsList.isEmpty()) {
+        } else if (payrollTaxesList.isEmpty()) {
             count = 1;
         } else {
             count = getTotalCount(personalDeductionsList,payrollTaxesList);
+            count=1;
+            /*count=payrollTaxesList.size();*/
         }
         return count;
     }
@@ -128,13 +136,35 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
 
     public class ExpenseReimbersementsViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView name;
-        public TextView value;
+        /*public TextView name;
+        public TextView value;*/
+        public TextView textview1;
+        public TextView textview1_value;
+        public RecyclerView recyclerView;
+        public PersonPayrolltaxesRecyclerviewAdapter adapter1;
+        public PersonAdditionalDeductionsRecyclerViewAdapter adapter2;
         public ExpenseReimbersementsViewHolder(View view){
             super(view);
 
-            this.name=(TextView)view.findViewById(R.id.textview_name);
-            this.value=(TextView)view.findViewById(R.id.textview_value);
+            /*this.name=(TextView)view.findViewById(R.id.textview_name);
+            this.value=(TextView)view.findViewById(R.id.textview_value);*/
+            this.textview1=(TextView)view.findViewById(R.id.textview1);
+            this.textview1_value=(TextView)view.findViewById(R.id.textview1_value);
+            this.recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
+            adapter1=new PersonPayrolltaxesRecyclerviewAdapter(context,payrollTaxesList);
+            //adapter2=new PersonAdditionalDeductionsRecyclerViewAdapter(context,personalDeductionsList);
+            /*this.recyclerView.setAdapter(adapter1);
+            this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            this.recyclerView.setScrollContainer(true);*/
+            /*if(getAdapterPosition()==0){
+                this.recyclerView.setAdapter(adapter1);
+                this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                this.recyclerView.setScrollContainer(true);
+            }else if(getAdapterPosition()==1){
+                this.recyclerView.setAdapter(adapter2);
+                this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                this.recyclerView.setScrollContainer(true);
+            }*/
         }
     }
 
@@ -144,15 +174,26 @@ public class PersonalDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
 
 
 
-        if(isChecked) {
-            viewHolder.name.setText(names.get(position));
-            viewHolder.value.setText("$" + String.format("%.2f", values_ytd.get(position)));
+                viewHolder.textview1.setText("Statutory");
+                viewHolder.recyclerView.setAdapter(viewHolder.adapter1);
+                viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                viewHolder.recyclerView.setScrollContainer(true);
+                viewHolder.adapter1.updateDataSource(false);
+            /* else{
+                viewHolder.textview1.setText("Other*");
+                viewHolder.recyclerView.setAdapter(viewHolder.adapter2);
+                viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                viewHolder.recyclerView.setScrollContainer(true);
+            }*/
+        /*if(isChecked) {
+            *//*viewHolder.name.setText(names.get(position));
+            viewHolder.value.setText("$" + String.format("%.2f", values_ytd.get(position)));*//*
 
         }else if(!isChecked){
 
-            viewHolder.name.setText(names.get(position));
-            viewHolder.value.setText("$" + String.format("%.2f", values.get(position)));
-        }
+            *//*viewHolder.name.setText(names.get(position));
+            viewHolder.value.setText("$" + String.format("%.2f", values.get(position)));*//*
+        }*/
     }
 
 

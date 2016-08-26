@@ -14,7 +14,7 @@ public class TablePersonDeposits {
     private Long id;
     /** Not-null value. */
     private double amount;
-    private String name;
+    private String name,amountMtd,amountYtd;
     private long depositsRowId;
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -39,6 +39,16 @@ public class TablePersonDeposits {
         this.id=id;
         this.amount=amount;
         this.name=name;
+        this.depositsRowId=depositsRowId;
+    }
+
+    public TablePersonDeposits(Long id,Double amount,String name,String amountMtd,String amountYtd,long depositsRowId)
+    {
+        this.id=id;
+        this.amount=amount;
+        this.name=name;
+        this.amountMtd=amountMtd;
+        this.amountYtd=amountYtd;
         this.depositsRowId=depositsRowId;
     }
 
@@ -75,6 +85,21 @@ public class TablePersonDeposits {
         this.depositsRowId = depositsRowId;
     }
 
+    public String getAmountMtd() {
+        return amountMtd;
+    }
+
+    public void setAmountMtd(String amountMtd) {
+        this.amountMtd = amountMtd;
+    }
+
+    public String getAmountYtd() {
+        return amountYtd;
+    }
+
+    public void setAmountYtd(String amountYtd) {
+        this.amountYtd = amountYtd;
+    }
 
     public TablePersonalWithHolding getTablePersonalWithHolding() {
 

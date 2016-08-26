@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:id="@+id/relativelayout"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:background="@color/mbo_color_white"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+
+            android:text="This Period"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:id="@+id/textview_thisPeriod"
+            android:textColor="@color/mbo_theme_blue_primary"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchbutton"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/textview_thisPeriod"
+            android:layout_marginLeft="16dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:id="@+id/textview_year"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/switchbutton"
+            android:text="Year to Date"
+            android:textSize="16sp"
+            android:textColor="@color/primary_dark_material_dark"
+            android:layout_marginLeft="16dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative"
+        android:layout_marginLeft="16dp"
+        android:text="@string/mbo_personalwithholding_payroll_deductions_card_text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:textSize="14sp"
+        android:id="@+id/headingNote"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_marginTop="14dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headingNote"
+        android:layout_marginLeft="16dp"
+        android:text="Total"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:id="@+id/textview1"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XXXXXX.XX"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:id="@+id/textview1_value"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_alignTop="@+id/textview1"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentEnd="true" />
+
+    <!--<android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/headingNote"
+        >
+        &lt;!&ndash;android:layout_marginTop="20dp"&ndash;&gt;
+        &lt;!&ndash;android:layout_marginRight="16dp"
+        android:layout_marginLeft="26dp"&ndash;&gt;
+    </android.support.v7.widget.RecyclerView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/textview1_value"
+        android:id="@+id/parentView">
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/parentView"
+        android:layout_marginLeft="16dp"
+        android:text="Other*"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:id="@+id/textview2"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XX.XX"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:id="@+id/textview2_value"
+        android:textColor="@color/primary_dark_material_dark"
+        android:layout_alignTop="@+id/textview2"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentEnd="true" />
+
+    <!--<android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/headingNote"
+        >
+        &lt;!&ndash;android:layout_marginTop="20dp"&ndash;&gt;
+        &lt;!&ndash;android:layout_marginRight="16dp"
+        android:layout_marginLeft="26dp"&ndash;&gt;
+    </android.support.v7.widget.RecyclerView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/textview2_value"
+        android:id="@+id/parentView2">
+
+    </LinearLayout>
+</RelativeLayout>

@@ -251,6 +251,8 @@ public class Converter {
                 null,
                 personDeposits.getAmount(),personDeposits.getName(),
                 depositsRowId);
+
+
         return tablePersonDeposits;
     }
 
@@ -552,6 +554,7 @@ public class Converter {
         PersonDeposits personDeposits = null;
         if (table != null) {
             personDeposits = new PersonDeposits(table.getAmount(), table.getName());
+
             return personDeposits;
         }else
             return personDeposits;

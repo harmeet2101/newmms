@@ -14,6 +14,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -83,7 +84,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             }
             case ITEM_VIEW_TYPE__DEDUCTIONS : {
                 View itemView = LayoutInflater.from(parent.getContext()).
-                        inflate(R.layout.layout_businessholdings_list_items_test, parent, false);
+                        inflate(R.layout.layout_personwithholdings_deductions_card_view, parent, false);
                 viewHolder = new NextPayrollViewHolder(itemView);
                 break;
             }
@@ -199,21 +200,39 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(DEDUCTIONS));
         viewHolder.company_name_TextView.setText(DEDUCTIONS);
+        for(int i=0;i<personWithHoldingList.get(this.position).getPayrollTaxes().size();i++){
+            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            viewHolder.myView = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+            viewHolder.name=(TextView)viewHolder.myView.findViewById(R.id.textview_name);
+            viewHolder.value=(TextView)viewHolder.myView.findViewById(R.id.textview_value);
+            viewHolder.name.setText(personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getName());
+            viewHolder.value.setText("$" + String.format("%.2f", personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getAmount()));
+            viewHolder.linearLayout.addView(viewHolder.myView);
+        }
+        for(int i=0;i<personWithHoldingList.get(this.position).getAfterTaxDeductions().size();i++){
+            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            viewHolder.myView2 = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+            viewHolder.name2=(TextView)viewHolder.myView2.findViewById(R.id.textview_name);
+            viewHolder.value2=(TextView)viewHolder.myView2.findViewById(R.id.textview_value);
+            viewHolder.name2.setText(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getName());
+            viewHolder.value2.setText("$" + String.format("%.2f", personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getAmount()));
+            viewHolder.linearLayout2.addView(viewHolder.myView2);
+        }
         viewHolder.textview1.setText("Statutory");
         if(isDeductions_ytd_checked) {
             viewHolder.work_order_name_TextView.setText("$" +
                     String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                             getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
             viewHolder.periodTextview.setText("Year to Date");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
-                    getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview1_value.setText("$" + String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
         }else
         {
             viewHolder.work_order_name_TextView.setText("$" +String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                     getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
             viewHolder.periodTextview.setText("This Period");
-            viewHolder.textview1_value.setText("$" +String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
-                    getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview1_value.setText("$" +String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
         }
     }
 
@@ -372,11 +391,13 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public int minHeight;
         public TextView headingTextview;
         public TextView textview1;
-        public TextView textview1_value;
+        public TextView textview1_value,textview2_value;
         public RecyclerView recyclerView;
-        public TextView thisPeriodTextview;
+        public TextView thisPeriodTextview,name,value,name2,value2;
         public TextView ytdTextview;
         public Switch aSwitch;
+        public LinearLayout linearLayout,linearLayout2;
+        public View myView,myView2;
 
         public NextPayrollViewHolder(View itemView) {
             super(itemView);
@@ -388,15 +409,29 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.includeView=itemView.findViewById(R.id.includeview);
             this.textview1=(TextView)itemView.findViewById(R.id.textview1);
             this.textview1_value=(TextView)itemView.findViewById(R.id.textview1_value);
+            this.textview2_value=(TextView)itemView.findViewById(R.id.textview2_value);
+            linearLayout = (LinearLayout)itemView.findViewById(R.id.parentView);
+            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            myView = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+            linearLayout.addView(myView);
+            name=(TextView)myView.findViewById(R.id.textview_name);
+            value=(TextView)myView.findViewById(R.id.textview_value);
+            linearLayout2 = (LinearLayout)itemView.findViewById(R.id.parentView2);
+            LayoutInflater inflater2 =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            myView2 = inflater2.inflate(R.layout.layout_holding_recyclerview, null);
+            linearLayout2.addView(myView2);
+            name2=(TextView)myView2.findViewById(R.id.textview_name);
+            value2=(TextView)myView2.findViewById(R.id.textview_value);
             this.headingTextview=(TextView)itemView.findViewById(R.id.headingNote);
             this.headingTextview.setVisibility(View.VISIBLE);
             this.itemView.setOnClickListener(this);
-            this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
+            /*this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
             final PersonalDeductionsRecyclerViewAdapter madapter=new PersonalDeductionsRecyclerViewAdapter
                     (context,personWithHoldingList.get(position).getAfterTaxDeductions(),personWithHoldingList.get(position).getPayrollTaxes());
+
             this.recyclerView.setAdapter(madapter);
             this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            this.recyclerView.setScrollContainer(true);
+            this.recyclerView.setScrollContainer(true);*/
             this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
             this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
             this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
@@ -416,10 +451,30 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                                         getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                                                 getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
                         periodTextview.setText("Year to Date");*/
-                        textview1_value.setText("$" +String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
-                                                getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+                        textview1_value.setText("$" +String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
+                        textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
 
-                        madapter.updateDataSource(isDeductions_ytd_checked);
+                        //madapter.updateDataSource(isDeductions_ytd_checked);
+                        linearLayout.removeAllViews();
+                        for(int i=0;i<personWithHoldingList.get(0).getPayrollTaxes().size();i++){
+                            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            myView = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+                            name=(TextView)myView.findViewById(R.id.textview_name);
+                            value=(TextView)myView.findViewById(R.id.textview_value);
+                            name.setText(personWithHoldingList.get(0).getPayrollTaxes().get(i).getName());
+                            value.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmountYtd()));
+                            linearLayout.addView(myView);
+                        }
+                        linearLayout2.removeAllViews();
+                        for(int i=0;i<personWithHoldingList.get(0).getAfterTaxDeductions().size();i++){
+                            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            myView2 = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+                            name2=(TextView)myView2.findViewById(R.id.textview_name);
+                            value2=(TextView)myView2.findViewById(R.id.textview_value);
+                            name2.setText(personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getName());
+                            value2.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmountYtd()));
+                            linearLayout2.addView(myView2);
+                        }
 
                     } else {
 
@@ -431,10 +486,34 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                                         getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                                                 getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
                         periodTextview.setText("This Period");*/
-                        textview1_value.setText("$" +
+                        /*textview1_value.setText("$" +
                                 String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
-                                                getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
-                        madapter.updateDataSource(isDeductions_ytd_checked);
+                                                getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));*/
+                        //madapter.updateDataSource(isDeductions_ytd_checked);
+
+                        textview1_value.setText("$" +String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
+                        textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+
+                        linearLayout.removeAllViews();
+                        for(int i=0;i<personWithHoldingList.get(0).getPayrollTaxes().size();i++){
+                            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            myView = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+                            name=(TextView)myView.findViewById(R.id.textview_name);
+                            value=(TextView)myView.findViewById(R.id.textview_value);
+                            name.setText(personWithHoldingList.get(0).getPayrollTaxes().get(i).getName());
+                            value.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmount()));
+                            linearLayout.addView(myView);
+                        }
+                        linearLayout2.removeAllViews();
+                        for(int i=0;i<personWithHoldingList.get(0).getAfterTaxDeductions().size();i++){
+                            LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            myView2 = inflater.inflate(R.layout.layout_holding_recyclerview, null);
+                            name2=(TextView)myView2.findViewById(R.id.textview_name);
+                            value2=(TextView)myView2.findViewById(R.id.textview_value);
+                            name2.setText(personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getName());
+                            value2.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmount()));
+                            linearLayout2.addView(myView2);
+                        }
                     }
                 }
             });
@@ -636,7 +715,7 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
         try {
             if (personWithHoldingList != null) {
-                for (int i = 0; i < personWithHoldingList.get(this.position).getAfterTaxDeductions().size(); i++) {
+                for (int i = 0; i < personWithHoldingList.get(this.position).getAfterTaxDeductions().size()-1; i++) {
                     if(isChecked)
                     total_expense = total_expense + personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getAmountYtd();
                     else

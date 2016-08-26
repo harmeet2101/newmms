@@ -13,7 +13,7 @@
         android:textSize="14sp"
         android:layout_marginRight="130dp"
         android:maxLines="1"
-        android:text="After Tax Deducations"
+
         android:singleLine="true"
         android:layout_marginBottom="10dp"
         android:id="@+id/textview_name"
@@ -23,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="$XXX.XX"
         android:layout_marginBottom="10dp"
         android:maxLines="1"
         android:singleLine="true"
         android:id="@+id/textview_value"
         android:textColor="@color/primary_dark_material_dark"
         />
+
 </LinearLayout>

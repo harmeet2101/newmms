@@ -90,6 +90,7 @@ public class TablePersonDepositsDao extends AbstractDao<TablePersonDeposits, Lon
                 cursor.getDouble(offset + 1), // amount
                 cursor.getString(offset + 2),// name
                 cursor.getLong(offset + 3)
+
         );
         return entity;
     }
