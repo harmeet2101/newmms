@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<PayrollField> payrollFields;
 
     private List<PayrollSummary> payrollSummaryList;
+    private List<PayrollTransactions> payrollTransactionsList;
     private IPreviousCallbackListener iPreviousCallbackListener;
     private String card_1_amount,card_2_amount,card_3_amount;
 
@@ -44,6 +46,14 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.context=context;
         this.payrollSummaryList=payrollSummaryList;
         this.iPreviousCallbackListener=(IPreviousCallbackListener)context;
+    }
+
+    public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList,List<PayrollTransactions> payrollTransactionsList) {
+
+        this.context=context;
+        this.payrollSummaryList=payrollSummaryList;
+        this.iPreviousCallbackListener=(IPreviousCallbackListener)context;
+        this.payrollTransactionsList=payrollTransactionsList;
     }
 
     @Override
@@ -105,11 +115,23 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (payrollSummaryList == null) {}
+        /*if (payrollSummaryList == null) {}
         else if (payrollSummaryList.isEmpty()) {}
         else  if(position==0)
             bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
        else if(position==1)
+            bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
+        else if(position==2)
+            bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
+        else if(position==3)
+        {
+
+        }*/
+        if (payrollTransactionsList == null) {}
+        else if (payrollTransactionsList.isEmpty()) {}
+        else  if(position==0)
+            bindViewHolder_BusinessCenter((BusinessCenterViewHolder)viewHolder,position);
+        else if(position==1)
             bindViewHolder_Next_Payroll((NextPayrollViewHolder) viewHolder, position);
         else if(position==2)
             bindViewHolder_Last_Payroll((LastPayrollViewHolder)viewHolder,position);
@@ -122,9 +144,18 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         int count = 0;
-        if (payrollSummaryList == null) {
+        /*if (payrollSummaryList == null) {
             count = 1;
         } else if (payrollSummaryList.isEmpty()) {
+            count = 1;
+        } else
+            count = 4;
+
+        return count;*/
+
+        if (payrollTransactionsList == null) {
+            count = 1;
+        } else if (payrollTransactionsList.isEmpty()) {
             count = 1;
         } else
             count = 4;
@@ -132,17 +163,33 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return count;
     }
 
-    public void updateDataSource(List<PayrollSummary> fields) {
+    public void updateDataSource(List<PayrollSummary> fields,List<PayrollTransactions> transactions) {
         this.payrollSummaryList = fields;
+        this.payrollTransactionsList=transactions;
         notifyDataSetChanged();
     }
     @Override
     public int getItemViewType(int position) {
         int itemViewType = -1;
-        if (payrollSummaryList == null) {
+        /*if (payrollSummaryList == null) {
            return itemViewType = ITEM_VIEW_TYPE__LOADING;
         } else if (payrollSummaryList.isEmpty()) {
            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
+        }else if(position==0)
+            return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
+
+
+        else if(position==1)
+            return itemViewType=ITEM_VIEW_TYPE__NEXT_PAYROLL;
+        else if(position==2)
+            return itemViewType=ITEM_VIEW_TYPE__LAST_PAYROLL;
+        else if(position==3){
+            return itemViewType=ITEM_VIEW_TYPE__NEED_FUNDS;
+        }*/
+        if (payrollTransactionsList == null) {
+            return itemViewType = ITEM_VIEW_TYPE__LOADING;
+        } else if (payrollTransactionsList.isEmpty()) {
+            itemViewType = ITEM_VIEW_TYPE__EMPTY_LIST;
         }else if(position==0)
             return itemViewType=ITEM_VIEW_TYPE__BUSINESS_CENTER;
 
@@ -226,12 +273,20 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_LAST_PAYMENT));
         viewHolder.company_name_TextView.setText(PAYROLL_LAST_PAYMENT);
         viewHolder.includeView.setVisibility(View.GONE);
-        if(payrollSummaryList.get(0).getLast_payroll()!=null&&
+        /*if(payrollSummaryList.get(0).getLast_payroll()!=null&&
                 payrollSummaryList.get(0).getLast_payroll().getBusinessWithholding() != null) {
             card_3_amount=getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollSummaryList.get(0).getLast_payroll().
                     getBusinessWithholding().getPayrollAmount().getAmount()));
 
                 viewHolder.work_order_name_TextView.setText("$" +card_3_amount);
+        }else
+            viewHolder.work_order_name_TextView.setText("N/A");*/
+
+        if(payrollTransactionsList!=null&& payrollTransactionsList.get(0)!=null &&
+                payrollTransactionsList.get(0).getBusinessWithholding() != null) {
+            card_3_amount=getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollTransactionsList.get(0).getBusinessWithholding().getPayrollAmount().getAmount()));
+
+            viewHolder.work_order_name_TextView.setText("$" +card_3_amount);
         }else
             viewHolder.work_order_name_TextView.setText("N/A");
     }

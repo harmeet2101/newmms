@@ -17,10 +17,7 @@ public class PersonDeposits implements Serializable, Validatable {
     private Double amount;
     @SerializedName("name")
     private String name;
-    @SerializedName("amountYtd")
-    private String amountYtd;
-    @SerializedName("amountMtd")
-    private String amountMtd;
+
 
     @Override
     public boolean isValid() {
@@ -45,12 +42,6 @@ public class PersonDeposits implements Serializable, Validatable {
         this.amount=amount;
         this.name=name;
     }
-    public PersonDeposits(Double amount,String name,String amountMtd,String amountYtd){
-        this.amount=amount;
-        this.name=name;
-        this.amountMtd=amountMtd;
-        this.amountYtd=amountYtd;
-    }
 
     public double getAmount() {
         return amount;
@@ -69,20 +60,5 @@ public class PersonDeposits implements Serializable, Validatable {
         this.name = name;
     }
 
-    public String getAmountYtd() {
-        return amountYtd;
-    }
-
-    public void setAmountYtd(String amountYtd) {
-        this.amountYtd = amountYtd;
-    }
-
-    public String getAmountMtd() {
-        return amountMtd;
-    }
-
-    public void setAmountMtd(String amountMtd) {
-        this.amountMtd = amountMtd;
-    }
 }
 

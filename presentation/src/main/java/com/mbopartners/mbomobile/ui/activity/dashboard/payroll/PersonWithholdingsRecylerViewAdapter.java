@@ -265,7 +265,6 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         public CardView cardView;
         public View includeView;
         public int minHeight;
-        public RecyclerView recyclerView;
         public TextView textview1;
         public TextView textview1_value;
         public TextView textview2;
@@ -287,13 +286,6 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             this.includeView=itemView.findViewById(R.id.includeview);
             this.ytdTextview=(TextView)itemView.findViewById(R.id.textview_year);
             this.thisPeriodTextview=(TextView)itemView.findViewById(R.id.textview_thisPeriod);
-            this.recyclerView=(RecyclerView)itemView.findViewById(R.id.recyclerView);
-
-            final PersonEarningsRecylerViewAdapter madapter=new PersonEarningsRecylerViewAdapter
-                    (context,personWithHoldingList.get(position).getDeposits());
-            this.recyclerView.setAdapter(madapter);
-            this.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            this.recyclerView.setScrollContainer(true);
             this.aSwitch=(Switch)itemView.findViewById(R.id.switchbutton);
             this.aSwitch.setChecked(false);
             this.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

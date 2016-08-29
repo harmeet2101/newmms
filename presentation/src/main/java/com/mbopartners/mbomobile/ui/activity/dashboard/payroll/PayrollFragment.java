@@ -13,11 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollField;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.R;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -78,7 +77,8 @@ public class PayrollFragment extends Fragment {
         payrollRecyclerView = (RecyclerView) fragmentRootView.findViewById(R.id.recyclerView);
         payrollRecyclerView.setHasFixedSize(true);
         payrollRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new PayrollRecyclerViewAdapter(getActivity(),mListener.getPayrollSummaryData());
+     //   adapter = new PayrollRecyclerViewAdapter(getActivity(),mListener.getPayrollSummaryData());
+        adapter=new PayrollRecyclerViewAdapter(getActivity(),mListener.getPayrollSummaryData(),mListener.getPayrollTransactionData());
         payrollRecyclerView.setAdapter(adapter);
         return fragmentRootView;
     }
@@ -96,12 +96,14 @@ public class PayrollFragment extends Fragment {
             return;
         }
         List<PayrollSummary> fields = mListener.getPayrollSummaryData();
-        adapter.updateDataSource(fields);
+        List<PayrollTransactions> transactions=mListener.getPayrollTransactionData();
+        adapter.updateDataSource(fields,transactions);
     }
 
     public interface PayrollFragmentInteractionListener {
         List<BusinessCenter> getBusinessCenterData();
         List<PayrollSummary> getPayrollSummaryData();
+        List<PayrollTransactions> getPayrollTransactionData();
         void onRefreshData();
     }
     private class InteractionListenerWrapper implements PayrollFragmentInteractionListener {
@@ -124,6 +126,14 @@ public class PayrollFragment extends Fragment {
         public List<PayrollSummary> getPayrollSummaryData() {
             if (realListener != null) {
                 return realListener.getPayrollSummaryData();
+            } else {
+                return Collections.EMPTY_LIST;
+            }
+        }
+
+        public List<PayrollTransactions> getPayrollTransactionData(){
+            if (realListener != null) {
+                return realListener.getPayrollTransactionData();
             } else {
                 return Collections.EMPTY_LIST;
             }
