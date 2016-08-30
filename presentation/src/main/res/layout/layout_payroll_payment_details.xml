@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/mbo_AppBar_grey"
+        app:popupTheme="@style/mbo_AppBar_PopupMenu_grey"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        />
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment"
+        android:name="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.paymentDetails.PaymentDetailsFragment"
+        tools:layout="@layout/fragment_payroll_previous_payments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/includeView"/>
+    <View
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/bar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mbo_shadow_height"/>
+
+    <include layout="@layout/layout_payroll_payment_details_bottom_bar"
+        android:layout_width="match_parent"
+        android:id="@+id/includeView"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"></include>
+</RelativeLayout>

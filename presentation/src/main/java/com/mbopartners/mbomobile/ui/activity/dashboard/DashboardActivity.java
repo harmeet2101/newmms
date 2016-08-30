@@ -78,7 +78,7 @@ public class DashboardActivity extends AutoLockActivity
         RevenuePageFragment.RevenueFragmentInteractionListener,
         TimePageFragment.TimeFragmentInteractionListener,
         ExpensePageFragment.ExpensesInteractionListener,
-        SmartSectionedRecyclerViewAdapter.IAddTimeCallbackListener,
+        SmartSectionedRecyclerViewAdapter.IAddTimeCallbackListener,PayrollRecyclerViewAdapter.IPaymentDetailsListener,
         ExpenseRecyclerViewAdapter.IExpenseCallbackListener,PayrollFragment.PayrollFragmentInteractionListener,PayrollRecyclerViewAdapter.IPreviousCallbackListener {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
@@ -908,6 +908,18 @@ public class DashboardActivity extends AutoLockActivity
 
     }
 
+    @Override
+    public void callPaymentDetails() {
+
+        if(dataModel.getPayrollSummaryList()!=null){
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("summaryList", (Serializable) dataModel.getPayrollSummaryList());
+            Intent intent=ActivityIntentHelper.Payroll_PaymentDetails_ActivityBuilder.getActivity(DashboardActivity.this);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
+
 
     // ================================================================================
 
@@ -1319,7 +1331,7 @@ public class DashboardActivity extends AutoLockActivity
 
     public boolean onKeyDown(int keyCode,KeyEvent keyEvent)
     {
-        super.onKeyDown(keyCode,keyEvent);
+        super.onKeyDown(keyCode, keyEvent);
 
             if(fabMenu!=null){
                 if (fabMenu.isExpanded()) {
@@ -1350,4 +1362,6 @@ public class DashboardActivity extends AutoLockActivity
     public List<PayrollTransactions> getPayrollTransactionData(){
         return dataModel.getPayrollTransactionsList();
     }
+
+
 }

@@ -67,6 +67,7 @@ public class RestApiContract {
         private static final String BUSINESS_CENTER_LIST="business-centers-dev/v1/business-centers/";
         private static final String PAYROLL_SUMMARY_LIST="business-centers-dev/v1/summary";
         private static final String PAYROLL_TRANSACTION_LIST="payroll-dev/v1/transactions";
+        private static final String PAYROLL_PAYMENT_DETAILS="payroll-dev/api/v1/previews";
     }
 
     public static class Key {

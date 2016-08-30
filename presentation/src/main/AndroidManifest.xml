@@ -171,6 +171,18 @@
                 android:value="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity" />
         </activity>
 
+        <activity android:name=".activity.dashboard.payroll.paymentDetails.PaymentDetailsActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_payroll_payment_details"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.dashboard.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/mbo_AppTheme_grey"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity" />
+        </activity>
         <activity android:name=".activity.dashboard.payroll.PayrollWithHoldings"
             android:configChanges="orientation"
             android:label="@string/title_activity_payroll_previous_payments_holdings"

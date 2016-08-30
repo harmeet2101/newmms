@@ -11,6 +11,7 @@ import com.mbopartners.mbomobile.ui.activity.choose_workorder.ChooseWorkOrderAct
 import com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollWithHoldings;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentsActivity;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.paymentDetails.PaymentDetailsActivity;
 import com.mbopartners.mbomobile.ui.activity.joinus.JoinUsActivity;
 import com.mbopartners.mbomobile.ui.activity.logexpense.LogExpenseActivity;
 import com.mbopartners.mbomobile.ui.activity.login.LoginActivity;
@@ -432,6 +433,14 @@ public class ActivityIntentHelper {
 
         public static Intent getActivity(Context context) {
             Intent intent = getNewStandardIntent(context, PreviousPaymentsActivity.class);
+            return intent;
+        }
+    }
+
+
+    public static class Payroll_PaymentDetails_ActivityBuilder{
+        public static Intent getActivity(Context context) {
+            Intent intent = getNewStandardIntent(context, PaymentDetailsActivity.class);
             return intent;
         }
     }

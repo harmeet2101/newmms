@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/bottonbarsumitlayout"
+    android:layout_height="wrap_content"
+    android:background="@color/mbo_theme_blue_primary">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingStart="30dp"
+        android:paddingRight="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/deletetext"
+        android:textColor="@color/mbo_simple_white_color"
+        android:text="DELETE"
+        android:onClick="deletePayment"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/donetext" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingStart="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/donetext"
+        android:textColor="@color/mbo_simple_white_color"
+        android:text="DONE"
+        android:onClick="confirmPayment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
+

@@ -32,6 +32,7 @@
     <string name="title_activity_choose_expense_type">Expense</string>
     <string name="title_activity_log_expense">Expense Type</string>
     <string name="title_activity_payroll_previous_payments">Previous Payments</string>
+    <string name="title_activity_payroll_payment_details">Payroll</string>
     <string name="title_activity_payroll_previous_payments_holdings">Withholdings</string>
 
 
@@ -60,6 +61,7 @@
     <string name="mbo_dashboard_expenses_text">Recent Expenses</string>
     <string name="mbo_PIN_screen_action_logout">LOGOUT</string>
     <string name="mbo_dashboard_payroll_text">Payroll</string>
+    <string name="mbo_dashboard_payroll_payment_details_text">Payment details</string>
     <string name="mbo_businesswithholding_payroll_text">Estimates Business Withholdings</string>
     <string name="mbo_personalwithholding_payroll_text">Estimates Earnings Statement</string>
     <string name="mbo_personalwithholding_payroll_deductions_card_text">*Exclude from federal taxable wages</string>
@@ -91,7 +93,9 @@
     <string name="mbo_Submit_TimeSheet_dialog_Button_NO">Cancel</string>
 
     <string name="mbo_Discard_changes_dialog_title">Discard changes</string>
+    <string name="mbo_payroll_delete_payment_text">Delete Payroll</string>
     <string name="mbo_Discard_changes_dialog_message">Do you want to discard your unsaved changes?</string>
+    <string name="mbo_payroll_delete_payment_alert_msg">Are you sure you want to delete your schedule payrolls. You will not be able to undo this action</string>
     <string name="mbo_Discard_changes_dialog_Button_OK">Yes</string>
     <string name="mbo_Discard_changes_dialog_Button_NO">No</string>
 

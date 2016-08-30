@@ -38,6 +38,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private List<PayrollSummary> payrollSummaryList;
     private List<PayrollTransactions> payrollTransactionsList;
     private IPreviousCallbackListener iPreviousCallbackListener;
+    private IPaymentDetailsListener iPaymentDetailsListener;
     private String card_1_amount,card_2_amount,card_3_amount;
 
 
@@ -46,6 +47,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.context=context;
         this.payrollSummaryList=payrollSummaryList;
         this.iPreviousCallbackListener=(IPreviousCallbackListener)context;
+        this.iPaymentDetailsListener=(IPaymentDetailsListener)context;
     }
 
     public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList,List<PayrollTransactions> payrollTransactionsList) {
@@ -54,6 +56,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.payrollSummaryList=payrollSummaryList;
         this.iPreviousCallbackListener=(IPreviousCallbackListener)context;
         this.payrollTransactionsList=payrollTransactionsList;
+        this.iPaymentDetailsListener=(IPaymentDetailsListener)context;
     }
 
     @Override
@@ -315,7 +318,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
 
-    public class NextPayrollViewHolder extends RecyclerView.ViewHolder {
+    public class NextPayrollViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView payrollImageView;
         public TextView company_name_TextView;
@@ -330,7 +333,13 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.work_order_name_TextView = (TextView) itemView.findViewById(R.id.work_order_name_TextView);
             this.periodTextview=(TextView)itemView.findViewById(R.id.mbo_timesheet_time_period_TextView);
             this.includeView=itemView.findViewById(R.id.includeview);
+            this.itemView.setOnClickListener(this);
         }
+        @Override
+        public void onClick(View v) {
+            iPaymentDetailsListener.callPaymentDetails();
+        }
+
 
     }
 
@@ -362,6 +371,11 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public interface IPreviousCallbackListener{
         void callbackPrevious();
+    }
+
+
+    public interface IPaymentDetailsListener{
+        void callPaymentDetails();
     }
     public String getAmount_uptoTwoDecimalPlaces(String amount)
     {
