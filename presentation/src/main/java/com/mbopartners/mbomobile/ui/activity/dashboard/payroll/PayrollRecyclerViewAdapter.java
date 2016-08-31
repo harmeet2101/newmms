@@ -12,7 +12,9 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollFie
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
+import java.text.DateFormat;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private IPreviousCallbackListener iPreviousCallbackListener;
     private IPaymentDetailsListener iPaymentDetailsListener;
     private String card_1_amount,card_2_amount,card_3_amount;
+    private DateFormat  dateFormat;
 
 
     public PayrollRecyclerViewAdapter(Context context,List<PayrollSummary> payrollSummaryList) {
@@ -237,9 +240,11 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(PAYROLL_BUSINESS_ACCOUNT));
         viewHolder.company_name_TextView.setText(PAYROLL_BUSINESS_ACCOUNT);
-        if(payrollSummaryList!=null && payrollSummaryList.get(0).getBalance()!=null)
-        card_1_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getBalance().toString());
-
+        if(payrollSummaryList!=null && payrollSummaryList.get(0).getBalance()!=null) {
+            String temp = String.format("%.2f", payrollSummaryList.get(0).getBalance());
+        /*card_1_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getBalance().toString());*/
+            card_1_amount = NumberFormatUtils.getAmountWithCommas(temp);
+        }
         if(card_1_amount!=null)
         viewHolder.work_order_name_TextView.setText("$" + card_1_amount);
         else
@@ -256,7 +261,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     payrollSummaryList.get(0).getNext_payroll().getAmount()!=null||
                     payrollSummaryList.get(0).getNext_payroll().getAmount()!=0)
             {
-                card_2_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getNext_payroll().getAmount().toString());
+                //card_2_amount=getAmount_uptoTwoDecimalPlaces(payrollSummaryList.get(0).getNext_payroll().getAmount().toString());
+                String temp=String.format("%.2f",payrollSummaryList.get(0).getNext_payroll().getAmount());
+                card_2_amount=NumberFormatUtils.getAmountWithCommas(temp); ;
             viewHolder.work_order_name_TextView.setText("$" + card_2_amount);
             viewHolder.includeView.setVisibility(View.GONE);
             }else {
@@ -287,8 +294,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         if(payrollTransactionsList!=null&& payrollTransactionsList.get(0)!=null &&
                 payrollTransactionsList.get(0).getBusinessWithholding() != null) {
-            card_3_amount=getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollTransactionsList.get(0).getBusinessWithholding().getPayrollAmount().getAmount()));
-
+            String temp=String.format("%.2f",payrollTransactionsList.get(0).getBusinessWithholding().getPayrollAmount().getAmount());
+            //card_3_amount=getAmount_uptoTwoDecimalPlaces(String.valueOf(payrollTransactionsList.get(0).getBusinessWithholding().getPayrollAmount().getAmount()));
+            card_3_amount=NumberFormatUtils.getAmountWithCommas(temp);
             viewHolder.work_order_name_TextView.setText("$" +card_3_amount);
         }else
             viewHolder.work_order_name_TextView.setText("N/A");

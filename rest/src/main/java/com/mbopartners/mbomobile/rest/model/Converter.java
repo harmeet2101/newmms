@@ -1,5 +1,7 @@
 package com.mbopartners.mbomobile.rest.model;
 
+import android.util.Log;
+
 import com.mbopartners.mbomobile.data.db.generated.model.TableBusinessManager;
 import com.mbopartners.mbomobile.data.db.generated.model.TableCompany;
 import com.mbopartners.mbomobile.data.db.generated.model.TableDashboard;
@@ -132,7 +134,7 @@ public class Converter {
     }
 
     public static TableNextPayment toTable_payroll_nexPayment(long nextPaymentRowId,NextPayment nextPayment) {
-        TableNextPayment tableNextPayment = new TableNextPayment(
+        /*TableNextPayment tableNextPayment = new TableNextPayment(
                 null,
                 nextPayment.getAmount(),
                 nextPayment.getBusinessCenterId(),
@@ -142,6 +144,18 @@ public class Converter {
                 nextPayment.getFrequency(),
                 nextPayment.getId(),
                 nextPayment.getMboId(),nextPaymentRowId);
+        Log.d("tableNextPayment",tableNextPayment.toString());
+        return tableNextPayment;*/
+
+        TableNextPayment tableNextPayment = new TableNextPayment(
+                null,
+                nextPayment.getAmount(),
+                nextPayment.getCalculationMethod(),
+                nextPayment.getStartDate(),
+                nextPayment.getFrequency(),
+                nextPayment.getId(),
+                nextPayment.getMboId(),nextPaymentRowId);
+        Log.d("tableNextPayment",tableNextPayment.toString());
         return tableNextPayment;
     }
     public static TablePreviousPayment toTable_payroll_prevPayment(long previousPaymentRowId,PreviousPayment previousPayment) {
@@ -151,6 +165,7 @@ public class Converter {
                 previousPayment.getdate(),
                 previousPayment.getId(),
                 previousPayment.getMboId(),previousPaymentRowId);
+        Log.d("tablePreviousPayment",tablePreviousPayment.toString());
         return tablePreviousPayment;
     }
 
@@ -441,7 +456,7 @@ public class Converter {
     public static NextPayment toWeb_nextPayment(TableNextPayment table) {
         NextPayment nextPayment=null;
         if(table!=null) {
-            nextPayment = new NextPayment(table.getAmount(), table.getBusinessCenterId(), table.getCalculationMethod(), table.getEndDate(), table.getStartDate(),
+            nextPayment = new NextPayment(table.getAmount(),/* table.getBusinessCenterId(), */table.getCalculationMethod()/*, table.getEndDate()*/, table.getStartDate(),
                     table.getFrequency(), table.getNextPaymentId(), table.getMboId());
             return nextPayment;
         }else

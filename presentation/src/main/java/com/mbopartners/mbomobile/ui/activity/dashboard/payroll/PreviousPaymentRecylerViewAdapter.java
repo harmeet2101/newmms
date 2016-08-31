@@ -2,19 +2,17 @@ package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonDeposits;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
-import com.mbopartners.mbomobile.ui.util.TwoDecimalPlacesUtil;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +121,9 @@ public class PreviousPaymentRecylerViewAdapter extends RecyclerView.Adapter<Recy
 
 
         viewHolder.paymentNameTextview.setText(depositsList.get(position).getName());
-        viewHolder.paymentAmountTextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
+        String temp=String.format("%.2f",depositsList.get(position).getAmount());
+        viewHolder.paymentAmountTextView.setText("$"+NumberFormatUtils.getAmountWithCommas(temp));
+        //viewHolder.paymentAmountTextView.setText("$" + TwoDecimalPlacesUtil.getAmount_uptoTwoDecimalPlaces(String.valueOf(depositsList.get(position).getAmount())));
                 /*Adding date*/
         viewHolder.paymentDateTextView.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(position).getDate()));
 

@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableNextPayment;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 
@@ -36,7 +35,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        /*public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property amount = new Property(1, Double.class, "amount", false, "amount");
         public final static Property BusinessCenterId = new Property(2, String.class, "businessCenterId", false, "businessCenterId");
         public final static Property calculationMethod = new Property(3, String.class, "calculationMethod", false, "calculationMethod");
@@ -45,7 +44,16 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         public final static Property frequency = new Property(6, String.class, "frequency", false, "frequency");
         public final static Property nextPaymentId = new Property(7, String.class, "nextPaymentId", false, "nextPaymentId");
         public final static Property mboId = new Property(8, String.class, "mboId", false, "mboId");
-        public final static Property nextPaymentRowId = new Property(9, long.class, "nextPaymentRowId", false, "nextPaymentRowId");
+        public final static Property nextPaymentRowId = new Property(9, long.class, "nextPaymentRowId", false, "nextPaymentRowId");*/
+
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property amount = new Property(1, Double.class, "amount", false, "amount");
+        public final static Property calculationMethod = new Property(2, String.class, "calculationMethod", false, "calculationMethod");
+        public final static Property startDate = new Property(3, Date.class, "startDate", false, "startDate");
+        public final static Property frequency = new Property(4, String.class, "frequency", false, "frequency");
+        public final static Property nextPaymentId = new Property(5, String.class, "nextPaymentId", false, "nextPaymentId");
+        public final static Property mboId = new Property(6, String.class, "mboId", false, "mboId");
+        public final static Property nextPaymentRowId = new Property(7, long.class, "nextPaymentRowId", false, "nextPaymentRowId");
     };
 
     public TableNextPaymentDao(DaoConfig config) {
@@ -60,17 +68,27 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
+        /*db.execSQL("CREATE TABLE " + constraint + "\"TABLE_NEXT_PAYMENT\" (" + //
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," +     // 0: id
+                "\"amount\" REAL," +                     // 1: amount
+                "\"businessCenterId\" TEXT," + // 2: businessCenterId
+                "\"calculationMethod\" TEXT," + // 3: calculationMethod
+                "\"endDate\" INTEGER," +          // 4.endDate
+                "\"startDate\" INTEGER," +        //5.startDate
+                "\"frequency\" TEXT," +           // 6.frequency
+                "\"nextPaymentId\" TEXT NOT NULL," +       //   7.nextPaymentId
+                "\"mboId\" TEXT," +           // 8: mboId
+                "\"nextPaymentRowId\" INTEGER TEXT NOT NULL);");*/
+
         db.execSQL("CREATE TABLE " + constraint + "\"TABLE_NEXT_PAYMENT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," +     // 0: id
-                "\"amount\" REAL NOT NULL," +                     // 1: amount
-                "\"businessCenterId\" TEXT NOT NULL ," + // 2: businessCenterId
-                "\"calculationMethod\" TEXT NOT NULL ," + // 3: calculationMethod
-                "\"endDate\" INTEGER NOT NULL," +          // 4.endDate
-                "\"startDate\" INTEGER NOT NULL," +        //5.startDate
-                "\"frequency\" TEXT NOT NULL," +           // 6.frequency
+                "\"amount\" REAL," +                     // 1: amount// 2: businessCenterId
+                "\"calculationMethod\" TEXT," + // 3: calculationMethod// 4.endDate
+                "\"startDate\" INTEGER," +        //5.startDate
+                "\"frequency\" TEXT," +           // 6.frequency
                 "\"nextPaymentId\" TEXT NOT NULL," +       //   7.nextPaymentId
-                "\"mboId\" TEXT NOT NULL," +           // 8: mboId
-                "\"nextPaymentRowId\" INTEGER NOT NULL );");
+                "\"mboId\" TEXT," +           // 8: mboId
+                "\"nextPaymentRowId\" INTEGER TEXT NOT NULL);");
     }
 
     /** Drops the underlying database table. */
@@ -93,7 +111,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindDouble(2, entity.getAmount());
+       /* stmt.bindDouble(2, entity.getAmount());
         stmt.bindString(3, entity.getBusinessCenterId());
         stmt.bindString(4, entity.getCalculationMethod());
         stmt.bindLong(5, entity.getEndDate().getTime());
@@ -101,7 +119,15 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         stmt.bindString(7, entity.getFrequency());
         stmt.bindString(8, entity.getNextPaymentId());
         stmt.bindString(9, entity.getMboId());
-        stmt.bindLong(10, entity.getNextPaymentRowId());
+        stmt.bindLong(10, entity.getNextPaymentRowId());*/
+
+        stmt.bindDouble(2, entity.getAmount());
+        stmt.bindString(3, entity.getCalculationMethod());
+        stmt.bindLong(4,entity.getStartDate().getTime());
+        stmt.bindString(5, entity.getFrequency());
+        stmt.bindString(6, entity.getNextPaymentId());
+        stmt.bindString(7, entity.getMboId());
+        stmt.bindLong(8, entity.getNextPaymentRowId());
     }
 
     /** @inheritdoc */
@@ -115,7 +141,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
     public TableNextPayment readEntity(Cursor cursor, int offset) {
         
 
-        TableNextPayment entity = new TableNextPayment(
+        /*TableNextPayment entity = new TableNextPayment(
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0),
                 cursor.getLong(offset + 1),
                 cursor.getString(offset + 2),
@@ -127,6 +153,18 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
                 cursor.getString(offset + 8),
                 cursor.getLong(offset + 9)
 
+        );*/
+
+        TableNextPayment entity = new TableNextPayment(
+                cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0),
+                cursor.getLong(offset + 1),
+                cursor.getString(offset + 2),
+                new Date(cursor.getLong(offset + 3)),
+                cursor.getString(offset + 4),
+                cursor.getString(offset + 5),
+                cursor.getString(offset + 6),
+                cursor.getLong(offset + 7)
+
         );
         return entity;
     }
@@ -135,7 +173,7 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
     @Override
     public void readEntity(Cursor cursor, TableNextPayment entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setAmount(cursor.getInt(offset + 1));
+        /*entity.setAmount(cursor.getInt(offset + 1));
         entity.setBusinessCenterId(cursor.getString(offset + 2));
         entity.setCalculationMethod(cursor.getString(offset + 3));
         entity.setEndDate(new java.util.Date(cursor.getLong(offset + 4)));
@@ -143,7 +181,15 @@ public class TableNextPaymentDao extends AbstractDao<TableNextPayment, Long> {
         entity.setFrequency(cursor.getString(offset + 6));
         entity.setNextPaymentId(cursor.getString(offset + 7));
         entity.setMboId(cursor.getString(offset + 8));
-        entity.setNextPaymentRowId(cursor.getLong(offset + 9));
+        entity.setNextPaymentRowId(cursor.getLong(offset + 9));*/
+
+        entity.setAmount(cursor.getInt(offset + 1));
+        entity.setCalculationMethod(cursor.getString(offset + 2));
+        entity.setStartDate(new java.util.Date(cursor.getLong(offset + 3)));
+        entity.setFrequency(cursor.getString(offset + 4));
+        entity.setNextPaymentId(cursor.getString(offset + 5));
+        entity.setMboId(cursor.getString(offset + 6));
+        entity.setNextPaymentRowId(cursor.getLong(offset + 7));
     }
 
     /** @inheritdoc */

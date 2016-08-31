@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import com.mbopartners.mbomobile.data.db.generated.dao.DaoSession;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableAmount;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollSummary;
 import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePreviousPayment;
 
@@ -55,11 +54,11 @@ public class TablePreviousPaymentDao extends AbstractDao<TablePreviousPayment, L
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TABLE_PREVIOUS_PAYMENT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"businessCenterId\" TEXT NOT NULL,"+// 1: businessCenterId
-                "\"date\" INTEGER NOT NULL ," + // 2: date
-                "\"previousPaymentId\" TEXT NOT NULL ," + // 3: previousPaymentId
-                "\"mboId\" TEXT NOT NULL," + // 4: mboId
-                "\"previousPaymentRowId\" INTEGER NOT NULL );");
+                "\"businessCenterId\" TEXT,"+// 1: businessCenterId
+                "\"date\" INTEGER," + // 2: date
+                "\"previousPaymentId\" TEXT NOT NULL," + // 3: previousPaymentId
+                "\"mboId\" TEXT," + // 4: mboId
+                "\"previousPaymentRowId\" INTEGER TEXT NOT NULL);");
     }
 
     /** Drops the underlying database table. */

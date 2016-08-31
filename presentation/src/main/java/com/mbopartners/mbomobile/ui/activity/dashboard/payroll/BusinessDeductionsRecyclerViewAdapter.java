@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessPayrollTaxes;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.List;
 
@@ -135,10 +136,12 @@ public class BusinessDeductionsRecyclerViewAdapter extends RecyclerView.Adapter<
 
         viewHolder.name.setText(businessPayrollTaxesList.get(position).getName());
         if(isChecked)
-            viewHolder.value.setText("$"+ String.format("%.2f", businessPayrollTaxesList.get(position).getAmountYtd()));
+            viewHolder.value.setText("$"+ NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", businessPayrollTaxesList.get(position).getAmountYtd())));
         else {
             ;
-            viewHolder.value.setText("$"+ String.format("%.2f",businessPayrollTaxesList.get(position).getAmount()));
+            viewHolder.value.setText("$"+NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", businessPayrollTaxesList.get(position).getAmount())));
         }
     }
 

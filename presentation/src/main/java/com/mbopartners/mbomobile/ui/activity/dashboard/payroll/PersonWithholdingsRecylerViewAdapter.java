@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.List;
 
@@ -174,25 +175,33 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
 
         if(isEarnings_ytd_checked){
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getGrossAmount().getAmountYtd()));
+            viewHolder.work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).
+                    getGrossAmount().getAmountYtd())));
             viewHolder.periodTextview.setText("Year to Date");
             viewHolder.textview1.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getGrossAmount().getAmountYtd()));
+            viewHolder.textview1_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).getGrossAmount().getAmountYtd())));
             viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
-            viewHolder.textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getNetAmount().getAmountYtd()));
+            viewHolder.textview2_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).getNetAmount().getAmountYtd())));
             viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(this.position).getPaycheckAmount().getAmountYtd()+
-                    personWithHoldingList.get(this.position).getNetAmount().getAmountYtd())));
+            viewHolder.textview3_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", (personWithHoldingList.get(this.position).getPaycheckAmount().getAmountYtd() +
+                            personWithHoldingList.get(this.position).getNetAmount().getAmountYtd()))));
         }else {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getGrossAmount().getAmount()));
+            viewHolder.work_order_name_TextView.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
             viewHolder.periodTextview.setText("This Period");
             viewHolder.textview1.setText(personWithHoldingList.get(this.position).getGrossAmount().getName());
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getGrossAmount().getAmount()));
+            viewHolder.textview1_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).getGrossAmount().getAmount())));
             viewHolder.textview2.setText(personWithHoldingList.get(this.position).getNetAmount().getName());
-            viewHolder.textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(this.position).getNetAmount().getAmount()));
+            viewHolder.textview2_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f", personWithHoldingList.get(this.position).getNetAmount().getAmount())));
             viewHolder.textview3.setText(personWithHoldingList.get(this.position).getPaycheckAmount().getName());
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(this.position).getPaycheckAmount().getAmount()+
-                    personWithHoldingList.get(this.position).getNetAmount().getAmount())));
+            viewHolder.textview3_value.setText("$" + NumberFormatUtils.getAmountWithCommas(String.format("%.2f",
+                    (personWithHoldingList.get(this.position).getPaycheckAmount().getAmount() +
+                            personWithHoldingList.get(this.position).getNetAmount().getAmount()))));
         }
     }
     public void bindViewHolder_Next_Payroll(NextPayrollViewHolder viewHolder, int position) {
@@ -206,7 +215,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.name=(TextView)viewHolder.myView.findViewById(R.id.textview_name);
             viewHolder.value=(TextView)viewHolder.myView.findViewById(R.id.textview_value);
             viewHolder.name.setText(personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getName());
-            viewHolder.value.setText("$" + String.format("%.2f", personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getAmount()));
+            viewHolder.value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", personWithHoldingList.get(this.position).getPayrollTaxes().get(i).getAmount())));
             viewHolder.linearLayout.addView(viewHolder.myView);
         }
         for(int i=0;i<personWithHoldingList.get(this.position).getAfterTaxDeductions().size();i++){
@@ -215,7 +225,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.name2=(TextView)viewHolder.myView2.findViewById(R.id.textview_name);
             viewHolder.value2=(TextView)viewHolder.myView2.findViewById(R.id.textview_value);
             viewHolder.name2.setText(personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getName());
-            viewHolder.value2.setText("$" + String.format("%.2f", personWithHoldingList.get(this.position).getAfterTaxDeductions().get(i).getAmount()));
+            viewHolder.value2.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(
+                            String.format("%.2f", personWithHoldingList.
+                                    get(this.position).getAfterTaxDeductions().get(i).getAmount())));
             viewHolder.linearLayout2.addView(viewHolder.myView2);
         }
         viewHolder.textview1.setText("Statutory");
@@ -224,15 +237,22 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                     String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                             getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
             viewHolder.periodTextview.setText("Year to Date");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
-            viewHolder.textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked))));
+            viewHolder.textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(String.format("%.2f",
+                    getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
         }else
         {
-            viewHolder.work_order_name_TextView.setText("$" +String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
-                    getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(
+                            String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
+                                    getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
             viewHolder.periodTextview.setText("This Period");
-            viewHolder.textview1_value.setText("$" +String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
-            viewHolder.textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+            viewHolder.textview1_value.setText("$" +
+                    NumberFormatUtils.getAmountWithCommas(
+                            String.format("%.2f", getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked))));
+            viewHolder.textview2_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
         }
     }
 
@@ -241,13 +261,17 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
         viewHolder.payrollImageView.setImageResource(getPayrollImageId(EXPENSE_REIMBERSEMENTS));
         viewHolder.company_name_TextView.setText(EXPENSE_REIMBERSEMENTS);
         if(isExpense_ytd_checked) {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
             viewHolder.periodTextview.setText("Year to Date");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+            viewHolder.textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(String.format("%.2f",
+                    getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
         }else {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
             viewHolder.periodTextview.setText("This Period");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+            viewHolder.textview1_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
         }
     }
     public class BulkViewHolder extends RecyclerView.ViewHolder {
@@ -294,30 +318,40 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
 
                     if(aSwitch.isChecked()){
 
+                        isEarnings_ytd_checked=true;
                         ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         thisPeriodTextview.setTextColor(Color.BLACK);
-                        work_order_name_TextView.setText("$" + String.format("%.2f", personWithHoldingList.get(position).getGrossAmount().getAmountYtd()));
+                        work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", personWithHoldingList.get(position).getGrossAmount().getAmountYtd())));
                         periodTextview.setText("Year to Date");
                         textview1.setText(personWithHoldingList.get(position).getGrossAmount().getName());
-                        textview1_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmountYtd()));
+                        textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmountYtd())));
                         textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
-                        textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmountYtd()));
+                        textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmountYtd())));
                         textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
-                        textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(position).getPaycheckAmount().getAmountYtd()+
-                                personWithHoldingList.get(position).getNetAmount().getAmountYtd())));
+                        textview3_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", (personWithHoldingList.get(position).getPaycheckAmount().getAmountYtd() +
+                                        personWithHoldingList.get(position).getNetAmount().getAmountYtd()))));
                     }else {
 
+                        isEarnings_ytd_checked=false;
                         ytdTextview.setTextColor(Color.BLACK);
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f", personWithHoldingList.get(position).getGrossAmount().getAmount()));
+                        work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", personWithHoldingList.get(position).getGrossAmount().getAmount())));
                         periodTextview.setText("This Period");
                         textview1.setText(personWithHoldingList.get(position).getGrossAmount().getName());
-                        textview1_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmount()));
+                        textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",personWithHoldingList.get(position).getGrossAmount().getAmount())));
                         textview2.setText(personWithHoldingList.get(position).getNetAmount().getName());
-                        textview2_value.setText("$" + String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmount()));
+                        textview2_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",personWithHoldingList.get(position).getNetAmount().getAmount())));
                         textview3.setText(personWithHoldingList.get(position).getPaycheckAmount().getName());
-                        textview3_value.setText("$" + String.format("%.2f",(personWithHoldingList.get(position).getPaycheckAmount().getAmount()+
-                                personWithHoldingList.get(position).getNetAmount().getAmount())));
+                        textview3_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",(personWithHoldingList.get(position).getPaycheckAmount().getAmount()+
+                                personWithHoldingList.get(position).getNetAmount().getAmount()))));
                     }
                 }
             });
@@ -443,8 +477,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                                         getAmount_uptoTwoDecimalPlaces(String.valueOf(getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked) +
                                                 getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
                         periodTextview.setText("Year to Date");*/
-                        textview1_value.setText("$" +String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
-                        textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+                        textview1_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked))));
+                        textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
 
                         //madapter.updateDataSource(isDeductions_ytd_checked);
                         linearLayout.removeAllViews();
@@ -454,7 +490,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                             name=(TextView)myView.findViewById(R.id.textview_name);
                             value=(TextView)myView.findViewById(R.id.textview_value);
                             name.setText(personWithHoldingList.get(0).getPayrollTaxes().get(i).getName());
-                            value.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmountYtd()));
+                            value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                    String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmountYtd())));
                             linearLayout.addView(myView);
                         }
                         linearLayout2.removeAllViews();
@@ -464,7 +501,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                             name2=(TextView)myView2.findViewById(R.id.textview_name);
                             value2=(TextView)myView2.findViewById(R.id.textview_value);
                             name2.setText(personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getName());
-                            value2.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmountYtd()));
+                            value2.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                    String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmountYtd())));
                             linearLayout2.addView(myView2);
                         }
 
@@ -483,8 +521,10 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                                                 getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));*/
                         //madapter.updateDataSource(isDeductions_ytd_checked);
 
-                        textview1_value.setText("$" +String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked)));
-                        textview2_value.setText("$" +String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked)));
+                        textview1_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",getSumOfPayrollTaxes(personWithHoldingList, isDeductions_ytd_checked))));
+                        textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f",getSumOfAfterTaxDeductions(personWithHoldingList, isDeductions_ytd_checked))));
 
                         linearLayout.removeAllViews();
                         for(int i=0;i<personWithHoldingList.get(0).getPayrollTaxes().size();i++){
@@ -493,7 +533,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                             name=(TextView)myView.findViewById(R.id.textview_name);
                             value=(TextView)myView.findViewById(R.id.textview_value);
                             name.setText(personWithHoldingList.get(0).getPayrollTaxes().get(i).getName());
-                            value.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmount()));
+                            value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                    String.format("%.2f", personWithHoldingList.get(0).getPayrollTaxes().get(i).getAmount())));
                             linearLayout.addView(myView);
                         }
                         linearLayout2.removeAllViews();
@@ -503,7 +544,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                             name2=(TextView)myView2.findViewById(R.id.textview_name);
                             value2=(TextView)myView2.findViewById(R.id.textview_value);
                             name2.setText(personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getName());
-                            value2.setText("$" + String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmount()));
+                            value2.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                    String.format("%.2f", personWithHoldingList.get(0).getAfterTaxDeductions().get(i).getAmount())));
                             linearLayout2.addView(myView2);
                         }
                     }
@@ -601,7 +643,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                         ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         thisPeriodTextview.setTextColor(Color.BLACK);
                         isExpense_ytd_checked=true;
-                        work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfExpenseReimbersements(personWithHoldingList,isExpense_ytd_checked)));
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
                         //textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
                         periodTextview.setText("Year to Date");
                         madapter.updateDataSource(isExpense_ytd_checked);
@@ -611,7 +654,8 @@ public class PersonWithholdingsRecylerViewAdapter extends RecyclerView.Adapter<R
                         ytdTextview.setTextColor(Color.BLACK);
                         isExpense_ytd_checked=false;
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked))));
                         //textview1_value.setText("$" + String.format("%.2f", getSumOfExpenseReimbersements(personWithHoldingList, isExpense_ytd_checked)));
                         periodTextview.setText("This Period");
                         madapter.updateDataSource(isExpense_ytd_checked);

@@ -71,10 +71,10 @@ public class PreviousPayment implements Serializable, Validatable {
     @Override
     public boolean isValid() {
         boolean result =
-                id!=null &&
+                id!=null/* &&
                         businessCenterId != null &&
                         mboId != null &&
-                        date!=null&& businessWithholding!=null&& personalWithholding!=null;
+                        date!=null&& businessWithholding!=null&& personalWithholding!=null*/;
 
 
         if (! result) {

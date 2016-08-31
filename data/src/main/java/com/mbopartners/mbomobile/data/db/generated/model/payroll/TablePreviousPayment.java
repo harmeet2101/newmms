@@ -95,6 +95,12 @@ public class TablePreviousPayment {
 
     }
 
+    public String toString(){
+
+        return "id: "+getId()+"businessCenterId:"+getBusinessCenterId()+
+                "perviousPaymentId:"+getPreviousPaymentId()+
+                "perviousPaymentRowId:"+getPreviousPaymentRowId()+"mboId:"+getMboId()+"date:"+getDate();
+    }
 
 
     public Long getId() {

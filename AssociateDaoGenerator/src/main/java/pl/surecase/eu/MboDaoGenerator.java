@@ -338,9 +338,9 @@ public class MboDaoGenerator {
         Entity table = schema.addEntity("TablePayrollNextPayment");
         table.addIdProperty().autoincrement();
         table.addDoubleProperty("amount");
-        table.addStringProperty("businessCenterId");
+        /*table.addStringProperty("businessCenterId");*/
         table.addStringProperty("calculationMethod");
-        table.addDateProperty("endDate");
+        /*table.addDateProperty("endDate");*/
         table.addDateProperty("startDate");
         table.addStringProperty("frequency");
         table.addStringProperty("nextPaymentId");

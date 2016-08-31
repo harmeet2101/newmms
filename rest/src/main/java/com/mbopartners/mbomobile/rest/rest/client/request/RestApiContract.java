@@ -65,9 +65,9 @@ public class RestApiContract {
         private static final String EXPENSE_RECEIPT = "expenses/" + Key.EXPENSE_ID + "/receipts/" + Key.EXPENSE_FILENAME + "/";
         private static final String EXPENSE_TYPES_LIST = "expenseTypes/ ";
         private static final String BUSINESS_CENTER_LIST="business-centers-dev/v1/business-centers/";
-        private static final String PAYROLL_SUMMARY_LIST="business-centers-dev/v1/summary";
-        private static final String PAYROLL_TRANSACTION_LIST="payroll-dev/v1/transactions";
-        private static final String PAYROLL_PAYMENT_DETAILS="payroll-dev/api/v1/previews";
+        private static final String PAYROLL_SUMMARY_LIST="business-centers/v1/summary";
+       private static final String PAYROLL_TRANSACTION_LIST="payroll/v1/transactions";           // payroll-dev/v1/transactions
+        //private static final String PAYROLL_PREVIEW_LIST="payroll/v1/previews ";              //  payroll-dev/api/v1/previews
     }
 
     public static class Key {

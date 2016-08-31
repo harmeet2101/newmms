@@ -95,6 +95,27 @@ public class TableNextPayment {
 
     }
 
+    public TableNextPayment(Long id, double amount,String calculationMethod,
+                            Date startDate, String frequency, String nextPaymentId, String mboId,long nextPaymentRowId)
+    {
+        this.id=id;
+        this.amount=amount;
+        this.calculationMethod=calculationMethod;
+        this.startDate=startDate;
+        this.frequency=frequency;
+        this.nextPaymentId=nextPaymentId;
+        this.nextPaymentRowId=nextPaymentRowId;
+        this.mboId=mboId;
+
+    }
+
+    public String toString(){
+
+        return "id: "+getId()+"amount"+getAmount()+"businessCenterId:"/*+getBusinessCenterId()+"endDate: "+getEndDate()*/+
+                "startDate:"+getStartDate()+":frequency:"+getFrequency()+"nextPaymentId:"+getNextPaymentId()+
+                "nextPaymentRowId:"+getNextPaymentRowId()+"mboId:"+getMboId();
+    }
+
     public Long getId() {
         return id;
     }
@@ -111,13 +132,13 @@ public class TableNextPayment {
         this.amount = amount;
     }
 
-    public String getBusinessCenterId() {
+    /*public String getBusinessCenterId() {
         return businessCenterId;
     }
 
     public void setBusinessCenterId(String businessCenterId) {
         this.businessCenterId = businessCenterId;
-    }
+    }*/
 
     public String getCalculationMethod() {
         return calculationMethod;
@@ -127,13 +148,13 @@ public class TableNextPayment {
         this.calculationMethod = calculationMethod;
     }
 
-    public Date getEndDate() {
+    /*public Date getEndDate() {
         return endDate;
-    }
+    }*/
 
-    public void setEndDate(Date endDate) {
+    /*public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
+    }*/
 
     public Date getStartDate() {
         return startDate;

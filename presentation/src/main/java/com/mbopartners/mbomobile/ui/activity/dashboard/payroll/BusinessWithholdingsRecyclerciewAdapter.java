@@ -21,6 +21,7 @@ import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessEx
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessPayrollTaxes;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.List;
 
@@ -179,21 +180,29 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
         viewHolder.textview2.setText("Deductions");
         viewHolder.textview3.setText("Gross Pay");
         if(isBusiness_ytd_checked){
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f", businessWithHoldingList.get(this.position).getPayrollAmount().getAmountYtd()));
+            viewHolder.work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", businessWithHoldingList.get(this.position).getPayrollAmount().getAmountYtd())));
             viewHolder.periodTextview.setText("Year to Date");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
-                    .getBusinessExpenses(),isBusiness_ytd_checked)));
-            viewHolder.textview2_value.setText("$" + String.format("%.2f",getSumOfPayrollTaxes(businessWithHoldingList.get(position)
-                    .getPayrollTaxes(), isBusiness_ytd_checked)));
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",(businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd())));
+            viewHolder.textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
+                            .getBusinessExpenses(), isBusiness_ytd_checked))));
+            viewHolder.textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfPayrollTaxes(businessWithHoldingList.get(position)
+                            .getPayrollTaxes(), isBusiness_ytd_checked))));
+            viewHolder.textview3_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", (businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd()))));
         }else {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f", businessWithHoldingList.get(this.position).getPayrollAmount().getAmount()));
+            viewHolder.work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", businessWithHoldingList.get(this.position).getPayrollAmount().getAmount())));
             viewHolder.periodTextview.setText("This Period");
-            viewHolder.textview1_value.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
-                    .getBusinessExpenses(),isBusiness_ytd_checked)));
-            viewHolder.textview2_value.setText("$" + String.format("%.2f",getSumOfPayrollTaxes(businessWithHoldingList.get(position)
-                    .getPayrollTaxes(), isBusiness_ytd_checked)));
-            viewHolder.textview3_value.setText("$" + String.format("%.2f",(businessWithHoldingList.get(position).getPayrollAmount().getAmount())));
+            viewHolder.textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
+                            .getBusinessExpenses(), isBusiness_ytd_checked))));
+            viewHolder.textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfPayrollTaxes(businessWithHoldingList.get(position)
+                            .getPayrollTaxes(), isBusiness_ytd_checked))));
+            viewHolder.textview3_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", (businessWithHoldingList.get(position).getPayrollAmount().getAmount()))));
         }
 
     }
@@ -207,12 +216,14 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
 
         viewHolder.periodTextview.setText("This Period");
         if(isDeductions_ytd_checked){
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",
-                    getSumOfPayrollTaxes(businessWithHoldingList.get(this.position).getPayrollTaxes(), isDeductions_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",
+                            getSumOfPayrollTaxes(businessWithHoldingList.get(this.position).getPayrollTaxes(), isDeductions_ytd_checked))));
 
         }else {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",
-                    getSumOfPayrollTaxes(businessWithHoldingList.get(this.position).getPayrollTaxes(),isDeductions_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",
+                            getSumOfPayrollTaxes(businessWithHoldingList.get(this.position).getPayrollTaxes(), isDeductions_ytd_checked))));
         }
     }
     public void bindViewHolder_business_expense(BusinessExpenseViewHolder viewHolder, int position) {
@@ -223,12 +234,14 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
         viewHolder.periodTextview.setText("This Period");
         if(isExpense_ytd_checked){
 
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses
-                    (businessWithHoldingList.get(this.position).getBusinessExpenses(),
-                            isExpense_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfInsuranceExpenses
+                            (businessWithHoldingList.get(this.position).getBusinessExpenses(),
+                                    isExpense_ytd_checked))));
         }else {
-            viewHolder.work_order_name_TextView.setText("$" + String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.
-                    get(this.position).getBusinessExpenses(), isExpense_ytd_checked)));
+            viewHolder.work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.
+                            get(this.position).getBusinessExpenses(), isExpense_ytd_checked))));
         }
     }
 
@@ -285,31 +298,39 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
                         isBusiness_ytd_checked = true;
                         ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         thisPeriodTextview.setTextColor(Color.BLACK);
-                        work_order_name_TextView.setText("$" + String.format("%.2f", businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd()));
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd())));
                         periodTextview.setText("Year to Date");
                         textview1.setText("Expenses");
-                        textview1_value.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
-                        .getBusinessExpenses(),isBusiness_ytd_checked)));
+                        textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
+                                        .getBusinessExpenses(), isBusiness_ytd_checked))));
                         textview2.setText("Deductions");
-                        textview2_value.setText("$" + String.format("%.2f",getSumOfPayrollTaxes(businessWithHoldingList.get(position)
-                                .getPayrollTaxes(), isBusiness_ytd_checked)));
+                        textview2_value.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfPayrollTaxes(businessWithHoldingList.get(position)
+                                        .getPayrollTaxes(), isBusiness_ytd_checked))));
                         textview3.setText("Gross Pay");
-                        textview3_value.setText("$" + String.format("%.2f",(businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd())));
+                        textview3_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", (businessWithHoldingList.get(position).getPayrollAmount().getAmountYtd()))));
                     }else {
 
                         ytdTextview.setTextColor(Color.BLACK);
                         isBusiness_ytd_checked=false;
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f", businessWithHoldingList.get(position).getPayrollAmount().getAmount()));
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", businessWithHoldingList.get(position).getPayrollAmount().getAmount())));
                         periodTextview.setText("This Period");
                         textview1.setText("Expenses");
-                        textview1_value.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
-                                .getBusinessExpenses(),isBusiness_ytd_checked)));
+                        textview1_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.get(position)
+                                        .getBusinessExpenses(), isBusiness_ytd_checked))));
                         textview2.setText("Deductions");
-                        textview2_value.setText("$" + String.format("%.2f",getSumOfPayrollTaxes(businessWithHoldingList.get(position)
-                                .getPayrollTaxes(),isBusiness_ytd_checked)));
+                        textview2_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfPayrollTaxes(businessWithHoldingList.get(position)
+                                        .getPayrollTaxes(), isBusiness_ytd_checked))));
                         textview3.setText("Gross Pay");
-                        textview3_value.setText("$" + String.format("%.2f",(businessWithHoldingList.get(position).getPayrollAmount().getAmount())));
+                        textview3_value.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", (businessWithHoldingList.get(position).getPayrollAmount().getAmount()))));
                     }
                 }
             });
@@ -427,9 +448,9 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
                         ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         thisPeriodTextview.setTextColor(Color.BLACK);
                         isDeductions_ytd_checked=true;
-                        work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfPayrollTaxes(
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(String.format("%.2f", getSumOfPayrollTaxes(
                                 businessWithHoldingList.get(position).getPayrollTaxes(),
-                                isDeductions_ytd_checked), isDeductions_ytd_checked));
+                                isDeductions_ytd_checked), isDeductions_ytd_checked)));
                         periodTextview.setText("Year to Date");
                         madapter.updateDataSource(isDeductions_ytd_checked);
 
@@ -438,9 +459,9 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
                         ytdTextview.setTextColor(Color.BLACK);
                         isDeductions_ytd_checked=false;
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f", getSumOfPayrollTaxes(
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(String.format("%.2f", getSumOfPayrollTaxes(
                                 businessWithHoldingList.get(position).getPayrollTaxes(),
-                                isDeductions_ytd_checked), isDeductions_ytd_checked));
+                                isDeductions_ytd_checked), isDeductions_ytd_checked)));
                         periodTextview.setText("This Period");
                         madapter.updateDataSource(isDeductions_ytd_checked);
                     }
@@ -521,9 +542,10 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
                         ytdTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
                         thisPeriodTextview.setTextColor(Color.BLACK);
                         isExpense_ytd_checked=true;
-                        work_order_name_TextView.setText("$" + String.format("%.2f",getSumOfInsuranceExpenses
-                                (businessWithHoldingList.get(position).getBusinessExpenses(),
-                                        isExpense_ytd_checked), isExpense_ytd_checked));
+                        work_order_name_TextView.setText("$" + NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfInsuranceExpenses
+                                        (businessWithHoldingList.get(position).getBusinessExpenses(),
+                                                isExpense_ytd_checked), isExpense_ytd_checked)));
                         periodTextview.setText("Year to Date");
                         madapter.updateDataSource(isExpense_ytd_checked);
 
@@ -532,8 +554,9 @@ public class BusinessWithholdingsRecyclerciewAdapter extends RecyclerView.Adapte
                         ytdTextview.setTextColor(Color.BLACK);
                         isExpense_ytd_checked=false;
                         thisPeriodTextview.setTextColor(context.getResources().getColor(R.color.mbo_theme_blue_primary));
-                        work_order_name_TextView.setText("$" + String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.
-                                get(position).getBusinessExpenses(), isExpense_ytd_checked), isExpense_ytd_checked));
+                        work_order_name_TextView.setText("$" +NumberFormatUtils.getAmountWithCommas(
+                                String.format("%.2f", getSumOfInsuranceExpenses(businessWithHoldingList.
+                                        get(position).getBusinessExpenses(), isExpense_ytd_checked), isExpense_ytd_checked)));
                         periodTextview.setText("This Period");
                         madapter.updateDataSource(isExpense_ytd_checked);
                     }

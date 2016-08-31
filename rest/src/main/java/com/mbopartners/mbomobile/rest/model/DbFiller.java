@@ -40,11 +40,6 @@ import com.mbopartners.mbomobile.data.db.generated.model.TableExpenseData;
 import com.mbopartners.mbomobile.data.db.generated.model.TableReceipt;
 import com.mbopartners.mbomobile.data.db.generated.model.TableTimeEntry;
 import com.mbopartners.mbomobile.data.db.generated.model.TableTimePeriod;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessExpenses;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessPayrollTaxes;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableExpenseReimbersements;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TablePayrollTransactions;
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableSummaryBusinessWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.BusinessManager;
 import com.mbopartners.mbomobile.rest.model.response.Company;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
@@ -335,15 +330,18 @@ public class DbFiller {
     public static long insertPayrollTransactionField(PayrollTransactions payrollTransactions,DaoSession daoSession)
     {
         TablePayrollTransactionsDao dao = daoSession.getTablePayrollTransactionsDao();
-        return dao.insert(Converter.toTable_payroll_transactions(payrollTransactions));
+        long id=dao.insert(Converter.toTable_payroll_transactions(payrollTransactions));
+        return id;
     }
     public static long insertNextPaymentField(NextPayment nextPayment, long nextPaymentId,DaoSession daoSession) {
         TableNextPaymentDao dao = daoSession.getTableNextPaymentDao();
-        return dao.insert(Converter.toTable_payroll_nexPayment(nextPaymentId, nextPayment));
+        long id=dao.insert(Converter.toTable_payroll_nexPayment(nextPaymentId, nextPayment));
+        return id;
     }
     public static long insertPreviousPaymentField(PreviousPayment previousPayment, long previousPaymentId,DaoSession daoSession) {
         TablePreviousPaymentDao dao = daoSession.getTablePreviousPaymentDao();
-        return dao.insert(Converter.toTable_payroll_prevPayment(previousPaymentId, previousPayment));
+        long id=dao.insert(Converter.toTable_payroll_prevPayment(previousPaymentId, previousPayment));
+        return id;
     }
     public static long insertBusinessWithHoldingField(BusinessWithHolding businessWithHolding, long prevPaymentId,DaoSession daoSession) {
         TableBusinessWithHoldingDao dao = daoSession.getTableBusinessWithHoldingDao();

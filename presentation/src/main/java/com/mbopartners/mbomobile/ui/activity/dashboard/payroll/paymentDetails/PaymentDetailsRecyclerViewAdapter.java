@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,15 +118,15 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
         switch (position){
             case 0:
                 viewHolder.textview1.setText("Payment Frequency");
-                viewHolder.textview2.setText("Bi-Weekly");
+                viewHolder.textview2.setText(payrollSummaryList.get(0).getNext_payroll().getFrequency());
                 break;
             case 1:
                 viewHolder.textview1.setText("Start Date");
-                viewHolder.textview2.setText("16/09/2015");
+                viewHolder.textview2.setText(DateUtil.getDateFormatted_payroll(payrollSummaryList.get(0).getNext_payroll().getStartDate()));
                 break;
             case 2:
                 viewHolder.textview1.setText("Payment Method");
-                viewHolder.textview2.setText("GROSS");
+                viewHolder.textview2.setText(payrollSummaryList.get(0).getNext_payroll().getCalculationMethod());
                 break;
             case 3:
                 viewHolder.textview1.setText("Payment Amount");

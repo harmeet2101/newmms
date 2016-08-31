@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.ExpenseReimbursement;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.List;
 
@@ -138,10 +139,12 @@ public class PersonalReimbersementRecyclerAdapter extends RecyclerView.Adapter<R
 
         viewHolder.name.setText(expenseReimbursementList.get(position).getName());
         if(isChecked)
-        viewHolder.value.setText("$"+ String.format("%.2f", expenseReimbursementList.get(position).getAmountYtd()));
+        viewHolder.value.setText("$"+ NumberFormatUtils.getAmountWithCommas(
+                String.format("%.2f", expenseReimbursementList.get(position).getAmountYtd())));
         else {
            ;
-            viewHolder.value.setText("$"+ String.format("%.2f",expenseReimbursementList.get(position).getAmount()));
+            viewHolder.value.setText("$"+ NumberFormatUtils.getAmountWithCommas(
+                    String.format("%.2f",expenseReimbursementList.get(position).getAmount())));
         }
     }
 

@@ -44,7 +44,7 @@ public class NextPayment implements Serializable, Validatable {
 
     public NextPayment(){}
 
-    public NextPayment(Double amount,String businessCenterId,String calculationMethod
+    /*public NextPayment(Double amount,String businessCenterId,String calculationMethod
             ,Date endDate,Date startDate,String frequency,String id,String mboId)
     {
         this.amount=amount;
@@ -56,13 +56,31 @@ public class NextPayment implements Serializable, Validatable {
         this.id=id;
         this.mboId=mboId;
 
+    }*/
+
+    public NextPayment(Double amount,String calculationMethod
+            ,Date startDate,String frequency,String id,String mboId)
+    {
+        this.amount=amount;
+
+        this.calculationMethod=calculationMethod;
+        this.startDate=startDate;
+        this.frequency=frequency;
+        this.id=id;
+        this.mboId=mboId;
+
+    }
+    public String toString(){
+
+        return "id: "+getId()+"amount"+getAmount()+"businessCenterId:"+getBusinessCenterId()+"endDate: "+getEndDate()+
+                "startDate:"+getStartDate()+":frequency:"+getFrequency()+"mboId:"+getMboId();
     }
 
     @Override
     public boolean isValid() {
         boolean result =
-                id!=null &&
-                        businessCenterId != null/* &&
+                id!=null /*&&
+                        businessCenterId != null &&
                         mboId != null &&
                         amount != null && calculationMethod!=null&& endDate!=null
                         && startDate!=null&& frequency!=null*/;
@@ -138,5 +156,7 @@ public class NextPayment implements Serializable, Validatable {
     public void setMboId(String mboId) {
         this.mboId = mboId;
     }
+
+
 
 }
