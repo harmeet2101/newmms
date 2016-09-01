@@ -97,8 +97,6 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
         normalHintColor = getResources().getColor(R.color.mbo_simple_edittext_hint_color);
         redTextColor = getResources().getColor(R.color.mbo_error_message_text__color);
         redHintColor = getResources().getColor(R.color.mbo_error_message_hint__color);
-        editTextUserName.setText("021d8075-e293-41e0-a6be-b520ad34e904");
-        editTextPassword.setText("mbo.2011");
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
