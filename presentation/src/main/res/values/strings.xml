@@ -33,7 +33,7 @@
     <string name="title_activity_log_expense">Expense Type</string>
     <string name="title_activity_payroll_previous_payments">Previous Payments</string>
     <string name="title_activity_payroll_payment_details">Payroll</string>
-    <string name="title_activity_payroll_previous_payments_holdings">Withholdings</string>
+    <string name="title_activity_payroll_previous_payments_holdings">Estimated Withholdings</string>
 
 
     <!-- Menu -->

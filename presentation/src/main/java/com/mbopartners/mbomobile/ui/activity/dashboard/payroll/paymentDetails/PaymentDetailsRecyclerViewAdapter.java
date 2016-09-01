@@ -1,6 +1,8 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard.payroll.paymentDetails;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.paymentDetails.EstimatedWithHoldings.ViewEstimatedWithHolding;
 import com.mbopartners.mbomobile.ui.util.DateUtil;
+import com.mbopartners.mbomobile.ui.util.NumberFormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
     private OnItemClickListener mItemClickListener;
     private PersonWithHolding personWithHolding;
     private ArrayList<PayrollSummary> payrollSummaryList;
+    private ArrayList<PayrollTransactions> payrollTransactionsList;
     private static final int ITEM_VIEW_TYPE__LOADING = 0;
     private static final int ITEM_VIEW_TYPE__EMPTY_LIST = 1;
     private static final int ITEM_VIEW_TYPE__PAYROLL_PAYMENT_DETAILS = 2;
@@ -33,6 +39,15 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
         this.personWithHolding=personWithHolding;
         this.context=context;
         this.payrollSummaryList= (ArrayList<PayrollSummary>) payrollSummaryList;
+    }
+
+    public PaymentDetailsRecyclerViewAdapter(Context context,PersonWithHolding personWithHolding,List<PayrollSummary> payrollSummaryList,
+                                             List<PayrollTransactions> payrollTransactionsList) {
+
+        this.personWithHolding=personWithHolding;
+        this.context=context;
+        this.payrollSummaryList= (ArrayList<PayrollSummary>) payrollSummaryList;
+        this.payrollTransactionsList= (ArrayList<PayrollTransactions>) payrollTransactionsList;
     }
 
     private void fillParent(ViewGroup parent, View view) {
@@ -130,9 +145,16 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
                 break;
             case 3:
                 viewHolder.textview1.setText("Payment Amount");
-                viewHolder.textview2.setText("Gross Pay:$3,000");
-                viewHolder.textview3.setText("Net Pay:$2,450");
-                viewHolder.textview3.setVisibility(View.VISIBLE);
+                if(payrollTransactionsList!=null && payrollTransactionsList.get(0).getPersonalWithholding()!=null) {
+                    viewHolder.textview2.setText("Gross Pay: $" +
+                            NumberFormatUtils.getAmountWithCommas(String.format("%.2f"
+                                    , payrollTransactionsList.get(0).getPersonalWithholding().getGrossAmount().getAmountYtd())));
+                    viewHolder.textview3.setText("Net Pay: $" +
+                            NumberFormatUtils.getAmountWithCommas(String.format("%.2f"
+                                    , payrollTransactionsList.get(0).getPersonalWithholding().getNetAmount().getAmountYtd())));
+                    viewHolder.textview4.setText("Projected business account balance \nafter payment: $"+
+                    NumberFormatUtils.getAmountWithCommas(String.format("%.2f",payrollSummaryList.get(0).getBalance())));
+                }viewHolder.textview3.setVisibility(View.VISIBLE);
                 viewHolder.textview4.setVisibility(View.VISIBLE);
                 viewHolder.textview5.setVisibility(View.VISIBLE);
 
@@ -144,6 +166,7 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
                 viewHolder.imageView.setVisibility(View.GONE);
                 viewHolder.textview4.setVisibility(View.GONE);
                 viewHolder.textview5.setVisibility(View.GONE);
+                viewHolder.textview3.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -166,8 +189,9 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
         return itemCount;
     }
 
-    public void updateDataSource(List<PayrollSummary> fields) {
+    public void updateDataSource(List<PayrollSummary> fields,List<PayrollTransactions> transactionsList) {
         this.payrollSummaryList = (ArrayList<PayrollSummary>) fields;
+        this.payrollTransactionsList=(ArrayList<PayrollTransactions>)transactionsList;
         notifyDataSetChanged();
     }
     public class PreviousPaymentViewHolder extends RecyclerView.ViewHolder {
@@ -184,6 +208,22 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
             this.textview3=(TextView)itemView.findViewById(R.id.textView3);
             this.textview4=(TextView)itemView.findViewById(R.id.textView4);
             this.textview5=(TextView)itemView.findViewById(R.id.textView5);
+            this.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editPaymentDetails(getPosition());
+                }
+            });
+            this.textview5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, ViewEstimatedWithHolding.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("summaryList",payrollTransactionsList);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
 
         }
     }
@@ -195,5 +235,24 @@ public class PaymentDetailsRecyclerViewAdapter extends RecyclerView.Adapter<Recy
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+
+    public void editPaymentDetails(int position){
+
+        switch (position){
+
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:{
+
+            }
+        }
     }
 }

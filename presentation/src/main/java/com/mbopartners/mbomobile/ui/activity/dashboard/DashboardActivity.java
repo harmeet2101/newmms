@@ -914,6 +914,7 @@ public class DashboardActivity extends AutoLockActivity
         if(dataModel.getPayrollSummaryList()!=null){
             Bundle bundle=new Bundle();
             bundle.putSerializable("summaryList", (Serializable) dataModel.getPayrollSummaryList());
+            bundle.putSerializable("transactionsList",(Serializable)dataModel.getPayrollTransactionsList());
             Intent intent=ActivityIntentHelper.Payroll_PaymentDetails_ActivityBuilder.getActivity(DashboardActivity.this);
             intent.putExtras(bundle);
             startActivity(intent);

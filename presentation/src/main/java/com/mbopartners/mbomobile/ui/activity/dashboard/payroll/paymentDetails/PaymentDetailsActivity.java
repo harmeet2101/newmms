@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.AutoLockActivity;
 
@@ -22,6 +23,7 @@ public class PaymentDetailsActivity extends AutoLockActivity implements PaymentD
     private static final String TAG = PaymentDetailsActivity.class.getSimpleName();
     private TextView deleteTextview,doneTextview;
     private List<PayrollSummary> payrollSummaryList;
+    private List<PayrollTransactions> payrollTransactionsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class PaymentDetailsActivity extends AutoLockActivity implements PaymentD
         if(bundle!=null)
         {
             payrollSummaryList= (List<PayrollSummary>) bundle.getSerializable("summaryList");
-
+            payrollTransactionsList=(List<PayrollTransactions>)bundle.getSerializable("transactionsList");
         }
 
         fragment = (PaymentDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
@@ -124,6 +126,16 @@ public class PaymentDetailsActivity extends AutoLockActivity implements PaymentD
         if(payrollSummaryList!=null)
         {
             return payrollSummaryList;
+        }else
+            return null;
+
+    }
+
+    @Override
+    public List<PayrollTransactions> getPayrollTransactions() {
+        if(payrollTransactionsList!=null)
+        {
+            return payrollTransactionsList;
         }else
             return null;
 

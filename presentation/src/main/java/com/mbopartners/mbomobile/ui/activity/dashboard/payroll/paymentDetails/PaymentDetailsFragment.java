@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.R;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class PaymentDetailsFragment extends Fragment {
         paymentDetailsRecyclerView.setHasFixedSize(true);
         paymentDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        adapter = new PaymentDetailsRecyclerViewAdapter(getActivity(),null,mListener.getPayrollSummary());
+        adapter = new PaymentDetailsRecyclerViewAdapter(getActivity(),null,mListener.getPayrollSummary(),mListener.getPayrollTransactions());
         /*adapter.SetOnItemClickListener(new PaymentDetailsRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -66,12 +67,14 @@ public class PaymentDetailsFragment extends Fragment {
     public void onDataReceived() {
 
         if (mListener != null) {
-            adapter.updateDataSource(mListener.getPayrollSummary());
+            adapter.updateDataSource(mListener.getPayrollSummary(),mListener.getPayrollTransactions());
+
         }
     }
     public interface OnFragmentInteractionListener {
 
         List<PayrollSummary> getPayrollSummary();
+        List<PayrollTransactions>getPayrollTransactions();
         void onItemClick(int position);
     }
 }

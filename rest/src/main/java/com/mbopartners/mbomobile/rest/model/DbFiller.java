@@ -265,6 +265,7 @@ public class DbFiller {
                         PayrollAmount payrollAmount = businessWithHolding.getPayrollAmount();
                         insertSummaryBusiness_payrollAmountField(payrollAmount, businessId, daoSession);
                     }
+
                 }
         }
 

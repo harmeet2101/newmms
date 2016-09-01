@@ -70,11 +70,11 @@ public class NextPayment implements Serializable, Validatable {
         this.mboId=mboId;
 
     }
-    public String toString(){
+    /*public String toString(){
 
         return "id: "+getId()+"amount"+getAmount()+"businessCenterId:"+getBusinessCenterId()+"endDate: "+getEndDate()+
                 "startDate:"+getStartDate()+":frequency:"+getFrequency()+"mboId:"+getMboId();
-    }
+    }*/
 
     @Override
     public boolean isValid() {
