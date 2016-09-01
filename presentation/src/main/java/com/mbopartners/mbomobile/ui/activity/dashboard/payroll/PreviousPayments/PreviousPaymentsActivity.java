@@ -1,23 +1,19 @@
-package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
+package com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPayments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PreviousPayment;
 import com.mbopartners.mbomobile.ui.R;
 import com.mbopartners.mbomobile.ui.activity.AutoLockActivity;
 import com.mbopartners.mbomobile.ui.activity.helper.ActivityIntentHelper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

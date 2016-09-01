@@ -1,7 +1,6 @@
-package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
+package com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPayments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
-import com.mbopartners.mbomobile.rest.model.response.payroll_response.PersonWithHolding;
 import com.mbopartners.mbomobile.ui.R;
-import com.mbopartners.mbomobile.ui.activity.helper.ActivityIntentHelper;
-import com.mbopartners.mbomobile.ui.toast.ActivityToaster;
 
 import java.util.List;
 

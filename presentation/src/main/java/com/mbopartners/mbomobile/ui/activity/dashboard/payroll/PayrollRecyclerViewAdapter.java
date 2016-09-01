@@ -98,9 +98,9 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 break;
             }
             case ITEM_VIEW_TYPE__NEED_FUNDS : {
-                View itemView = LayoutInflater.from(parent.getContext()).
+                View  itemView_funds = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.layout_payroll_need_funds_text_layout, parent, false);
-                viewHolder = new BulkViewHolder(itemView);
+                viewHolder = new BulkViewHolder(itemView_funds);
                 break;
             }
 
@@ -266,9 +266,11 @@ public class PayrollRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 card_2_amount=NumberFormatUtils.getAmountWithCommas(temp); ;
             viewHolder.work_order_name_TextView.setText("$" + card_2_amount);
             viewHolder.includeView.setVisibility(View.GONE);
+
             }else {
             viewHolder.work_order_name_TextView.setText("Unscheduled");
             viewHolder.includeView.setVisibility(View.VISIBLE);
+
             }
         }catch (Exception e)
         {

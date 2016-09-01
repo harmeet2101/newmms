@@ -10,7 +10,7 @@ import com.mbopartners.mbomobile.ui.activity.choose_expense_type.ChooseExpenseTy
 import com.mbopartners.mbomobile.ui.activity.choose_workorder.ChooseWorkOrderActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PayrollWithHoldings;
-import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentsActivity;
+import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPayments.PreviousPaymentsActivity;
 import com.mbopartners.mbomobile.ui.activity.dashboard.payroll.paymentDetails.PaymentDetailsActivity;
 import com.mbopartners.mbomobile.ui.activity.joinus.JoinUsActivity;
 import com.mbopartners.mbomobile.ui.activity.logexpense.LogExpenseActivity;

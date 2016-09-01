@@ -1,4 +1,4 @@
-package com.mbopartners.mbomobile.ui.activity.dashboard.payroll;
+package com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPayments;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

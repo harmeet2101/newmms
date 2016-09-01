@@ -21,7 +21,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment"
-        android:name="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentFragment"
+        android:name="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPayments.PreviousPaymentFragment"
         tools:layout="@layout/fragment_payroll_previous_payments"
         android:layout_width="match_parent"
 

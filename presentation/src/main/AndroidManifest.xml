@@ -158,7 +158,7 @@
                 android:value="com.mbopartners.mbomobile.ui.activity.dashboard.DashboardActivity" />
         </activity>
 
-        <activity android:name=".activity.dashboard.payroll.PreviousPaymentsActivity"
+        <activity android:name=".activity.dashboard.payroll.PreviousPayments.PreviousPaymentsActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_payroll_previous_payments"
             android:launchMode="singleTop"
@@ -188,12 +188,12 @@
             android:label="@string/title_activity_payroll_previous_payments_holdings"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activity.dashboard.payroll.PreviousPaymentsActivity"
+            android:parentActivityName=".activity.dashboard.payroll.PreviousPayments.PreviousPaymentsActivity"
             android:theme="@style/mbo_AppTheme_grey"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mbopartners.mbomobile.ui.activity.dashboard.payroll.PreviousPaymentsActivity" />
+                android:value=".activity.dashboard.payroll.PreviousPayments.PreviousPaymentsActivity" />
         </activity>
 
         <activity

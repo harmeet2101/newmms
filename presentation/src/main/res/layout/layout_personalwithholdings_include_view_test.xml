@@ -33,6 +33,8 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/textview_thisPeriod"
             android:layout_marginLeft="16dp"
+            android:checked="false"
+            android:theme="@style/SCBSwitch"
             />
 
         <TextView

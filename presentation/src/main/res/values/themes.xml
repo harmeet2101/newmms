@@ -189,5 +189,4 @@
         <item name="android:windowTitleStyle">@style/MyAlertTitleStyle</item>
 
     </style>
-
 </resources>
