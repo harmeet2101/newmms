@@ -127,7 +127,7 @@ public class LoginActivity extends ArtisanedBaseActivity implements FontControll
     }
 
     private void doLogin(IRestClient restServiceHelper, Context context) {
-        String userName = editTextUserName.getText().toString();
+        String userName = /*editTextUserName.getText().toString()*/"021d8075-e293-41e0-a6be-b520ad34e904";
         String password = editTextPassword.getText().toString();
         if (userName.isEmpty() || password.isEmpty()) {
             textViewError_Message.setText("");

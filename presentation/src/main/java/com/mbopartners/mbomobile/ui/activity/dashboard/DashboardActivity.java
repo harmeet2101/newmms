@@ -578,6 +578,7 @@ public class DashboardActivity extends AutoLockActivity
             fetchBusinessCenterData();
             fetchPayrollSummaryData();
             fetchPayrollTransactionsData();
+            fetchPayrollPreviewsData();
         }
     }
 
@@ -593,6 +594,7 @@ public class DashboardActivity extends AutoLockActivity
         final IRestClient.Callback getBusinessCenterCallback = new BusinessCenterCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getPayrollSummaryCallback = new PayrollSummaryCallback(defaultRestClientResponseHandler);
         final IRestClient.Callback getPayrollTransactionsCallback=new PayrollTransactionsCallback(defaultRestClientResponseHandler);
+        final IRestClient.Callback getPayrollPreviewsCallback=new   PayrollPreviewsCallback(defaultRestClientResponseHandler);
         restServiceHelper.clearCallbacks();
         restServiceHelper.registerCallback(RestApiContract.Method.getDashboards, getDashboardsCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getUserProfile, getUserProfileCallback);
@@ -602,6 +604,7 @@ public class DashboardActivity extends AutoLockActivity
         restServiceHelper.registerCallback(RestApiContract.Method.getBusinessCenterList, getBusinessCenterCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getPayrollSummary, getPayrollSummaryCallback);
         restServiceHelper.registerCallback(RestApiContract.Method.getPayrollTransactions, getPayrollTransactionsCallback);
+        restServiceHelper.registerCallback(RestApiContract.Method.getPayrollPreviews, getPayrollPreviewsCallback);
     }
 
     /**
@@ -683,6 +686,14 @@ public class DashboardActivity extends AutoLockActivity
         dataLoadingDispatcher.notifyNeedDataReload();
         dataLoadingDispatcher.notifyDadaLoadingStarted();
         restServiceHelper.getPayrollTransactionsList(this);
+        mNetworkingCount++;
+    }
+
+    private void fetchPayrollPreviewsData(){
+        dataModel.initPreviewModel();
+        dataLoadingDispatcher.notifyNeedDataReload();
+        dataLoadingDispatcher.notifyDadaLoadingStarted();
+        restServiceHelper.getPayrollPreviewsList(this, "2016-09-02","RETAIN","40000");
         mNetworkingCount++;
     }
 
@@ -817,6 +828,7 @@ public class DashboardActivity extends AutoLockActivity
                 fetchBusinessCenterData();
                 fetchPayrollSummaryData();
                 fetchPayrollTransactionsData();
+                fetchPayrollPreviewsData();
             }
         }
     }
@@ -1040,6 +1052,32 @@ public class DashboardActivity extends AutoLockActivity
                 case Ok: {
                     forceLoadPayrollTransactionData();
                     doDataLoadingFromServer_Step_4();
+                    break;
+                }
+
+                default: {
+                    doOnDataLoadingFromServer_FailedRoutine();
+                    defaultHandler.onComplete(response);
+                }
+            }
+        }
+    }
+
+    class PayrollPreviewsCallback implements IRestClient.Callback {
+        private DefaultRestClientResponseHandler defaultHandler;
+
+        public PayrollPreviewsCallback(DefaultRestClientResponseHandler defaultHandler) {
+            this.defaultHandler = defaultHandler;
+        }
+
+        @Override
+        public void onComplete(UniversalRestResponse response) {
+            mNetworkingCount--;
+            switch (response.getClientResult()) {
+                case Ok: {
+                    Log.d("res",response.getResponseEntity().toString());
+                    //forceLoadPayrollTransactionData();
+                    //doDataLoadingFromServer_Step_4();
                     break;
                 }
 

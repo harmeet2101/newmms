@@ -1,9 +1,9 @@
 package com.mbopartners.mbomobile.ui.activity.dashboard;
 
-import com.mbopartners.mbomobile.data.db.generated.model.payroll.TableBusinessCenter;
 import com.mbopartners.mbomobile.rest.model.response.DashboardField;
 import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollPreviews;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.ui.model.ExpenseTimesheetItem;
@@ -19,6 +19,7 @@ class DashboardActivityDataModel {
     private List<BusinessCenter> businessCenterList;
     private List<PayrollSummary> payrollSummaryList;
     private List<PayrollTransactions> payrollTransactionsList;
+    private List<PayrollPreviews> payrollPreviewsList;
 
     public DashboardActivityDataModel() {
         initModel();
@@ -31,6 +32,7 @@ class DashboardActivityDataModel {
         initBusinessModel();
         initPayrollModel();
         initTransactionModel();
+        initPreviewModel();
     }
 
     public void onAllDataLoadingFailed() {
@@ -40,6 +42,12 @@ class DashboardActivityDataModel {
         businessCenterDataLoadingFailed();
         payrollSummaryDataLoadingFailed();
         payrollTransactionDataLoadingFailed();
+        payrollPreviewDataLoadingFailed();
+    }
+
+    private void payrollPreviewDataLoadingFailed() {
+
+        payrollPreviewsList=new ArrayList<>();
     }
 
     private void payrollTransactionDataLoadingFailed() {
@@ -81,6 +89,10 @@ class DashboardActivityDataModel {
     public void initTransactionModel()
     {
         payrollTransactionsList=null;
+    }
+
+    public void initPreviewModel(){
+        payrollPreviewsList=null;
     }
 
     public List<DashboardField> getDashboardData() {
@@ -146,6 +158,10 @@ class DashboardActivityDataModel {
         return payrollSummaryList;
     }
 
+    public List<PayrollPreviews> getPayrollPreviewsList(){
+        return payrollPreviewsList;
+    }
+
     public void     setBusinessData(List<BusinessCenter> fields) {
         if (this.businessCenterList != null) {
             this.businessCenterList.clear();
@@ -176,6 +192,16 @@ class DashboardActivityDataModel {
             this.payrollTransactionsList.addAll(payrollTransactionses);
         } else {
             payrollTransactionsList = payrollTransactionses;
+        }
+    }
+
+
+    public void setPayrollPreviewsList(List<PayrollPreviews> payrollPreviewsList){
+        if (this.payrollPreviewsList != null) {
+            this.payrollPreviewsList.clear();
+            this.payrollPreviewsList.addAll(payrollPreviewsList);
+        } else {
+            this.payrollPreviewsList = payrollPreviewsList;
         }
     }
 }

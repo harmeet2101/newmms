@@ -1,8 +1,6 @@
 package com.mbopartners.mbomobile.rest.rest.client;
 
 import android.content.Context;
-import android.net.Uri;
-import android.util.Pair;
 
 import com.mbopartners.mbomobile.rest.model.response.Expense;
 import com.mbopartners.mbomobile.rest.model.response.TimeEntry;
@@ -59,5 +57,6 @@ public interface IRestClient {
     RequestDescriptor getBusinessCenterList(Context context);
     RequestDescriptor getPayrollSummaryList(Context context);
     RequestDescriptor getPayrollTransactionsList(Context context);
+    RequestDescriptor getPayrollPreviewsList(Context context,String payrollDate,String method,String amount);
 
 }

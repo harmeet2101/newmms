@@ -26,6 +26,7 @@ import com.mbopartners.mbomobile.rest.rest.client.request.SubmitTimePeriodReques
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.BusinessCenterRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollSummaryRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollTransactionRequest;
+import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PreviewsRequest;
 
 import java.io.File;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import ua.com.mobidev.android.framework.application.controller.Controllers;
 import ua.com.mobidev.android.mdrest.web.rest.WebRestService;
 import ua.com.mobidev.android.mdrest.web.rest.client.RestMethod;
 import ua.com.mobidev.android.mdrest.web.rest.http.HttpHeaders;
+import ua.com.mobidev.android.mdrest.web.rest.http.HttpParams;
 import ua.com.mobidev.android.mdrest.web.rest.request.AbstractRestRequest;
 import ua.com.mobidev.android.mdrest.web.rest.request.RequestDescriptor;
 import ua.com.mobidev.android.mdrest.web.rest.request.RequestId;
@@ -95,6 +97,26 @@ public class RestServiceHelper extends AbstractApplicationController implements 
         request.setHttpHeaders(headers);
 
         sendRequest(request, context);
+        return request.getRequestDescriptor();
+    }
+
+    @Override
+    public RequestDescriptor getPayrollPreviewsList(Context context, String payrollDate, String method, String amount) {
+
+        /*PayrollPreviewsEntity params=new PayrollPreviewsEntity();
+        params.payrollDate=payrollDate;
+        params.method=method;
+        params.amount=amount;*/
+
+        PreviewsRequest request=new PreviewsRequest(NetworkingConstants.PAYROLL_DEV_HOSTNAME);
+        HttpParams httpParams=new HttpParams();
+        httpParams.putParam("payrollDate",payrollDate);
+        httpParams.putParam("method",method);
+        httpParams.putParam("amount",amount);
+        request.setHttpParams(httpParams);
+
+        addStandardRequesrHeaders(request);
+        sendRequest(request,context);
         return request.getRequestDescriptor();
     }
 

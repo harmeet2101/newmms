@@ -2,6 +2,7 @@ package com.mbopartners.mbomobile.rest.rest.client.request;
 
 import com.mbopartners.mbomobile.rest.model.param.EmptyRequestEntity;
 import com.mbopartners.mbomobile.rest.model.param.OAuthBodyEntity;
+import com.mbopartners.mbomobile.rest.model.param.PayrollPreviewsEntity;
 import com.mbopartners.mbomobile.rest.model.response.Dashboard;
 import com.mbopartners.mbomobile.rest.model.response.EmptyResponseEntity;
 import com.mbopartners.mbomobile.rest.model.response.Expense;
@@ -14,11 +15,13 @@ import com.mbopartners.mbomobile.rest.model.response.WorkOrder;
 import com.mbopartners.mbomobile.rest.model.response.oauth.OAuthApiException;
 import com.mbopartners.mbomobile.rest.model.response.oauth.OAuthToken;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.BusinessCenter;
+import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollPreviews;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollSummary;
 import com.mbopartners.mbomobile.rest.model.response.payroll_response.PayrollTransactions;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.BusinessCenterRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollSummaryRequest;
 import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PayrollTransactionRequest;
+import com.mbopartners.mbomobile.rest.rest.client.request.payroll.PreviewsRequest;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.DashboardsDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.DeleteExpenseReceiptDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.GetExpenseTypesDbHandler;
@@ -32,6 +35,7 @@ import com.mbopartners.mbomobile.rest.rest.storage.handler.PutExpenseDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.SaveTimeEntriesDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.SubmitTimePeriodDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.BusinessCenterDbHandler;
+import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.PreviewsDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.SummaryDbHandler;
 import com.mbopartners.mbomobile.rest.rest.storage.handler.payroll.TransactionDbHandler;
 
@@ -64,10 +68,11 @@ public class RestApiContract {
         private static final String EXPENSE_RECEIPTS_LIST = "expenses/" + Key.EXPENSE_ID + "/receipts/";
         private static final String EXPENSE_RECEIPT = "expenses/" + Key.EXPENSE_ID + "/receipts/" + Key.EXPENSE_FILENAME + "/";
         private static final String EXPENSE_TYPES_LIST = "expenseTypes/ ";
-        private static final String BUSINESS_CENTER_LIST="business-centers-dev/v1/business-centers/";
+        private static final String BUSINESS_CENTER_LIST="business-centers/v1/business-centers/";
         private static final String PAYROLL_SUMMARY_LIST="business-centers/v1/summary";
-       private static final String PAYROLL_TRANSACTION_LIST="payroll/v1/transactions";           // payroll-dev/v1/transactions
-        //private static final String PAYROLL_PREVIEW_LIST="payroll/v1/previews ";              //  payroll-dev/api/v1/previews
+        private static final String PAYROLL_TRANSACTION_LIST="payroll/v1/transactions";           // payroll-dev/v1/transactions
+        private static final String PAYROLL_PREVIEW_LIST="payroll/v1/previews ";              //  payroll-dev/api/v1/previews
+
     }
 
     public static class Key {
@@ -95,6 +100,7 @@ public class RestApiContract {
         public static final String getBusinessCenterList="Get_Business_Center_list";
         public static final String getPayrollSummary="Get_Payroll_Summary";
         public static final String getPayrollTransactions="Get_Payroll_Transactions";
+        public static final String getPayrollPreviews="Get_Payroll_Previews";
     }
 
     public static class Method {
@@ -146,6 +152,9 @@ public class RestApiContract {
         public static final RestMethod<PayrollTransactionRequest, EmptyRequestEntity, PayrollTransactions[], RestServerApiException, TransactionDbHandler> getPayrollTransactions =
                 new RestMethod<>(Name.getPayrollTransactions, HttpMethod.GET, Resource.PAYROLL_TRANSACTION_LIST, EmptyRequestEntity.class, PayrollTransactions[].class, RestServerApiException.class, TransactionDbHandler.class);
 
+
+        public static final RestMethod<PreviewsRequest, PayrollPreviewsEntity, PayrollPreviews, RestServerApiException, PreviewsDbHandler> getPayrollPreviews =
+                new RestMethod<>(Name.getPayrollPreviews, HttpMethod.GET, Resource.PAYROLL_PREVIEW_LIST, PayrollPreviewsEntity.class, PayrollPreviews.class, RestServerApiException.class, PreviewsDbHandler.class);
     }
 
 }
